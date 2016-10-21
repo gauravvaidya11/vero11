@@ -1,0 +1,836 @@
+/----   kishor malviya database ----------/
+
+<!========== 22-02-2016 ==============>
+
+--
+-- Table structure for table `tbl_admin_email_templates`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_email_templates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) CHARACTER SET utf8 NOT NULL,
+  `type` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `content` text CHARACTER SET utf8 NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: disable, 1: enable',
+  `delete_status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `tbl_admin_email_templates`
+--
+
+INSERT INTO `tbl_admin_email_templates` (`id`, `name`, `type`, `content`, `status`, `delete_status`, `created_at`, `modified_at`) VALUES
+(1, 'Email on registration', 'registration', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />\n	<title>{{siteName}}</title>\n	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />\n</head>\n<body style="margin:0; padding:0; font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; background:#fff; color:#8d8d8d; font-size:16px;">\n<p>{{contents}}&nbsp;</p>\n\n<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">\n	<tbody>\n		<tr>\n			<td style="border-top:#ff6600 solid 7px; padding:25px 0; text-align:center;"><a href="#"><img alt="" height="93" src="{{siteLogo}}" width="420" /></a></td>\n		</tr>\n		<tr>\n			<td style="background:#ff6600; text-align:center; padding:30px 0;"><span style="text-align:center; padding:0; margin:0;">{{emailBannerLogo}} </span>\n			<p style="margin:0;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; padding:0 0 0 0; font-weight:bold; color:#fff; font-size:60px;">{{emailBannerTitle}}</p>\n			</td>\n		</tr>\n		<tr>\n			<td style="background:#f6f4f2; color:#483526;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; font-size:14px; text-align:center; padding:15px 0;">{{currentdate}} Copyright 2016 - | All rights reserved to <a href="{C}{C}{C}{C}<!--baseURL-->">{{siteName}}</a></td>\n		</tr>\n	</tbody>\n</table>\n</body>\n</html>', 1, 0, '2016-02-20 14:28:29', '2016-02-22 06:06:36'),
+(2, 'Email on forgot password', 'forgot_password', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />\n	<title>{{siteName}}</title>\n	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />\n</head>\n<body style="margin:0; padding:0; font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; background:#fff; color:#8d8d8d; font-size:16px;">\n<p>{{contents}}&nbsp;</p>\n\n<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">\n	<tbody>\n		<tr>\n			<td style="border-top:#ff6600 solid 7px; padding:25px 0; text-align:center;"><a href="#"><img alt="" height="93" src="{{siteLogo}}" width="420" /></a></td>\n		</tr>\n		<tr>\n			<td style="background:#ff6600; text-align:center; padding:30px 0;"><span style="text-align:center; padding:0; margin:0;">{{emailBannerLogo}} </span>\n			<p style="margin:0;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; padding:0 0 0 0; font-weight:bold; color:#fff; font-size:60px;">{{emailBannerTitle}}</p>\n			</td>\n		</tr>\n		<tr>\n			<td style="background:#f6f4f2; color:#483526;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; font-size:14px; text-align:center; padding:15px 0;">{{currentdate}} Copyright 2016 - | All rights reserved to <a href="{C}{C}{C}{C}<!--baseURL-->">{{siteName}}</a></td>\n		</tr>\n	</tbody>\n</table>\n</body>\n</html>', 1, 0, '2016-02-20 14:56:30', '2016-02-20 13:56:37'),
+(3, 'Email on reset password', 'reset_password', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />\n	<title>{{siteName}}</title>\n	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />\n</head>\n<body style="margin:0; padding:0; font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; background:#fff; color:#8d8d8d; font-size:16px;">\n<p>{{contents}}&nbsp;</p>\n\n<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">\n	<tbody>\n		<tr>\n			<td style="border-top:#ff6600 solid 7px; padding:25px 0; text-align:center;"><a href="#"><img alt="" height="93" src="{{siteLogo}}" width="420" /></a></td>\n		</tr>\n		<tr>\n			<td style="background:#ff6600; text-align:center; padding:30px 0;"><span style="text-align:center; padding:0; margin:0;">{{emailBannerLogo}} </span>\n			<p style="margin:0;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; padding:0 0 0 0; font-weight:bold; color:#fff; font-size:60px;">{{emailBannerTitle}}</p>\n			</td>\n		</tr>\n		<tr>\n			<td style="background:#f6f4f2; color:#483526;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; font-size:14px; text-align:center; padding:15px 0;">{{currentdate}} Copyright 2016 - | All rights reserved to <a href="{C}{C}{C}<!--baseURL-->">{{siteName}}</a></td>\n		</tr>\n	</tbody>\n</table>\n</body>\n</html>', 1, 0, '2016-02-20 14:57:09', '2016-02-20 13:57:09'),
+(4, 'Email on email verify', 'email_verification', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n<head>\n	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />\n	<title>{{siteName}}</title>\n	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css" />\n</head>\n<body style="margin:0; padding:0; font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; background:#fff; color:#8d8d8d; font-size:16px;">\n<p>{{contents}}&nbsp;</p>\n\n<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">\n	<tbody>\n		<tr>\n			<td style="border-top:#ff6600 solid 7px; padding:25px 0; text-align:center;"><a href="#"><img alt="" height="93" src="{{siteLogo}}" width="420" /></a></td>\n		</tr>\n		<tr>\n			<td style="background:#ff6600; text-align:center; padding:30px 0;"><span style="text-align:center; padding:0; margin:0;">{{emailBannerLogo}} </span>\n			<p style="margin:0;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; padding:0 0 0 0; font-weight:bold; color:#fff; font-size:60px;">{{emailBannerTitle}}</p>\n			</td>\n		</tr>\n		<tr>\n			<td style="background:#f6f4f2; color:#483526;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; font-size:14px; text-align:center; padding:15px 0;">{{currentdate}} Copyright 2016 - | All rights reserved to <a href="{C}{C}{C}{C}{C}<!--baseURL-->">{{siteName}}</a></td>\n		</tr>\n	</tbody>\n</table>\n</body>\n</html>', 1, 0, '2016-02-20 14:57:31', '2016-02-22 07:04:43');
+
+
+/-------- 19-03-2016 ---------------------/
+ALTER TABLE `tbl_orders` ADD `payment_status` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0:not paid 1:pending 2:done' AFTER `notes`;
+
+
+/*====================== 02-04-2016 ===============================*/
+
+
+ALTER TABLE `tbl_user_roll` ADD `note` VARCHAR(250) NOT NULL COMMENT 'Basic description of roll type ' AFTER `slug`;
+UPDATE `monofood`.`tbl_user_roll` SET `note` = 'This roll type is for super admin' WHERE `tbl_user_roll`.`id` = 1;
+UPDATE `monofood`.`tbl_user_roll` SET `note` = 'This roll type is for dealer' WHERE `tbl_user_roll`.`id` = 2;
+UPDATE `monofood`.`tbl_user_roll` SET `note` = 'This roll type is for distributer' WHERE `tbl_user_roll`.`id` = 3;
+UPDATE `monofood`.`tbl_user_roll` SET `note` = 'This roll type is for customer' WHERE `tbl_user_roll`.`id` = 4;
+UPDATE `monofood`.`tbl_user_roll` SET `note` = 'This roll type is for guest user' WHERE `tbl_user_roll`.`id` = 5;
+
+INSERT INTO `monofood`.`tbl_user_roll` (`id`, `roll_type`, `slug`, `note`, `created_at`, `modified_at`) VALUES (NULL, 'Business Type', 'business_type', 'This roll type is for business type created by super admin', '2016-04-02 09:09:10.000000', '0000-00-00 00:00:00.000000');
+
+=================================================================================================================================================
+--
+-- Table structure for table `tbl_business_user_details`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_user_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT 'master user table p_id',
+  `business_name` varchar(150) NOT NULL,
+  `area_level` tinyint(4) NOT NULL COMMENT '0:country level  1:state level',
+  `country_id` int(11) DEFAULT NULL,
+  `country` varchar(250) DEFAULT NULL,
+  `zone_id` int(11) DEFAULT NULL,
+  `zone` varchar(250) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:disable 1:enable',
+  `delete_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: not deleted  1: deleted',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+==================================================================
+
+
+
+
+/=========================== 05-04-2016 =============================================/
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_business_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_name` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0:disable 1:enable',
+  `delete_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:not delete 1: delete',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+/************************************   08-04-2016 ****************************/
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'site_url', NULL, 'http://vegisan.ch/', '1', '2016-04-08 08:16:12.158131', CURRENT_TIMESTAMP);
+
+/************************************   13-04-2016 ****************************/
+ALTER TABLE `tbl_users` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+ALTER TABLE `tbl_users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, CHANGE `life_id` `life_id` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `life_account` `life_account` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `first_name` `first_name` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `last_name` `last_name` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `username` `username` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `gender` `gender` VARCHAR(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `email` `email` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `working_range` `working_range` DECIMAL(10,2) NULL DEFAULT '0.00', CHANGE `roll_type` `roll_type` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `avatar` `avatar` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `phone` `phone` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `mobile` `mobile` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `country_dailing_code` `country_dailing_code` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `address` `address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `city` `city` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `state` `state` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `country_id` `country_id` INT(11) NULL DEFAULT NULL, CHANGE `zone_id` `zone_id` INT(11) NULL DEFAULT NULL, CHANGE `post_code` `post_code` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `latitude` `latitude` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `longitude` `longitude` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `email_token` `email_token` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `register_type` `register_type` TINYINT(1) NULL DEFAULT NULL COMMENT '1 :Yes, 2:No, 3:Cancel(register by solo page), 4: By dealer referal link', CHANGE `last_login` `last_login` DATETIME NULL DEFAULT NULL, CHANGE `status` `status` INT(1) NOT NULL DEFAULT '1' COMMENT '0: disable, 1: enable', CHANGE `verify_email_status` `verify_email_status` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0: Un-Verify Email, 1: Verfified Email', CHANGE `delete_status` `delete_status` INT(1) NOT NULL DEFAULT '0' COMMENT '1: deleted', CHANGE `created_at` `created_at` DATETIME NOT NULL, CHANGE `modified_at` `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+
+/************************************ 14-04-2016 ******************************************/
+
+ALTER TABLE `tbl_user_roll` CHANGE `roll_type` `roll_type` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `slug` `slug` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `note` `note` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Basic description of roll type ';
+
+ALTER TABLE `tbl_temp_signup` CHANGE `email` `email` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `email_token` `email_token` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tbl_settings` CHANGE `setting_name` `setting_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `setting_code` `setting_code` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `setting_value` `setting_value` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tbl_package_types` CHANGE `name` `name` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_option_values` CHANGE `limit` `opt_limit` INT(9) NULL DEFAULT NULL; 
+
+ALTER TABLE `tbl_message_contact` CHANGE `user_name` `user_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `user_email` `user_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `user_message` `user_message` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_cms` CHANGE `key_name` `key_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `key_code` `key_code` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'page name ', CHANGE `key_value` `key_value` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_affiliation_pool` CHANGE `pool_email` `pool_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `email_token` `email_token` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_admin_email_receivers` CHANGE `receiver_id` `receiver_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_admin_email_attach` CHANGE `attachment_url` `attachment_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_admin` CHANGE `username` `username` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `password` `password` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `email` `email` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `access` `access` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `firstname` `firstname` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `lastname` `lastname` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `avatar` `avatar` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+
+
+ALTER TABLE `tbl_company_profiles` CHANGE `state` `state` INT NULL DEFAULT NULL; 
+
+
+
+/************************** 15-04-2016 *************************/
+
+ALTER TABLE `tbl_online_contracts` CHANGE `payee_country` `payee_country` INT NOT NULL, CHANGE `payer_country` `payer_country` INT NOT NULL; 
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'location_url', NULL, 'http://www.latlong.net/', '1', '2016-04-15 11:19:14.143163', CURRENT_TIMESTAMP); 
+
+
+
+
+/**************************  19-04-2016 *****************************/
+
+ALTER TABLE `tbl_users` ADD `country_dailing_code_phone` INT NOT NULL AFTER `country_dailing_code`; 
+
+
+
+
+
+/**************************  20-04-2016 ************************************/
+
+ALTER TABLE `tbl_users` CHANGE `country_dailing_code` `country_dailing_code` INT NOT NULL; 
+
+
+
+
+
+/**************************  21-04-2016 *****************************************/
+
+ALTER TABLE `tbl_business_categories` ADD `description` TEXT NOT NULL AFTER `business_name`; 
+ALTER TABLE `tbl_users` CHANGE `country_dailing_code_phone` `country_dailing_code_phone` INT(11) NOT NULL DEFAULT '0'; 
+ALTER TABLE `tbl_business_categories` CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+ALTER TABLE `tbl_company_profiles` ADD `country_dialing_code_phone` INT NOT NULL DEFAULT '0' AFTER `phone`; 
+
+
+
+
+
+/**************************  22-04-2016 ************************************/
+
+UPDATE `monofood`.`tbl_user_roll` SET `roll_type` = 'Business', `slug` = 'business' WHERE `tbl_user_roll`.`id` = 6; 
+
+
+
+/************************** 25-04-2016 *************************************/
+
+
+DROP TABLE `tbl_business_user_details` ;
+
+--
+-- Table structure for table `tbl_business_user_details`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_user_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `business_cat_id` int(11) NOT NULL COMMENT 'business category id',
+  `country_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+
+/************************** 30-04-2016 *************************************/
+
+
+
+ALTER TABLE `tbl_company_profiles` ADD `verify_status` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0: not verified 1: verified' AFTER `status`; 
+
+--
+-- Table structure for table `tbl_business_dealer_request`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_dealer_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_user_id` int(11) NOT NULL COMMENT 'owner of request',
+  `user_id` int(11) NOT NULL COMMENT 'customer id /dealer id - on modified',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: normal 1: re-verify',
+  `count` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL COMMENT '0: new 1:pending 2: approved 3:cancled 4:re-submit',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+--
+-- Table structure for table `tbl_business_dealer_user`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_dealer_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_dealer_request',
+  `comapny_profile_id` int(11) NOT NULL COMMENT 'Pk id of tbl_comapy_profiles',
+  `note` text NOT NULL COMMENT 'customer can put note when action on request',
+  `status` tinyint(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved ',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+--
+-- Table structure for table `tbl_business_dealer_request_details`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_dealer_request_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_dealer_request',
+  `business_user_id` int(11) NOT NULL,
+  `note` text NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+
+--
+-- Table structure for table `tbl_business_dealer_admin_suggestion`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_dealer_admin_suggestion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_user_id` int(11) NOT NULL,
+  `business_user_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `note` text NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+/************************** 03-05-2016 *************************************/
+
+
+ALTER TABLE `tbl_business_dealer_user` ADD `company_name` VARCHAR(155) NULL AFTER `note`, ADD `company_uid` VARCHAR(50) NULL AFTER `company_name`, ADD `company_address` VARCHAR(255) NULL AFTER `company_uid`, ADD `country` INT NULL AFTER `company_address`, ADD `state` INT NULL AFTER `country`, ADD `city` VARCHAR(50) NULL AFTER `state`, ADD `phone` VARCHAR(20) NULL AFTER `city`; 
+
+
+ALTER TABLE `tbl_business_dealer_user` ADD `country_dialing_code_phone` INT NOT NULL DEFAULT '0' AFTER `phone`, ADD `company_logo` VARCHAR(255) NULL AFTER `country_dialing_code_phone`; 
+
+
+ALTER TABLE `tbl_business_dealer_user` ADD `uid_checkbox` TINYINT NOT NULL DEFAULT '0' COMMENT '0: i have UID 1: i dont have UID' AFTER `status`, ADD `uid_document` VARCHAR(255) NULL AFTER `uid_checkbox`; 
+
+ALTER TABLE `tbl_business_dealer_user` DROP `comapny_profile_id`; 
+
+
+ALTER TABLE `tbl_business_dealer_user` ADD `user_id` INT NOT NULL COMMENT 'customer id who apply for dealer' AFTER `request_id`; 
+
+
+
+
+/************************** 04-05-2016 *************************************/
+
+
+ALTER TABLE `tbl_business_dealer_user` ADD `post_code` VARCHAR(10) NOT NULL AFTER `city`; 
+
+ALTER TABLE `tbl_company_profiles` ADD `uid_checkbox` TINYINT NOT NULL DEFAULT '0' COMMENT '0: i have UID 1: i dont have UID' AFTER `company_logo`; 
+
+ALTER TABLE `tbl_company_profiles` ADD `uid_document` VARCHAR(255) NULL AFTER `uid_checkbox`; 
+
+
+
+
+
+/************************** 05-05-2016 *************************************/
+
+
+ALTER TABLE `tbl_business_dealer_user` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit'; 
+
+ALTER TABLE `tbl_business_dealer_request_details` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit'; 
+
+
+/************************ 06-05-2016 ****************************************/
+
+ALTER TABLE `tbl_business_dealer_admin_suggestion` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit'; 
+
+
+/************************ 07-05-2016 *****************************************/
+
+ALTER TABLE `tbl_business_dealer_request` CHANGE `count` `count` INT(11) NOT NULL DEFAULT '0' COMMENT 'plus when customer(user) submit/re-sumit';
+ 
+
+/************************ 13-05-2016 ****************************************/
+
+ALTER TABLE `tbl_admin_email_templates` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 
+
+
+
+/************************ 17-05-2016 ****************************************/
+
+ALTER TABLE `tbl_business_dealer_request` ADD `business_cat_id` INT NOT NULL COMMENT 'pk of tbl_business_user_details' AFTER `user_id`; 
+
+
+
+--
+-- Table structure for table `tbl_business_dealer_relations`
+--
+
+
+CREATE TABLE IF NOT EXISTS `tbl_business_dealer_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_user_id` int(11) NOT NULL COMMENT 'can be business user id or admin id',
+  `user_id` int(11) NOT NULL COMMENT 'dealer id',
+  `business_cat_id` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--
+-- Table structure for table `tbl_business_admin_claims`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_admin_claims` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_user_id` int(11) NOT NULL COMMENT 'business_user_id/admin id',
+  `user_id` int(11) NOT NULL COMMENT 'dealer_id',
+  `comment` text NOT NULL,
+  `note` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(4) NOT NULL,
+  `delete_status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `tbl_business_dealer_admin_suggestion` ADD `business_cat_id` INT NOT NULL AFTER `customer_id`; 
+
+
+/************************ 18-05-2016 ****************************************/
+
+ALTER TABLE `tbl_business_admin_claims` ADD `business_cat_id` INT NOT NULL COMMENT 'requested business cat id for claim' AFTER `parent_user_id`; 
+
+ALTER TABLE `tbl_business_admin_claims` CHANGE `status` `status` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0: unread 1: viewed/read 2: approved 3:canceled'; 
+
+
+
+/*********************** 24-05-2016 ******************************************/
+
+ALTER TABLE `tbl_company_profiles` ADD `note` TEXT NOT NULL AFTER `verify_status`; 
+
+/*********************** 25-05-2016 ****************************************/
+
+ALTER TABLE `tbl_company_profiles` ADD `request_id` INT NULL COMMENT 'for re-verify(pkid of dealer_requst)' AFTER `user_id`; 
+
+
+ALTER TABLE `tbl_business_dealer_request` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0: new 1:pending 2: approved 3:cancled 4:re-submit 5:re-verify'; 
+
+ALTER TABLE `tbl_business_dealer_request_details` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify'; 
+
+ALTER TABLE `tbl_business_dealer_user` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify'; 
+
+
+/************************ 30-05-2016 ****************************************/
+
+ALTER TABLE `tbl_business_user_details` ADD `delete_status` TINYINT NOT NULL DEFAULT '0' COMMENT '1: deleted 0: not deleted' AFTER `modified_at`; 
+
+/*********************** 31-05-2016 *****************************************/
+
+ALTER TABLE `tbl_order_items` ADD `net_price` DECIMAL(10,2) NULL DEFAULT '0' AFTER `saleprice_1`; 
+
+
+
+
+/*********************** 09-06-2016 *****************************************/
+
+--
+-- Table structure for table `tbl_dealer_coach_requests`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_dealer_coach_requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dealer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `note` varchar(100) NOT NULL,
+  `comment` varchar(110) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0: new 1:view 2:approve 3:cancel',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+/*********************** 10-06-2016 *****************************************/
+
+--
+-- Table structure for table `tbl_dealer_coach_relations`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_dealer_coach_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL COMMENT 'dealer_id',
+  `child_id` int(11) NOT NULL COMMENT 'customer id',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `comment` `comment` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'customer comment'; 
+
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `note` `note` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'dealer note'; 
+
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `note` `note` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'dealer note'; 
+
+
+/*********************** 13-06-2016 *****************************************/
+
+ALTER TABLE `tbl_dealer_coach_relations` ADD `delete_status` TINYINT NOT NULL DEFAULT '0' COMMENT '1: deleted 0: not deleted' AFTER `child_id`; 
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `note` `note` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'dealer note';
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `comment` `comment` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'customer comment';
+ALTER TABLE `tbl_dealer_coach_requests` ADD `admin_comment` VARCHAR(110) NULL AFTER `comment`; 
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `status` `status` TINYINT(4) NOT NULL COMMENT '0: new 1:view 2:approve 3:cancel 4:pending';
+
+
+
+/*********************** 14-06-2016 *****************************************/
+ALTER TABLE `tbl_dealer_coach_requests` CHANGE `dealer_id` `dealer_id` INT(11) NOT NULL COMMENT 'dealer_id or business_user_id'; 
+
+ALTER TABLE `tbl_dealer_coach_relations` CHANGE `parent_id` `parent_id` INT(11) NOT NULL COMMENT 'dealer_id or business_user_id';  
+
+
+/************************ 15-06-2016 ****************************************/
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES (NULL, 'DEALER CREATED BY ADMIN', 'When admin create a new dealer with fill all details.', '1'); 
+
+
+
+/************************ 16-06-2016 ****************************************/
+--
+-- Table structure for table `tbl_buisness_distributor_requests`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_buisness_distributor_requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_user_id` int(11) NOT NULL,
+  `business_cat_id` int(11) DEFAULT NULL,
+  `child_user_id` int(11) NOT NULL,
+  `parent_note` varchar(110) NOT NULL,
+  `child_note` varchar(110) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0:new 1:view/pending 2:approved 3:canceled',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `tbl_buisness_distributor_requests` CHANGE `parent_note` `parent_note` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `child_note` `child_note` VARCHAR(110) CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+
+
+/********************** 17-06-2016 ***********************************/
+
+INSERT INTO `monofood`.`tbl_user_roll_level` (`id`, `roll_id`, `default_level`, `slug`, `level_name`, `description`, `status`, `created_at`, `modified_at`) VALUES (NULL, '3', '1', 'distributor', 'Distributor', 'This is a default level for all distributor.', '1', NOW(), CURRENT_TIMESTAMP); 
+
+
+--
+-- Table structure for table `tbl_business_distributor_relations`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_distributor_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_buisness_distributor_requests',
+  `parent_id` int(11) NOT NULL COMMENT 'this is a business user id',
+  `child_id` int(11) NOT NULL COMMENT 'dealer/coach/customer id',
+  `business_cat_id` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
+  `delete_status` tinyint(4) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `tbl_coach_relation_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_data` text NOT NULL,
+  `relation_data` text NOT NULL,
+  `note` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='when coach relation is break for distributor level -- previous history of that ' AUTO_INCREMENT=1 ;
+
+
+
+
+CREATE TABLE IF NOT EXISTS `tbl_dealer_relation_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_data` text NOT NULL,
+  `relation_data` text NOT NULL,
+  `note` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='when dealer relation is break for distributor level -- previous history of that' AUTO_INCREMENT=1 ;
+
+ALTER TABLE `tbl_business_distributor_relations` CHANGE `status` `status` TINYINT(4) NOT NULL DEFAULT '1'; 
+
+
+/********************** 20-06-2016 ***********************************/
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'default_development_mode', 'coding deveoplement', '0', '1', '2016-06-20 00:00:00.000000', CURRENT_TIMESTAMP);
+
+
+
+
+/********************** 30-06-2016 ***********************************/
+
+ALTER TABLE `tbl_business_dealer_relations` CHANGE `business_cat_id` `business_cat_id` INT(11) NULL DEFAULT NULL COMMENT 'admin : pk of tbl_business_categories';
+
+--
+-- Table structure for table `tbl_admin_business_requests`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_business_requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `type` tinyint(4) NOT NULL COMMENT '0:new 1:re-verify',
+  `count` mediumint(9) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0: new 1:pending 2: approved 3:cancled 4:re-submit 5:re-verify 6:resubmitted(type 1)',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+--
+-- Table structure for table `tbl_admin_business_request_details`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_business_request_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'pk of tbl_admin_business_requests',
+  `note` varchar(110) NOT NULL COMMENT 'note by requester/admin',
+  `status` tinyint(4) NOT NULL COMMENT '0: new 1:pending 2: approved 3:cancled 4:re-submit 5:re-verify 6:resubmitted (type 1)',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+--
+-- Table structure for table `tbl_admin_business_request_data`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_business_request_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_dealer_request',
+  `user_id` int(11) NOT NULL COMMENT 'customer id who apply for dealer',
+  `note` text NOT NULL COMMENT 'customer can put note when action on request',
+  `company_name` varchar(155) DEFAULT NULL,
+  `company_uid` varchar(50) DEFAULT NULL,
+  `company_address` varchar(255) DEFAULT NULL,
+  `country` int(11) DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `post_code` varchar(10) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `country_dialing_code_phone` int(11) NOT NULL DEFAULT '0',
+  `company_logo` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify',
+  `uid_checkbox` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: i have UID 1: i dont have UID',
+  `uid_document` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+/********************** 01-07-2016 ***********************************/
+
+ALTER TABLE `tbl_company_profiles` ADD `commercial_latitude` VARCHAR(100) NULL DEFAULT NULL AFTER `post_code`, ADD `commercial_longitude` VARCHAR(100) NULL DEFAULT NULL AFTER `commercial_latitude`; 
+
+ ALTER TABLE `tbl_business_dealer_user` ADD `commercial_latitude` VARCHAR(100) NULL DEFAULT NULL AFTER `post_code`, ADD `commercial_longitude` VARCHAR(100) NULL DEFAULT NULL AFTER `commercial_latitude` 
+
+
+
+
+
+/********************** 02-07-2016 ***********************************/
+
+ALTER TABLE `tbl_admin_business_request_data` CHANGE `company_address` `company_address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+ALTER TABLE `tbl_business_dealer_user` CHANGE `company_address` `company_address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+ALTER TABLE `tbl_company_profiles` CHANGE `company_address` `company_address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+
+
+
+/********************** 05-07-2016 ***********************************/
+
+DROP TABLE `tbl_admin_business_request_data`;
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_business_request_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_dealer_request',
+  `user_id` int(11) NOT NULL COMMENT 'customer id who apply for dealer',
+  `note` text NOT NULL COMMENT 'customer can put note when action on request',
+  `company_name` varchar(155) DEFAULT NULL,
+  `company_uid` varchar(50) DEFAULT NULL,
+  `company_address` text,
+  `country` int(11) DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `post_code` varchar(10) NOT NULL,
+  `commercial_latitude` varchar(100) DEFAULT NULL,
+  `commercial_longitude` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `country_dialing_code_phone` int(11) NOT NULL DEFAULT '0',
+  `company_logo` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify',
+  `uid_checkbox` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: i have UID 1: i dont have UID',
+  `uid_document` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+/********************** 07-07-2016 ***********************************/
+--
+-- Table structure for table `tbl_business_distributor_request`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_distributor_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_user_id` int(11) NOT NULL COMMENT 'owner of request',
+  `user_id` int(11) NOT NULL COMMENT 'customer/dealer/coach id ( distributor- on modified',
+  `business_cat_id` int(11) NOT NULL COMMENT 'pk of tbl_business_user_details',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: normal 1: re-verify',
+  `count` int(11) NOT NULL DEFAULT '0' COMMENT 'plus when customer(user) submit/re-sumit',
+  `status` tinyint(4) NOT NULL COMMENT '0: new 1:pending 2: approved 3:cancled 4:re-submit 5:re-verify',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+--
+-- Table structure for table `tbl_business_distributor_request_details`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_distributor_request_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_distributor_request',
+  `business_user_id` int(11) NOT NULL,
+  `note` text NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify 6: resubmitted(type1)',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--
+-- Table structure for table `tbl_business_distributor_data`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_business_distributor_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `request_id` int(11) NOT NULL COMMENT 'Pk id of tbl_business_dealer_request',
+  `user_id` int(11) NOT NULL COMMENT 'customer id who apply for dealer',
+  `note` text NOT NULL COMMENT 'customer can put note when action on request',
+  `company_name` varchar(155) DEFAULT NULL,
+  `company_uid` varchar(50) DEFAULT NULL,
+  `company_address` text,
+  `country` int(11) DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `post_code` varchar(10) NOT NULL,
+  `commercial_latitude` varchar(100) DEFAULT NULL,
+  `commercial_longitude` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `country_dialing_code_phone` int(11) NOT NULL DEFAULT '0',
+  `company_logo` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '0:pending 1:viewed 2:approved 3:cancel 4:re-submit 5:re-verify',
+  `uid_checkbox` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0: i have UID 1: i dont have UID',
+  `uid_document` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+/********************** 12-07-2016 ***********************************/
+
+DROP TABLE `tbl_buisness_distributor_requests`;
+
+/********************** 13-07-2016 ***********************************/
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'contact_email', 'contact_email', 'Contact@monofood.org', '1', '2016-07-13 06:17:13.192192', CURRENT_TIMESTAMP), (NULL, 'contact_number', 'contact_number', '+234 803 593 6974', '1', '2016-07-13 11:17:14.212151', CURRENT_TIMESTAMP);
+
+
+
+
+/********************** 05-08-2016 ***********************************/
+
+ALTER TABLE `tbl_company_profiles` DROP `country`, DROP `state`; 
+
+ALTER TABLE `tbl_company_profiles` ADD `country_id` INT NULL AFTER `state`, ADD `zone_id` INT NULL AFTER `country_id`; 
+
+
+/********************** 12-08-2016 ***********************************/
+
+ALTER TABLE `tbl_business_dealer_user` ADD `street_address` VARCHAR(255) NULL AFTER `company_address`, ADD `street_number` VARCHAR(255) NULL AFTER `street_address`;
+
+
+/******************** 17-08-2016 **************************************/
+
+ALTER TABLE `tbl_business_distributor_data` ADD `street_address` VARCHAR(255) NULL AFTER `company_address`, ADD `street_number` VARCHAR(255) NULL AFTER `street_address`;
+
+ALTER TABLE `tbl_admin_business_request_data` ADD `street_address` VARCHAR(255) NULL AFTER `company_address`, ADD `street_number` VARCHAR(255) NULL AFTER `street_address`; 
+
+ALTER TABLE `tbl_company_profiles` CHANGE `post_code` `zip` INT(11) NULL DEFAULT NULL; 
+
+ALTER TABLE `tbl_company_profiles` ADD `country` VARCHAR(255) NULL AFTER `country_id`, ADD `country_code` VARCHAR(3) NULL AFTER `country`; 
+
+ALTER TABLE `tbl_company_profiles` ADD `zone` VARCHAR(255) NULL AFTER `zone_id`; 
+
+
+ALTER TABLE `tbl_company_profiles` CHANGE `zip` `zip` VARCHAR(11) NULL DEFAULT NULL; 
+
+
+
+
+/******************** 22-08-2016 **************************************/
+
+ALTER TABLE `tbl_company_profiles` ADD `email` VARCHAR(100) NULL AFTER `company_name`; 
+
+ALTER TABLE `tbl_admin_business_request_data` ADD `email` VARCHAR(100) NULL AFTER `company_name`; 
+
+ALTER TABLE `tbl_business_dealer_user` ADD `email` VARCHAR(100) NULL AFTER `company_name`; 
+
+ALTER TABLE `tbl_business_distributor_data` ADD `email` VARCHAR(100) NULL AFTER `company_name`; 
+
+
+
+
+/******************** 29-08-2016 **************************************/
+--
+-- Table structure for table `tbl_user_contracts`
+--
+
+CREATE TABLE `tbl_user_contracts` (
+  `id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `contract_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '1:accept 0: not accepted',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/******************** 31-08-2016 **************************************/
+
+RENAME TABLE `tbl_user_contracts` TO `tbl_contract_user`;
+
+
+/******************** 01-09-2016 **************************************/
+
+ALTER TABLE `tbl_users` ADD `contract_id` INT NOT NULL DEFAULT '0' AFTER `verify_email_status`, ADD `contract_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0: not accepted 1: accepted' AFTER `contract_id`, ADD `contract_accepted_at` DATETIME NOT NULL AFTER `contract_status`; 
+
+
+
+/******************** 02-09-2016 **************************************/
+
+ALTER TABLE `tbl_contract_user` CHANGE `created_at` `accepted_at` DATETIME NOT NULL; 
+RENAME TABLE `tbl_contract_user` TO `tbl_contract_history`;
+
+
+/******************** 08-09-2016 **************************************/
+
+ALTER TABLE `tbl_company_profiles` CHANGE `street_address` `street_address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `street_number` `street_number` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `note` `note` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+
+ALTER TABLE `tbl_admin_business_request_data` CHANGE `note` `note` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'customer can put note when action on request', CHANGE `post_code` `post_code` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+
+ALTER TABLE `tbl_business_dealer_user` CHANGE `note` `note` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'customer can put note when action on request', CHANGE `post_code` `post_code` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+
+
+ALTER TABLE `tbl_business_distributor_data` CHANGE `note` `note` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'customer can put note when action on request', CHANGE `post_code` `post_code` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL; 
+
+ALTER TABLE `tbl_business_distributor_relations` CHANGE `delete_status` `delete_status` TINYINT(4) NOT NULL DEFAULT '0';
+
+

@@ -1,0 +1,261 @@
+
+//12-JAN-2015 Gaurav Vaidya
+
+CREATE TABLE IF NOT EXISTS `tbl_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `setting_name` varchar(255) NOT NULL,
+  `setting_value` text NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+//12-jan-2016 By Rohit
+
+ALTER TABLE  `tbl_admin` ADD  `created_at` DATETIME NOT NULL AFTER  `lastname` ,
+ADD  `modified_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL AFTER  `created_at` ;
+
+ALTER TABLE  `tbl_admin` CHANGE  `ID`  `id` INT( 30 ) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `tbl_admin` ADD `status` INT( 1 ) NOT NULL DEFAULT '0' AFTER `lastname` ;
+
+ALTER TABLE `tbl_admin` ADD `avatar` VARCHAR( 255 ) NOT NULL AFTER `lastname` ;
+
+// 13-jan-2016 By Niraj
+
+CREATE TABLE IF NOT EXISTS `tbl_customers_address_bank` (
+`id` int( 9 ) unsigned NOT NULL AUTO_INCREMENT ,
+`customer_id` int( 9 ) unsigned NOT NULL ,
+`company` varchar( 255 ) NOT NULL ,
+`firstname` varchar( 128 ) NOT NULL ,
+`lastname` varchar( 128 ) NOT NULL ,
+`email` varchar( 255 ) NOT NULL ,
+`phone` varchar( 32 ) NOT NULL ,
+`address1` varchar( 255 ) NOT NULL ,
+`address2` varchar( 255 ) NOT NULL ,
+`city` varchar( 255 ) NOT NULL ,
+`zone` varchar( 255 ) NOT NULL ,
+`zip` varchar( 16 ) NOT NULL ,
+`country` varchar( 255 ) NOT NULL ,
+`country_code` varchar( 3 ) NOT NULL ,
+`country_id` int( 11 ) NOT NULL ,
+`zone_id` int( 11 ) NOT NULL ,
+`deleted` tinyint( 4 ) NOT NULL DEFAULT '0',
+PRIMARY KEY ( `id` )
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT =1;
+
+CREATE TABLE IF NOT EXISTS `tbl_orders` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `transaction_id` int(11) DEFAULT NULL,
+  `order_number` varchar(60) DEFAULT NULL,
+  `customer_id` int(9) unsigned DEFAULT NULL,
+  `billing_address_id` int(11) NOT NULL,
+  `shipping_address_id` int(11) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `ordered_on` datetime NOT NULL,
+  `shipped_on` datetime NOT NULL,
+  `tax` float(10,2) NOT NULL,
+  `total` float(10,2) NOT NULL,
+  `subtotal` float(10,2) NOT NULL,
+  `gift_card_discount` float(10,2) NOT NULL,
+  `coupon_discount` float(10,2) NOT NULL,
+  `shipping` float(10,2) NOT NULL,
+  `shipping_notes` text NOT NULL,
+  `notes` text,
+  `order_started` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+//13-JAN-2016 By gaurav
+
+ALTER TABLE  `tbl_admin` CHANGE  `access`  `access` INT( 2 ) NOT NULL ;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_user_roll` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roll_type` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+INSERT INTO `tbl_user_roll` (`id`, `roll_type`, `slug`, `created_at`, `modified_at`) VALUES
+(1, 'Administrator', 'admin', '2016-01-13 10:23:28', '2016-01-13 03:41:29'),
+(2, 'Dealer', 'dealer', '2016-01-13 07:37:40', '2016-01-13 02:33:17'),
+(3, 'Distributor', 'distributor', '2016-01-13 07:23:23', '2016-01-13 00:38:28'),
+(4, 'Customer', 'customer', '2016-01-13 06:23:21', '2016-01-13 00:39:31');
+
+CREATE TABLE IF NOT EXISTS `tbl_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `gender` varchar(1) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `roll_type` text NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `latitude` decimal(10,0) NOT NULL,
+  `longitude` decimal(10,0) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+2016-01-13---vishal patidar
+--
+-- Table structure for table `tbl_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_categories` (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(9) NOT NULL DEFAULT '0',
+  `name` varchar(64) NOT NULL,
+  `slug` varchar(64) NOT NULL,
+  `description` text NOT NULL,
+  `excerpt` text NOT NULL,
+  `sequence` int(5) unsigned NOT NULL DEFAULT '0',
+  `image` varchar(255) DEFAULT NULL,
+  `seo_title` text NOT NULL,
+  `meta` text NOT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '1=enabled; 0=disabled',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-------------------------------------------------------------
+2016-01-14---Rohit
+--
+-- Alter following fields for 'tbl_users'
+--
+
+ALTER TABLE  `tbl_users` ADD  `phone` VARCHAR( 100 ) NOT NULL AFTER  `roll_type` ;
+
+ALTER TABLE  `tbl_users` ADD  `post_code` VARCHAR( 50 ) NOT NULL AFTER  `country` ;
+
+ALTER TABLE  `tbl_users` ADD  `status` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '0: disable, 1: enable' AFTER  `longitude` ;
+
+ALTER TABLE  `tbl_users` ADD  `delete_status` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '1: deleted' AFTER  `status` ;
+
+-----------------------------------------------------------------
+2016-01-15--- Rohit
+--
+-- Change datatype in user lat long and state
+--
+
+ALTER TABLE `tbl_users` CHANGE `latitude` `latitude` VARCHAR( 100 ) NOT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `longitude` `longitude` VARCHAR( 100 ) NOT NULL ;
+
+ALTER TABLE `tbl_users` ADD `state` VARCHAR( 50 ) NOT NULL AFTER `city` ;
+
+----------------------------------------------------------------------
+
+
+--------------------------------------------------------------------
+2016-01-18--- Harish
+--
+-- create table Products
+--
+CREATE TABLE IF NOT EXISTS `tbl_products` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` varchar(30) NOT NULL,
+  `primary_category` tinyint(4) NOT NULL DEFAULT '0',
+  `name` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `excerpt` text NOT NULL,
+  `free_shipping` tinyint(1) NOT NULL DEFAULT '0',
+  `shippable` tinyint(1) NOT NULL DEFAULT '1',
+  `taxable` tinyint(1) NOT NULL DEFAULT '1',
+  `fixed_quantity` tinyint(1) NOT NULL DEFAULT '0',
+  `weight` varchar(10) NOT NULL DEFAULT '0',
+  `track_stock` tinyint(1) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL,
+  `related_products` text,
+  `images` text,
+  `seo_title` text,
+  `meta` text,
+  `is_giftcard` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  `price_1` decimal(10,2) DEFAULT '0.00',
+  `saleprice_1` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------------------------------------------------------------
+
+---------------------------------------------------
+2016-01-18--- Harish
+--
+-- add field for delete status product
+--
+
+ALTER TABLE `tbl_products` ADD `delete_status` INT(1) NULL DEFAULT '0' ;
+-----------------------------------------------------------------
+
+
+--------------------------------------------------------
+2016-01-18 --vishal patidar
+--
+-- Table structure for table `tbl_customers`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_customers` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `email_subscribe` tinyint(1) NOT NULL DEFAULT '0',
+  `phone` varchar(32) NOT NULL,
+  `company` varchar(128) NOT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `group_id` int(11) NOT NULL DEFAULT '1',
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `is_guest` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `tbl_categories`
+--
+
+ALTER TABLE `tbl_categories`  ADD `created_at` DATETIME NOT NULL  AFTER `status`,  ADD `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP  AFTER `created_at`;
+
+--
+-- Table structure for table `tbl_category_products`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_category_products` (
+  `product_id` int(9) unsigned NOT NULL,
+  `category_id` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`product_id`,`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+---------------------------------------------------------------------
+
+-----------------------------------------------------------------
+2016-01-19--- Rohit
+--
+-- Add email_token and avatar fiekds in for verification email
+--
+ALTER TABLE `tbl_users` ADD `email_token` VARCHAR( 155 ) NOT NULL AFTER `longitude` ;
+
+ALTER TABLE `tbl_users` ADD `avatar` VARCHAR( 155 ) NOT NULL AFTER `roll_type` ;
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+2016-01-19--- Harish
+--
+-- Change field type varchar from tinyint
+--
+
+ALTER TABLE `tbl_products` CHANGE `primary_category` `primary_category` VARCHAR(20) NOT NULL DEFAULT '0';
+-----------------------------------------------------------------

@@ -1,0 +1,819 @@
+-- --------------------------------------------------------
+2016-01-13---vishal patidar.....
+--
+-- Table structure for table `tbl_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_categories` (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(9) NOT NULL DEFAULT '0',
+  `name` varchar(64) NOT NULL,
+  `slug` varchar(64) NOT NULL,
+  `description` text NOT NULL,
+  `excerpt` text NOT NULL,
+  `sequence` int(5) unsigned NOT NULL DEFAULT '0',
+  `image` varchar(255) DEFAULT NULL,
+  `seo_title` text NOT NULL,
+  `meta` text NOT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '1=enabled; 0=disabled',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--------------------------------------------------------
+2016-01-18 --vishal patidar
+--
+-- Table structure for table `tbl_customers`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_customers` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `email_subscribe` tinyint(1) NOT NULL DEFAULT '0',
+  `phone` varchar(32) NOT NULL,
+  `company` varchar(128) NOT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `group_id` int(11) NOT NULL DEFAULT '1',
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `is_guest` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `tbl_categories`
+--
+
+ALTER TABLE `tbl_categories`  ADD `created_at` DATETIME NOT NULL  AFTER `status`,  ADD `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP  AFTER `created_at`;
+
+--
+-- Table structure for table `tbl_category_products`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_category_products` (
+  `product_id` int(9) unsigned NOT NULL,
+  `category_id` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`product_id`,`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+---------------------------------------------------------------------
+
+-- --------------------------------------------------------
+2016-01-20- vishal
+--
+-- Table structure for table `tbl_products_files`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_products_files` (
+  `product_id` int(9) unsigned NOT NULL,
+  `file_id` int(9) unsigned NOT NULL,
+  KEY `product_id_file_id` (`product_id`,`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `tbl_users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, CHANGE `first_name` `first_name` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `last_name` `last_name` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `gender` `gender` VARCHAR(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `email` `email` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `password` `password` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `roll_type` `roll_type` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, CHANGE `phone` `phone` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `address` `address` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `city` `city` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `state` `state` VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `country` `country` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `post_code` `post_code` VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `latitude` `latitude` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `longitude` `longitude` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL, CHANGE `status` `status` INT(1) NOT NULL DEFAULT '0' COMMENT '0: disable, 1: enable', CHANGE `delete_status` `delete_status` INT(1) NOT NULL DEFAULT '0' COMMENT '1: deleted', CHANGE `created_at` `created_at` DATETIME NOT NULL, CHANGE `modified_at` `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+INSERT INTO `monofood`.`tbl_user_roll` (`id`, `roll_type`, `slug`, `created_at`, `modified_at`) VALUES (NULL, 'Guest', 'guest', '2016-01-20 09:27:27', '2016-01-20 09:27:27.478492');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_order_items`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_order_items` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(9) unsigned NOT NULL,
+  `product_id` int(9) unsigned NOT NULL,
+  `is_giftcard` tinyint(1) NOT NULL DEFAULT '0',
+  `hash` varchar(32) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `sku` varchar(30) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `excerpt` text NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `saleprice` decimal(10,2) NOT NULL,
+  `total_price` decimal(10,2) NOT NULL,
+  `free_shipping` tinyint(1) NOT NULL,
+  `shippable` tinyint(1) NOT NULL,
+  `taxable` tinyint(1) NOT NULL,
+  `fixed_quantity` tinyint(1) NOT NULL,
+  `weight` varchar(10) NOT NULL,
+  `total_weight` decimal(10,2) NOT NULL,
+  `track_stock` tinyint(1) NOT NULL,
+  `images` text NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `coupon_code` varchar(50) NOT NULL,
+  `coupon_discount` decimal(10,2) NOT NULL,
+  `coupon_discount_quantity` int(11) NOT NULL,
+  `coupon_discount_type` varchar(24) NOT NULL,
+  `enabled_1` tinyint(1) DEFAULT '0',
+  `price_1` decimal(10,2) DEFAULT '0.00',
+  `saleprice_1` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+2016-01-21- vishal
+--
+-- Table structure for table `tbl_order_items`
+--
+
+ALTER TABLE `tbl_order_items` ADD `status` TINYINT(1) NULL DEFAULT '0' AFTER `saleprice_1`, ADD `delete_status` INT(1) NULL DEFAULT '0' AFTER `status`;
+
+DROP TABLE `tbl_customers`
+
+-- --------------------------------------------------------
+2016-01-25- vishal
+--
+-- Table structure for table `tbl_order_item_options`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_order_item_options` ( `id` int(11) NOT NULL AUTO_INCREMENT, `order_item_id` int(11) NOT NULL, `option_name` varchar(64) NOT NULL, `value` text NOT NULL, `order_id` int(11) NOT NULL, `price` decimal(10,2) NOT NULL, `weight` decimal(10,2) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 
+
+-- --------------------------------------------------------
+2016-01-27- vishal
+--
+-- Table structure for table `tbl_coupons`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_coupons` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `whole_order_coupon` tinyint(1) NOT NULL,
+  `max_product_instances` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `max_uses` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `num_uses` mediumint(8) unsigned NOT NULL,
+  `reduction_type` varchar(10) NOT NULL,
+  `reduction_amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--**********************=========***********************
+-- import the country database from application->extra folder 
+-- file name =  countrydb_vishal.sql
+--**********************=========***********************
+
+--
+-- 2016-01-29- vishal
+--
+
+INSERT INTO `rtcisinl_vegisan`.`tbl_languages` (`id`, `lang_name`, `lang_code`, `status`, `delete_status`, `created_at`, `modified_at`) VALUES (NULL, 'english', 'en', '1', '0', '2016-01-29 07:17:19', '2016-01-29 07:17:19');
+
+
+--
+-- 2016-01-30- vishal
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_coupons_products` (
+  `coupon_id` int(9) unsigned NOT NULL,
+  `product_id` int(9) unsigned NOT NULL,
+  KEY `coupon_id_product_id` (`coupon_id`,`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+--
+-- 2016-02-01- vishal
+--
+
+
+ALTER TABLE `tbl_settings` CHANGE `modified_at` `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `tbl_settings` ADD `setting_code` VARCHAR(255) NULL AFTER `setting_name`;
+
+
+--
+-- 2016-02-02- vishal
+--
+--
+-- Table structure for table `tbl_carriers`
+--
+
+
+CREATE TABLE IF NOT EXISTS `tbl_carriers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `transit_time` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `handling_cost` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '0',
+  `free_shipping` int(1) NOT NULL DEFAULT '0' COMMENT '0=paid shipping, 1= free shipping',
+  `billing_on_price_or_weight` int(1) NOT NULL DEFAULT '0' COMMENT '0=price,1=weight, Note: Billing on the basis on price or weight',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '0=inactive, 1= active',
+  `delete_status` int(1) NOT NULL DEFAULT '0' COMMENT '0=not delete; 1= Deleted',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+
+INSERT INTO `tbl_carriers` (`id`, `name`, `transit_time`, `image`, `handling_cost`, `free_shipping`, `billing_on_price_or_weight`, `status`, `delete_status`, `created_at`, `modified_at`) VALUES
+(1, 'Monofood', 'Within a week', '5b2e0a05ca778fe496e05803033e11db.jpg', '150', 1, 0, 1, 0, '0000-00-00 00:00:00', '2016-02-02 12:21:17'),
+(2, 'Test', 'Test', NULL, '0', 1, 1, 0, 0, '0000-00-00 00:00:00', '2016-02-02 12:21:15'),
+(3, 'Cis', 'Within a day', '65f10fcff3c3cac866f02f0ff028330c.jpg', '120', 0, 0, 1, 0, '2016-02-02 13:14:42', '2016-02-02 12:21:17');
+
+
+
+
+ALTER TABLE `tbl_carriers` CHANGE `total_price_or_weight` `billing_on_price_or_weight` INT(1) NOT NULL DEFAULT '0' COMMENT '0=price,1=weight, Note: Billing on the basis on price or weight';
+ALTER TABLE `tbl_carriers` ADD `delete_status` INT(1) NOT NULL DEFAULT '0' COMMENT '0=not delete; 1= Deleted' AFTER `status`;
+
+
+
+--
+-- 2016-02-05- vishal
+--
+--
+-- Table structure for table `tbl_orders`
+--
+
+
+ALTER TABLE `tbl_orders` ADD `paypal_ipn` TEXT NULL DEFAULT NULL COMMENT 'array return by ipn ' AFTER `transaction_id`;
+
+-- --------------------------------------------------------
+
+----
+-- 2016-02-08- vishal
+--
+--
+-- Table structure for table `tbl_carriers_countries`
+-- 
+DROP TABLE tbl_payments;
+DROP TABLE tbl_carriers_countries;
+DROP TABLE tbl_orders;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_carriers_countries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `cost` varchar(20) DEFAULT NULL,
+  `status` int(1) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Table structure for table `tbl_orders`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_orders` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(60) DEFAULT NULL,
+  `customer_id` int(9) unsigned DEFAULT NULL,
+  `billing_address_id` int(11) NOT NULL,
+  `shipping_address_id` int(11) NOT NULL,
+  `order_status` varchar(255) NOT NULL,
+  `ordered_on` datetime NOT NULL,
+  `shipped_on` datetime NOT NULL,
+  `tax` float(10,2) NOT NULL,
+  `total` float(10,2) NOT NULL,
+  `subtotal` float(10,2) NOT NULL,
+  `gift_card_discount` float(10,2) NOT NULL,
+  `coupon_discount` float(10,2) NOT NULL,
+  `shipping` float(10,2) NOT NULL,
+  `carrier_id` int(11) NOT NULL,
+  `shipping_notes` text NOT NULL,
+  `notes` text,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Table structure for table `tbl_payments`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_payments` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `transaction_id` varchar(255) NOT NULL,
+  `transaction_array` text COMMENT 'transaction module return the data',
+  `status_array` text,
+  `order_status` varchar(50) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_module` varchar(64) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `note` text,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+----
+-- 2016-02-11- vishal
+--
+--
+ALTER TABLE `tbl_settings` CHANGE `created_at` `created_at` DATETIME NULL;
+
+-- --------------------------------------------------------
+
+----
+-- 2016-02-19- vishal
+--
+--
+ALTER TABLE `tbl_languages` ADD `flag` VARCHAR(255) NULL DEFAULT NULL AFTER `lang_code`;
+
+
+-----------------------------------------------------------
+-- 2016-02-20- vishal
+--
+
+ALTER TABLE `tbl_languages` CHANGE `lang_name` `lang_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `lang_code` `lang_code` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `flag` `lang_flag` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+-----------------------------------------------------------
+-- 2016-02-22- vishal
+--
+
+UPDATE `monofood`.`tbl_countries` SET `status` = '0' 
+UPDATE `monofood`.`tbl_countries` SET `status` = '1' WHERE `tbl_countries`.`id` = 14;
+UPDATE `monofood`.`tbl_countries` SET `status` = '1' WHERE `tbl_countries`.`id` = 99;
+UPDATE `monofood`.`tbl_countries` SET `status` = '1' WHERE `tbl_countries`.`id` = 204;
+ALTER TABLE `tbl_customers_address_bank` ADD `area_id` VARCHAR(30) NULL DEFAULT NULL AFTER `zone_id`;
+ALTER TABLE `tbl_customers_address_bank` ADD `area` VARCHAR(30) NULL DEFAULT NULL AFTER `zone`;
+
+
+
+-----------------------------------------------------------
+-- 2016-02-25- vishal
+--
+drop table tbl_carriers_countries;
+drop table tbl_carrier_state_tax_prices;
+drop table tbl_carrier_city_tax_prices;
+drop table tbl_carrier_country_tax_prices;
+
+
+--
+-- Table structure for table `tbl_carrier_countries`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_countries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `country_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `country_tax` decimal(10,2) DEFAULT '0.00',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0:In-Active, 1:active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `tbl_carrier_states`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_states` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_country_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `state_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `state_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: In-Active, 1:Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--
+-- Table structure for table `tbl_carrier_cities`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_cities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_state_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `city_price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `city_tax` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1: Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+-----------------------------------------------------------
+-- 2016-02-29- vishal
+--
+
+ALTER TABLE `tbl_order_items` ADD `tax_amount` VARCHAR(255) NOT NULL DEFAULT '0' AFTER `taxable`;
+
+-----------------------------------------------------------
+-- 2016-03-02- vishal
+--
+
+ALTER TABLE `tbl_orders` CHANGE `billing_address_id` `billing_address_id` INT(11) NOT NULL DEFAULT '0', CHANGE `shipping_address_id` `shipping_address_id` INT(11) NOT NULL DEFAULT '0', CHANGE `order_status` `order_status` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'cart', CHANGE `ordered_on` `ordered_on` DATETIME NULL DEFAULT NULL, CHANGE `shipped_on` `shipped_on` DATETIME NULL DEFAULT NULL, CHANGE `tax` `tax` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `total` `total` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `subtotal` `subtotal` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `gift_card_discount` `gift_card_discount` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `coupon_discount` `coupon_discount` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `shipping` `shipping` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `carrier_id` `carrier_id` INT(11) NULL DEFAULT NULL, CHANGE `shipping_notes` `shipping_notes` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+-----------------------------------------------------------
+-- 2016-03-04- vishal
+--
+
+ALTER TABLE `tbl_carriers` CHANGE `handling_cost` `handling_cost` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
+
+
+-----------------------------------------------------------
+-- 2016-03-08- vishal
+--
+
+ALTER TABLE `tbl_order_items` ADD `shipping_amount` DECIMAL(10,2) NULL DEFAULT NULL AFTER `shippable`;
+
+-----------------------------------------------------------
+-- 2016-03-09- vishal
+--
+
+ALTER TABLE `tbl_order_items` DROP `price`, DROP `saleprice`;
+
+
+-----------------------------------------------------------
+-- 2016-03-16- vishal
+--
+
+ALTER TABLE `tbl_carrier_cities` CHANGE `status` `status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0: In-Active, 1: Active';
+
+-----------------------------------------------------------
+-- 2016-03-19- vishal
+--
+
+ALTER TABLE `tbl_order_items` CHANGE `id` `id` INT(9) UNSIGNED NOT NULL AUTO_INCREMENT, CHANGE `order_id` `order_id` INT(9) UNSIGNED NOT NULL, CHANGE `product_id` `product_id` INT(9) UNSIGNED NOT NULL, CHANGE `is_giftcard` `is_giftcard` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `hash` `hash` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `quantity` `quantity` INT(11) NOT NULL, CHANGE `sku` `sku` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `name` `name` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `slug` `slug` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `excerpt` `excerpt` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `total_price` `total_price` DECIMAL(10,2) NOT NULL, CHANGE `free_shipping` `free_shipping` TINYINT(1) NOT NULL, CHANGE `shippable` `shippable` TINYINT(1) NOT NULL, CHANGE `shipping_amount` `shipping_amount` DECIMAL(10,2) NULL DEFAULT NULL, CHANGE `taxable` `taxable` TINYINT(1) NOT NULL, CHANGE `tax_amount` `tax_amount` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0', CHANGE `fixed_quantity` `fixed_quantity` TINYINT(1) NOT NULL, CHANGE `weight` `weight` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `total_weight` `total_weight` DECIMAL(10,2) NOT NULL DEFAULT '0', CHANGE `track_stock` `track_stock` TINYINT(1) NOT NULL, CHANGE `images` `images` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `type` `type` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `coupon_code` `coupon_code` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `coupon_discount` `coupon_discount` DECIMAL(10,2) NOT NULL DEFAULT '0.00', CHANGE `coupon_discount_quantity` `coupon_discount_quantity` INT(11) NOT NULL DEFAULT '0', CHANGE `coupon_discount_type` `coupon_discount_type` VARCHAR(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `enabled_1` `enabled_1` TINYINT(1) NULL DEFAULT '0', CHANGE `price_1` `price_1` DECIMAL(10,2) NULL DEFAULT '0.00', CHANGE `saleprice_1` `saleprice_1` DECIMAL(10,2) NULL DEFAULT '0.00', CHANGE `status` `status` TINYINT(1) NULL DEFAULT '0', CHANGE `delete_status` `delete_status` INT(1) NULL DEFAULT '0';
+
+ALTER TABLE `tbl_order_items` CHANGE `coupon_discount_type` `coupon_discount_type` TINYINT(1) NULL DEFAULT NULL;
+
+ALTER TABLE `tbl_order_items` CHANGE `coupon_discount_type` `coupon_discount_type` VARCHAR(1) NULL DEFAULT NULL;
+
+
+-----------------------------------------------------------
+-- 2016-03-22- vishal
+--
+CREATE TABLE IF NOT EXISTS  `tbl_ci_sessions` (
+	session_id varchar(40) DEFAULT '0' NOT NULL,
+	ip_address varchar(45) DEFAULT '0' NOT NULL,
+	user_agent varchar(120) NOT NULL,
+	last_activity int(10) unsigned DEFAULT 0 NOT NULL,
+	user_data text NOT NULL,
+	PRIMARY KEY (session_id),
+	KEY `last_activity_idx` (`last_activity`)
+);
+
+
+UPDATE `tbl_settings` SET `setting_value` = 'public/uploads/logo/original/logo.png' WHERE `tbl_settings`.`setting_name` = 'site_logo';
+UPDATE `tbl_settings` SET `setting_code` = 'public/uploads/logo/thumb/logo.png' WHERE `tbl_settings`.`setting_name` = 'site_logo';
+
+-----------------------------------------------------------
+-- 2016-04-29- vishal
+--
+
+ALTER TABLE `tbl_product_price` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
+-----------------------------------------------------------
+-- 2016-05-03- vishal
+--
+
+UPDATE `tbl_users` SET `avatar` = 'user-placeholder.jpg' WHERE `tbl_users`.`avatar` IS NULL;
+
+ALTER TABLE `tbl_order_items` ADD `unit` VARCHAR(255) NOT NULL DEFAULT '0' COMMENT 'unit inside one product' AFTER `quantity`;
+ALTER TABLE `tbl_products` CHANGE `unit` `unit` INT(11) NULL DEFAULT '0' COMMENT 'unit inside one product';
+ALTER TABLE `tbl_products` CHANGE `unit` `unit` VARCHAR(255) NULL DEFAULT '0' COMMENT 'unit inside one product';
+
+-----------------------------------------------------------
+-- 2016-05-05- vishal
+--
+
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'site_logo_favicon', NULL, 'public/uploads/logo/favicon/favicon.ico', '1', '2016-05-05 08:19:20', CURRENT_TIMESTAMP);
+
+-----------------------------------------------------------
+-- 2016-05-23- vishal
+--
+
+ALTER TABLE `tbl_user_roll_level` ADD `default` TINYINT(1) NULL DEFAULT '0' COMMENT '1= default level of related roll type;' AFTER `roll_id`;
+
+-----------------------------------------------------------
+-- 2016-05-24- vishal
+--
+
+ALTER TABLE `tbl_product_price` CHANGE `modified_at` `modified_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-----------------------------------------------------------
+-- 2016-05-26- vishal
+--
+
+TRUNCATE TABLE `tbl_user_roll_level` 
+
+INSERT INTO `tbl_user_roll_level` (`id`, `roll_id`, `default`, `slug`, `level_name`, `description`, `status`, `created_at`, `modified_at`) VALUES
+(1, 2, 1, 'level-one', 'Level One', 'This is a default level for every dealer.', 1, '2016-05-16 20:04:57', '2016-05-23 13:47:36'),
+(2, 4, 1, 'private-customer', 'Private Customer', 'This is a default level for every customer.', 1, '2016-05-26 11:52:58', '2016-05-26 09:52:58'),
+(3, 6, 1, 'business ', 'Business', 'This is a default level for every business user.', 1, '2016-05-26 15:26:29', '2016-05-26 09:56:29');
+
+UPDATE `tbl_users` SET `roll_level`=1 WHERE `roll_type`=2;
+
+UPDATE `tbl_users` SET `roll_level`=2 WHERE `roll_type`=4;
+
+
+-----------------------------------------------------------
+-- 2016-06-09- vishal
+--
+INSERT INTO `tbl_user_roll_level` (`id`, `roll_id`, `default_level`, `slug`, `level_name`, `description`, `status`, `created_at`, `modified_at`) VALUES (NULL, '7', '1', 'coach', 'Coach', 'This is a default level for every coach user.', '1', NOW(), CURRENT_TIMESTAMP);
+
+
+-----------------------------------------------------------
+-- 2016-06-13- vishal
+--
+ALTER TABLE `tbl_orders` ADD `payment_date` DATETIME NULL DEFAULT NULL AFTER `payment_status` 
+
+-----------------------------------------------------------
+-- 2016-06-15- vishal
+--
+ALTER TABLE `tbl_orders` ADD `invoice_number` VARCHAR(255) NULL DEFAULT NULL AFTER `order_number`;
+
+
+-----------------------------------------------------------
+-- 2016-06-16- vishal
+--
+
+ALTER TABLE `tbl_order_items` CHANGE `product_id` `product_id` INT(11) UNSIGNED NOT NULL DEFAULT '0', CHANGE `sku` `sku` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `name` `name` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `slug` `slug` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `excerpt` `excerpt` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `total_price` `total_price` DECIMAL(10,2) NOT NULL DEFAULT '0.00', CHANGE `free_shipping` `free_shipping` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `shippable` `shippable` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `shipping_amount` `shipping_amount` DECIMAL(10,2) NULL DEFAULT '0.00', CHANGE `taxable` `taxable` TINYINT(1) NULL DEFAULT NULL, CHANGE `fixed_quantity` `fixed_quantity` TINYINT(1) NULL DEFAULT NULL, CHANGE `weight` `weight` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0.00' COMMENT 'in kg', CHANGE `total_weight` `total_weight` DECIMAL(10,2) NOT NULL DEFAULT '0.00' COMMENT 'in kg', CHANGE `track_stock` `track_stock` TINYINT(1) NOT NULL DEFAULT '0', CHANGE `images` `images` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `type` `type` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `tbl_order_items` ADD `tax_percentage` DECIMAL(10,2) NOT NULL DEFAULT '0.00' AFTER `tax_amount`;
+ALTER TABLE `tbl_order_items` CHANGE `tax_percentage` `tax_percentage` DECIMAL(10,2) NULL DEFAULT '0.00';
+
+-----------------------------------------------------------
+-- 2016-06-17- vishal
+--
+
+
+ALTER TABLE `tbl_order_items` CHANGE `total_price` `total_price` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `shipping_amount` `shipping_amount` FLOAT(10,2) NULL DEFAULT '0.00', CHANGE `tax_percentage` `tax_percentage` FLOAT(10,2) NULL DEFAULT '0.00', CHANGE `total_weight` `total_weight` FLOAT(10,2) NOT NULL DEFAULT '0.00' COMMENT 'in kg', CHANGE `coupon_discount` `coupon_discount` FLOAT(10,2) NOT NULL DEFAULT '0.00', CHANGE `price_1` `price_1` FLOAT(10,2) NULL DEFAULT '0.00', CHANGE `saleprice_1` `saleprice_1` FLOAT(10,2) NULL DEFAULT '0.00', CHANGE `net_price` `net_price` FLOAT(10,2) NULL DEFAULT '0.00';
+ALTER TABLE `tbl_orders` ADD `payment_method` VARCHAR(50) NULL DEFAULT NULL AFTER `payment_date`;
+UPDATE `tbl_settings` SET `setting_value` = 'Cash On Delivery' WHERE `tbl_settings`.`setting_name` = 'cod';
+
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'payment_modules', 'pbd', 'Payment Before Delivery', '1', NOW(), CURRENT_TIMESTAMP);
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'pbd', NULL, 'Payment Before Delivery', '1', NOW(), CURRENT_TIMESTAMP);
+
+
+-----------------------------------------------------------
+-- 2016-06-18- vishal
+--
+
+ALTER TABLE `tbl_orders` ADD `billing_address` TEXT NULL DEFAULT NULL COMMENT 'json data of billing address' AFTER `billing_address_id`;
+ALTER TABLE `tbl_orders` ADD `shipping_address` TEXT NULL DEFAULT NULL COMMENT 'json data of shipping address' AFTER `shipping_address_id`;
+
+
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'payment_modules', 'sofort', '', '1', NOW(), CURRENT_TIMESTAMP);
+
+
+-----------------------------------------------------------
+-- 2016-06-27- vishal
+--
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'sofort_configuration_key', 'sofort', 'OSfFIaM2C/yKEWhYZVKBdhusi9n6H+ElPX5ZiAneakvPNwAiRGguF7Dxkw3npfp0VTuIcCeeIXB0978ujpTYdAeHu3Sh190bXLoGsad+YlyLMngD7dAAIw+G1R4WkbWi', '1', NOW(), CURRENT_TIMESTAMP);
+
+-----------------------------------------------------------
+-- 2016-06-28- vishal
+--
+
+ALTER TABLE `tbl_languages` ADD `default` TINYINT(1) NOT NULL DEFAULT '0' AFTER `status`;
+UPDATE `monofood`.`tbl_languages` SET `default` = '1' WHERE `tbl_languages`.`id` = 5;
+
+
+-----------------------------------------------------------
+-- 2016-07-04- vishal
+--
+
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'sofort_active', 'sofort', 'test', '1', NULL, CURRENT_TIMESTAMP);
+
+-----------------------------------------------------------
+-- 2016-07-05- vishal
+--
+
+ALTER TABLE `tbl_orders` CHANGE `payment_status` `payment_status` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0:not paid 1:pending 2:done;3:failed;4:untracable';
+ALTER TABLE `tbl_payments` ADD `payment_status` INT(1) NOT NULL COMMENT '0:not paid 1:pending 2:done;3:failed:4:untracable' AFTER `order_status`;
+ALTER TABLE `tbl_payments` CHANGE `payment_status` `payment_status` INT(1) NOT NULL DEFAULT '0' COMMENT '0:not paid 1:pending 2:done;3:failed:4:untracable';
+ALTER TABLE `tbl_orders` ADD `payment_mode` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0:test 1:live 2:offline;' AFTER `payment_method`;
+ALTER TABLE `tbl_payments` ADD `payment_mode` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0:test 1:live' AFTER `note`;
+
+-----------------------------------------------------------
+-- 2016-07-06- vishal
+--
+ALTER TABLE `tbl_payments` ADD `notification` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0:no notification,1:pending notification;2:completed' AFTER `payment_mode`;
+ALTER TABLE `tbl_orders` ADD `customer_data` TEXT NULL DEFAULT NULL AFTER `customer_id`;
+ALTER TABLE `tbl_users` DROP `old_id`;
+
+-----------------------------------------------------------
+-- 2016-07-25- vishal
+--
+ALTER TABLE `tbl_product_country_taxes` CHANGE `status` `status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0: In-Active, 1: Active';
+
+-----------------------------------------------------------
+-- 2016-08-05- vishal
+--
+ALTER TABLE `tbl_order_items` ADD `calculation_data` TEXT NULL DEFAULT NULL AFTER `net_price`;
+
+-----------------------------------------------------------
+-- 2016-08-05- vishal
+--
+ALTER TABLE `tbl_order_items` ADD `coupon_unit_discount` FLOAT(10,2) NOT NULL DEFAULT '0.00' COMMENT 'discount amount for 1 unit' AFTER `coupon_discount`;
+
+-----------------------------------------------------------
+-- 2016-08-10- vishal
+--
+ALTER TABLE `tbl_orders` ADD `country_id` INT NOT NULL DEFAULT '0' COMMENT 'shipping country id' AFTER `shipping_address`;
+
+
+-----------------------------------------------------------
+-- 2016-08-16- vishal
+--
+ALTER TABLE `tbl_orders` ADD `user_type` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0= private user; 1= commercial user' AFTER `customer_data`;
+
+-----------------------------------------------------------
+-- 2016-08-17- vishal
+--
+ALTER TABLE `tbl_orders` ADD `shipping_address_table` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0= customer_address_bank; 1= company_profile' AFTER `billing_address`;
+
+-----------------------------------------------------------
+-- 2016-08-22- vishal
+--
+
+ALTER TABLE `tbl_orders` ADD `contact_person` TEXT NULL DEFAULT NULL AFTER `download_user_sequence`;
+
+-----------------------------------------------------------
+-- 2016-08-25- vishal
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_order_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `life_id` varchar(50) DEFAULT NULL,
+  `life_account` varchar(30) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `gender` varchar(1) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `roll_type` text NOT NULL,
+  `roll_level` int(2) NOT NULL DEFAULT '0' COMMENT 'define the level of user',
+  `avatar` varchar(155) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `mobile` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+CREATE TABLE IF NOT EXISTS `tbl_order_shipping_address` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `shipping_to` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(32) DEFAULT NULL,
+  `street_address` varchar(255) NOT NULL,
+  `street_number` varchar(255) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `zone` varchar(255) DEFAULT NULL,
+  `area` varchar(30) DEFAULT NULL,
+  `zip` varchar(16) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `country_code` varchar(3) DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `zone_id` int(11) DEFAULT NULL,
+  `area_id` varchar(30) DEFAULT NULL,
+  `address_type` tinyint(1) DEFAULT '0' COMMENT '0: Secondary Address, 1: Primary Address;2=company profile',
+  `country_dialing_code_phone` int(11) DEFAULT '0',
+  `uid_checkbox` tinyint(4) DEFAULT '0',
+  `uid_document` varchar(255) DEFAULT NULL,
+  `verify_status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `tbl_order_billing_address` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `billing_to` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(32) DEFAULT NULL,
+  `street_address` varchar(255) NOT NULL,
+  `street_number` varchar(255) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `zone` varchar(255) DEFAULT NULL,
+  `area` varchar(30) DEFAULT NULL,
+  `zip` varchar(16) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `country_code` varchar(3) DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `zone_id` int(11) DEFAULT NULL,
+  `area_id` varchar(30) DEFAULT NULL,
+  `address_type` tinyint(1) DEFAULT '0' COMMENT '0: Secondary Address, 1: Primary Address; 2=company profile',
+  `country_dialing_code_phone` int(11) DEFAULT '0',
+  `uid_checkbox` tinyint(4) DEFAULT '0',
+  `uid_document` varchar(255) DEFAULT NULL,
+  `verify_status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+
+-----------------------------------------------------------
+-- 2016-09-01- vishal
+--
+
+ALTER TABLE `tbl_orders` CHANGE `order_status` `order_status` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'cart' COMMENT 'order status: cart,pending,accepted,delivered,cancel,return,abort';
+
+-----------------------------------------------------------
+-- 2016-09-07- vishal
+--
+
+TRUNCATE TABLE `tbl_users`;
+TRUNCATE TABLE `tbl_user_details`;
+TRUNCATE TABLE `tbl_temp_signup`;
+TRUNCATE TABLE `tbl_products`;
+TRUNCATE TABLE `tbl_product_country_taxes`;
+TRUNCATE TABLE `tbl_product_price`;
+TRUNCATE TABLE `tbl_payments`;
+TRUNCATE TABLE `tbl_package_types`;
+TRUNCATE TABLE `tbl_package_country_prices`;
+TRUNCATE TABLE `tbl_order_users`;
+TRUNCATE TABLE `tbl_order_shipping_address`;
+TRUNCATE TABLE `tbl_order_item_options`;
+TRUNCATE TABLE `tbl_order_items`;
+TRUNCATE TABLE `tbl_order_billing_address`;
+TRUNCATE TABLE `tbl_orders`;
+TRUNCATE TABLE `tbl_option_values`;
+TRUNCATE TABLE `tbl_options`;
+TRUNCATE TABLE `tbl_online_contracts`;
+TRUNCATE TABLE `tbl_message_contact`;
+TRUNCATE TABLE `tbl_coupons`;
+TRUNCATE TABLE `tbl_contract_history`;
+TRUNCATE TABLE `tbl_contact_relation`;
+TRUNCATE TABLE `tbl_company_profiles`;
+TRUNCATE TABLE `tbl_coach_relation_history`;
+TRUNCATE TABLE `tbl_cms`;
+TRUNCATE TABLE `tbl_claim_history`;
+TRUNCATE TABLE `tbl_claims`;
+TRUNCATE TABLE `tbl_category_products`;
+TRUNCATE TABLE `tbl_categories`;
+TRUNCATE TABLE `tbl_carrier_states`;
+TRUNCATE TABLE `tbl_carrier_countries`;
+TRUNCATE TABLE `tbl_carrier_cities`;
+TRUNCATE TABLE `tbl_carriers`;
+TRUNCATE TABLE `tbl_business_user_details`;
+TRUNCATE TABLE `tbl_business_distributor_request_details`;
+TRUNCATE TABLE `tbl_business_distributor_request`;
+TRUNCATE TABLE `tbl_business_distributor_relations`;
+TRUNCATE TABLE `tbl_business_distributor_data`;
+TRUNCATE TABLE `tbl_business_dealer_user`;
+TRUNCATE TABLE `tbl_business_dealer_request_details`;
+TRUNCATE TABLE `tbl_business_dealer_request`;
+TRUNCATE TABLE `tbl_business_dealer_relations`;
+TRUNCATE TABLE `tbl_business_dealer_admin_suggestion`;
+TRUNCATE TABLE `tbl_business_admin_claims`;
+TRUNCATE TABLE `tbl_blocked_email_domain`;
+TRUNCATE TABLE `tbl_affiliation_pool`;
+TRUNCATE TABLE `tbl_affiliate_relations`;
+TRUNCATE TABLE `tbl_admin_reply_emails`;
+TRUNCATE TABLE `tbl_admin_email_receivers`;
+TRUNCATE TABLE `tbl_admin_email_attach`;
+TRUNCATE TABLE `tbl_admin_business_request_details`;
+TRUNCATE TABLE `tbl_admin_business_request_data`;
+TRUNCATE TABLE `tbl_admin_business_requests`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

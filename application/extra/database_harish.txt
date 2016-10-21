@@ -1,0 +1,609 @@
+2016-01-18--- Harish
+--
+-- create table Products
+--
+CREATE TABLE IF NOT EXISTS `tbl_products` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` varchar(30) NOT NULL,
+  `primary_category` tinyint(4) NOT NULL DEFAULT '0',
+  `name` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `excerpt` text NOT NULL,
+  `free_shipping` tinyint(1) NOT NULL DEFAULT '0',
+  `shippable` tinyint(1) NOT NULL DEFAULT '1',
+  `taxable` tinyint(1) NOT NULL DEFAULT '1',
+  `fixed_quantity` tinyint(1) NOT NULL DEFAULT '0',
+  `weight` varchar(10) NOT NULL DEFAULT '0',
+  `track_stock` tinyint(1) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL,
+  `related_products` text,
+  `images` text,
+  `seo_title` text,
+  `meta` text,
+  `is_giftcard` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  `price_1` decimal(10,2) DEFAULT '0.00',
+  `saleprice_1` decimal(10,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------------------------------------------------------------
+
+--
+-- add field for delete status product
+--
+
+ALTER TABLE `tbl_products` ADD `delete_status` INT(1) NULL DEFAULT '0' ;
+-----------------------------------------------------------------
+2016-01-19--- Harish
+--
+-- Table structure for table `tbl_category_products`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_category_products` (
+  `product_id` int(9) unsigned NOT NULL,
+  `category_id` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`product_id`,`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+---------------------------------------------------------------------
+
+--
+-- Change field type varchar from tinyint
+--
+
+ALTER TABLE `tbl_products` CHANGE `primary_category` `primary_category` VARCHAR(20) NOT NULL DEFAULT '0';
+-----------------------------------------------------------------
+
+-- --------------------------------------------------------
+2016-01-20 By Harish
+--
+-- Table structure for table `tbl_option_values`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_option_values` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `option_id` int(9) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `weight` decimal(10,2) NOT NULL,
+  `sequence` int(11) NOT NULL,
+  `limit` int(9) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_options`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_options` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(9) unsigned NOT NULL,
+  `sequence` int(5) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(64) NOT NULL,
+  `type` varchar(24) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--------------------------------------------------------------
+
+2016-01-27 By Harish
+--
+-- Table structure for table `tbl_forum_cat`
+--
+
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_cat` (
+  `id_forum_cat` int(11) NOT NULL AUTO_INCREMENT,
+  `id_parent` int(11) DEFAULT '0',
+  `title` varchar(125) NOT NULL,
+  `link_rewrite` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `position` int(11) NOT NULL,
+  `closed` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(4) DEFAULT '0' COMMENT '1=enabled; 0=disabled',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_forum_cat`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+----------------------------------------------------------------------------------------------2016-01-28 By Harish
+--
+-- alter table `tbl_forum_cat`
+--
+
+ALTER TABLE `tbl_forum_cat` CHANGE `id_forum_cat` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+----------------------------------------------------------------------------------------------
+
+---------------------------------------------------
+2016-01-29--- Harish
+--
+-- add field for delete status forum category
+--
+
+ALTER TABLE `tbl_forum_cat` ADD `delete_status` INT(1) NULL DEFAULT '0' ;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_forum_topic`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_topic` (
+  `id` int(11) NOT NULL,
+  `id_forum_cat` int(11) DEFAULT '0',
+  `id_author` int(11) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `link_rewrite` varchar(255) DEFAULT NULL,
+  `viewed` int(11) DEFAULT '0',
+  `active` tinyint(1) DEFAULT '0',
+  `closed` tinyint(1) DEFAULT '0',
+  `highlight` tinyint(1) DEFAULT '0',
+  `position` int(11) DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+2016-01-30--- Harish
+--
+-- Alter table `tbl_forum_topic` cange active to status
+--
+
+ALTER TABLE `tbl_forum_topic` CHANGE `active` `status` TINYINT(1) NULL DEFAULT '0';
+ALTER TABLE `tbl_forum_topic` ADD `delete_status` INT(1) NOT NULL DEFAULT '0' ;
+
+-------------------------------------------------------------------------------------
+--
+-- Table structure for table `tbl_forum_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_comment` (
+`id` int(11) NOT NULL,
+  `id_forum` int(11) DEFAULT '0',
+  `id_author` int(11) DEFAULT '0',
+  `comment` text,
+  `status` tinyint(1) DEFAULT '0',
+  `created` datetime NOT NULL,
+  `delete_status` int(1) DEFAULT '0'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+2016-02-01--- Harish
+--
+-- Table structure for table `tbl_forum_user`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forum_user` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL, 
+  `last_name` varchar(50) DEFAULT NULL,   
+  `email` varchar(50) DEFAULT NULL,   
+  `last_visit` datetime DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0' 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+----------------------------------------------------------------
+2016-02-03 ---  Harish
+
+--
+-- Table structure for table `tbl_payments`
+--
+CREATE TABLE IF NOT EXISTS `tbl_payments` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `transaction_id` varchar(255) NOT NULL,
+  `status` varchar(64) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `date_posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `payment_module` varchar(64) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+----------------------------------------------------------------
+2016-04-15 ---  Harish
+
+--
+-- Table structure for table `tbl_payments`
+--
+
+ALTER TABLE `tbl_products` ADD `unit` INT NULL AFTER `quantity`;
+
+----------------------------------------------------------------------
+2016-04-20 --- Harish
+
+--
+-- Insert for table `tbl_settings`
+--
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'support_email', NULL, 'info@vegisan.ch', '1', NULL, CURRENT_TIMESTAMP);
+
+--------------------------------------------------------------------------------
+--
+-- update table `tbl_countries`
+--
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+672' WHERE `tbl_countries`.`id` = 8;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+47' WHERE `tbl_countries`.`id` = 29; 
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+246' WHERE `tbl_countries`.`id` = 31; 
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+225' WHERE `tbl_countries`.`id` = 52; 
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+594' WHERE `tbl_countries`.`id` = 75; 
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+262' WHERE `tbl_countries`.`id` = 77;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+590' WHERE `tbl_countries`.`id` = 87;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+334' WHERE `tbl_countries`.`id` = 94;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+91' WHERE `tbl_countries`.`id` = 99;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+353' WHERE `tbl_countries`.`id` = 103;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+972' WHERE `tbl_countries`.`id` = 104;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+39' WHERE `tbl_countries`.`id` = 105;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+1-876' WHERE `tbl_countries`.`id` = 106;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+81' WHERE `tbl_countries`.`id` = 107;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+962' WHERE `tbl_countries`.`id` = 108;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+7' WHERE `tbl_countries`.`id` = 109;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+254' WHERE `tbl_countries`.`id` = 110;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+686' WHERE `tbl_countries`.`id` = 111;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+850' WHERE `tbl_countries`.`id` = 112;
+
+UPDATE `monofood`.`tbl_countries` SET `name` = 'South Korea', `country_dailing_code` = '+27' WHERE `tbl_countries`.`id` = 113;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+965' WHERE `tbl_countries`.`id` = 114;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+996' WHERE `tbl_countries`.`id` = 115;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+856' WHERE `tbl_countries`.`id` = 116;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+371' WHERE `tbl_countries`.`id` = 117;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+961' WHERE `tbl_countries`.`id` = 118;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+266' WHERE `tbl_countries`.`id` = 119;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+231' WHERE `tbl_countries`.`id` = 120;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+218' WHERE `tbl_countries`.`id` = 121;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+423' WHERE `tbl_countries`.`id` = 122;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+370' WHERE `tbl_countries`.`id` = 123;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+352' WHERE `tbl_countries`.`id` = 124;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+853' WHERE `tbl_countries`.`id` = 125;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+389' WHERE `tbl_countries`.`id` = 126;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+261' WHERE `tbl_countries`.`id` = 127;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+265' WHERE `tbl_countries`.`id` = 128;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+60' WHERE `tbl_countries`.`id` = 129;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+960' WHERE `tbl_countries`.`id` = 130;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+223' WHERE `tbl_countries`.`id` = 131;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+356' WHERE `tbl_countries`.`id` = 132;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+692' WHERE `tbl_countries`.`id` = 133;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+596' WHERE `tbl_countries`.`id` = 134;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+222' WHERE `tbl_countries`.`id` = 135;
+
+
+----------------------------------------------------------------------
+2016-04-21 --- Harish
+
+--
+-- Insert for table `tbl_countries`
+--
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+230' WHERE `tbl_countries`.`id` = 136;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+262' WHERE `tbl_countries`.`id` = 137;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+52' WHERE `tbl_countries`.`id` = 138;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+691' WHERE `tbl_countries`.`id` = 139;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+373' WHERE `tbl_countries`.`id` = 140;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+377' WHERE `tbl_countries`.`id` = 141;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+976' WHERE `tbl_countries`.`id` = 142;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-664' WHERE `tbl_countries`.`id` = 143;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+212' WHERE `tbl_countries`.`id` = 144;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+258' WHERE `tbl_countries`.`id` = 145;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+95' WHERE `tbl_countries`.`id` = 146;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+264' WHERE `tbl_countries`.`id` = 147;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+674' WHERE `tbl_countries`.`id` = 148;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+977' WHERE `tbl_countries`.`id` = 149;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+31' WHERE `tbl_countries`.`id` = 150;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+599' WHERE `tbl_countries`.`id` = 151;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+687' WHERE `tbl_countries`.`id` = 152;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+64' WHERE `tbl_countries`.`id` = 153;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+505' WHERE `tbl_countries`.`id` = 154;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+227' WHERE `tbl_countries`.`id` = 155;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+234' WHERE `tbl_countries`.`id` = 156;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+683' WHERE `tbl_countries`.`id` = 157;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+6723 ' WHERE `tbl_countries`.`id` = 158;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-670' WHERE `tbl_countries`.`id` = 159;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+47' WHERE `tbl_countries`.`id` = 160;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+968' WHERE `tbl_countries`.`id` = 161;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+92' WHERE `tbl_countries`.`id` = 162;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+680' WHERE `tbl_countries`.`id` = 163;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+507' WHERE `tbl_countries`.`id` = 164;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+675' WHERE `tbl_countries`.`id` = 165;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+595' WHERE `tbl_countries`.`id` = 166;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+51' WHERE `tbl_countries`.`id` = 167;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+63' WHERE `tbl_countries`.`id` = 168;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+64' WHERE `tbl_countries`.`id` = 169;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+48' WHERE `tbl_countries`.`id` = 170;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+351' WHERE `tbl_countries`.`id` = 171;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-787' WHERE `tbl_countries`.`id` = 172;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+974' WHERE `tbl_countries`.`id` = 173;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+262' WHERE `tbl_countries`.`id` = 174;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+40' WHERE `tbl_countries`.`id` = 175;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+7' WHERE `tbl_countries`.`id` = 176;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+250' WHERE `tbl_countries`.`id` = 177;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-869' WHERE `tbl_countries`.`id` = 178;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-758' WHERE `tbl_countries`.`id` = 179;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-784' WHERE `tbl_countries`.`id` = 180;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+685' WHERE `tbl_countries`.`id` = 181;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+378' WHERE `tbl_countries`.`id` = 182;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+239' WHERE `tbl_countries`.`id` = 183;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+966' WHERE `tbl_countries`.`id` = 184;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+221' WHERE `tbl_countries`.`id` = 185;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+248' WHERE `tbl_countries`.`id` = 186;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+232' WHERE `tbl_countries`.`id` = 187;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+65' WHERE `tbl_countries`.`id` = 188;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+421' WHERE `tbl_countries`.`id` = 189;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+386' WHERE `tbl_countries`.`id` = 190;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+677' WHERE `tbl_countries`.`id` = 191;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+252' WHERE `tbl_countries`.`id` = 192;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+27' WHERE `tbl_countries`.`id` = 193;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+500' WHERE `tbl_countries`.`id` = 194;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+34' WHERE `tbl_countries`.`id` = 195;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+94' WHERE `tbl_countries`.`id` = 196;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+290' WHERE `tbl_countries`.`id` = 197;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+508' WHERE `tbl_countries`.`id` = 198;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+249' WHERE `tbl_countries`.`id` = 199;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+597' WHERE `tbl_countries`.`id` = 200;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+47' WHERE `tbl_countries`.`id` = 201;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+46' WHERE `tbl_countries`.`id` = 203;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+963' WHERE `tbl_countries`.`id` = 205;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+886' WHERE `tbl_countries`.`id` = 206;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+992' WHERE `tbl_countries`.`id` = 207;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+255' WHERE `tbl_countries`.`id` = 208;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+66' WHERE `tbl_countries`.`id` = 209;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+228' WHERE `tbl_countries`.`id` = 210;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+690' WHERE `tbl_countries`.`id` = 211;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+676' WHERE `tbl_countries`.`id` = 212;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-868' WHERE `tbl_countries`.`id` = 213;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+216' WHERE `tbl_countries`.`id` = 214;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+90' WHERE `tbl_countries`.`id` = 215;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+993' WHERE `tbl_countries`.`id` = 216;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-649' WHERE `tbl_countries`.`id` = 217;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+688' WHERE `tbl_countries`.`id` = 218;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+256' WHERE `tbl_countries`.`id` = 219;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+380' WHERE `tbl_countries`.`id` = 220;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+971' WHERE `tbl_countries`.`id` = 221;
+
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+44' WHERE `tbl_countries`.`id` = 222;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1' WHERE `tbl_countries`.`id` = 223;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+699' WHERE `tbl_countries`.`id` = 224;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+598' WHERE `tbl_countries`.`id` = 225;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+998' WHERE `tbl_countries`.`id` = 226;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+678' WHERE `tbl_countries`.`id` = 227;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+379' WHERE `tbl_countries`.`id` = 228;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+58' WHERE `tbl_countries`.`id` = 229;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+84' WHERE `tbl_countries`.`id` = 230;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-284' WHERE `tbl_countries`.`id` = 231;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+1-340' WHERE `tbl_countries`.`id` = 232;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+681' WHERE `tbl_countries`.`id` = 233;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+212' WHERE `tbl_countries`.`id` = 234;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+967' WHERE `tbl_countries`.`id` = 235;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+38' WHERE `tbl_countries`.`id` = 236;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+243' WHERE `tbl_countries`.`id` = 237;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+260' WHERE `tbl_countries`.`id` = 238;
+
+UPDATE `monofood`.`tbl_countries` SET  `country_dailing_code` = '+263' WHERE `tbl_countries`.`id` = 239;
+
+
+
+----------------------------------------------------------------------------------
+
+-- --------------------------------------------------------
+2016-04-25 ---  Harish
+--
+-- Table structure for table `tbl_user_roll_level`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_user_roll_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roll_id` int(11) NOT NULL,
+  `level_name` varchar(255) CHARACTER SET utf16 NOT NULL,
+  `description` text CHARACTER SET utf16 NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+------------------------------------------------------------------------------------------
+
+2016-04-28 ---  Harish
+--
+-- Alter Table structure for table `tbl_user_roll_level`
+--
+
+ALTER TABLE `tbl_user_roll_level` ADD `slug` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `roll_id`;
+
+
+--
+-- Table structure for table `tbl_product_price`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_product_price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `status` tinyint(1) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+2016-04-30 ---  Harish
+--
+-- Table structure for table `tbl_product_price`
+--
+ALTER TABLE `tbl_product_price` CHANGE `status` `status` TINYINT(1) NOT NULL DEFAULT '1';
+
+------------------------------------------------------------------------------------------
+
+2016-05-07 -- Harish
+--
+-- Update Table structure for table `tbl_user_roll_level`
+--
+ALTER TABLE `tbl_user_roll_level` CHANGE `level_name` `level_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+
+ALTER TABLE `tbl_user_roll_level` CHANGE `description` `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+
+---------------------------------------------------------------------------------
+2016-06-01 -- Harish
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'claim_active', 'claim_active', '1', '1', NULL, CURRENT_TIMESTAMP);
+
+
+-------------------------------------------------------------------------------------
+2016-06-08 -- Harish
+
+INSERT INTO `monofood`.`tbl_user_roll` (`id`, `roll_type`, `slug`, `note`, `created_at`, `modified_at`) VALUES (NULL, 'Coach', 'coach', 'This role type is for coach', '2016-06-08 00:00:00.000000', '0000-00-00 00:00:00.000000');
+
+-------------------------------------------------------------------------------------
+2016-06-10 -- Harish
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'email_logo', 'public/uploads/logo/thumb/email-logo.png', 'public/uploads/logo/original/email-logo.png', '1', NULL, CURRENT_TIMESTAMP);

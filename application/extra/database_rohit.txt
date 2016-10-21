@@ -1,0 +1,795 @@
+----------------------------------------------------------------------
+--2016-01-12 By Rohit
+--Alter and add some field in admin table.
+--
+----------------------------------------------------------------------
+ALTER TABLE  `tbl_admin` ADD  `created_at` DATETIME NOT NULL AFTER  `lastname` ,
+ADD  `modified_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL AFTER  `created_at` ;
+
+ALTER TABLE  `tbl_admin` CHANGE  `ID`  `id` INT( 30 ) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `tbl_admin` ADD `status` INT( 1 ) NOT NULL DEFAULT '0' AFTER `lastname` ;
+
+ALTER TABLE `tbl_admin` ADD `avatar` VARCHAR( 255 ) NOT NULL AFTER `lastname` ;
+
+
+-------------------------------------------------------------
+2016-01-14---Rohit
+--
+-- Alter following fields for 'tbl_users'
+--
+
+ALTER TABLE  `tbl_users` ADD  `phone` VARCHAR( 100 ) NOT NULL AFTER  `roll_type` ;
+
+ALTER TABLE  `tbl_users` ADD  `post_code` VARCHAR( 50 ) NOT NULL AFTER  `country` ;
+
+ALTER TABLE  `tbl_users` ADD  `status` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '0: disable, 1: enable' AFTER  `longitude` ;
+
+ALTER TABLE  `tbl_users` ADD  `delete_status` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '1: deleted' AFTER  `status` ;
+
+-----------------------------------------------------------------
+2016-01-15--- Rohit
+--
+-- Change datatype in user lat long and state
+--
+
+ALTER TABLE `tbl_users` CHANGE `latitude` `latitude` VARCHAR( 100 ) NOT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `longitude` `longitude` VARCHAR( 100 ) NOT NULL ;
+
+ALTER TABLE `tbl_users` ADD `state` VARCHAR( 50 ) NOT NULL AFTER `city` ;
+
+----------------------------------------------------------------------
+
+
+-----------------------------------------------------------------
+2016-01-19--- Rohit
+--
+-- Add email_token and avatar fiekds in for verification email
+--
+ALTER TABLE `tbl_users` ADD `email_token` VARCHAR( 155 ) NOT NULL AFTER `longitude` ;
+
+ALTER TABLE `tbl_users` ADD `avatar` VARCHAR( 155 ) NOT NULL AFTER `roll_type` ;
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+2016-01-20--- Rohit
+--
+-- Table structure for table `tbl_temp_signup`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_temp_signup` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `email` varchar(155) NOT NULL,
+  `email_token` varchar(155) NOT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-----------------------------------------------------------------
+2016-01-21--- Rohit
+--
+-- Alter table for change status comment for signup customers
+--
+
+ALTER TABLE `tbl_users` CHANGE `status` `status` INT( 1 ) NOT NULL DEFAULT '0' COMMENT '0: disable, 1: enable';
+
+-----------------------------------------------------------------
+2016-01-21--- Rohit
+--
+-- Table structure for table `tbl_affiliation_pool`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_affiliation_pool` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pool_email` varchar(255) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `email_token` varchar(155) NOT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+------------------------------------------------------------------
+
+2016-01-22--- Rohit
+--
+-- Table structure for table `tbl_affiliate_relations`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_affiliate_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL COMMENT 'This id is as a dealer/users, parent',
+  `child_id` int(11) NOT NULL COMMENT 'This id is as a customer, users, child',
+  `status` int(11) NOT NULL COMMENT '0: In-Active, 1: Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+2016-01-27--- Rohit
+--
+-- Insert setting data in `tbl_settings`
+--
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES ('8', 'dealer_in_radius_km', '10', '1', '', '2016-01-27 03:41:07');
+
+INSERT INTO `tbl_settings` (`id`, `setting_name`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES
+(1, 'paypal_active', 'sandbox', 1, '0000-00-00 00:00:00', '2016-01-27 12:36:59'),
+(2, 'live_paypal_account', 'https://live.paypal.com? MODE=TEST&SECURETOKENID=MySecureTokenID&SECURETOKEN=MySecureToke', 1, '0000-00-00 00:00:00', '2016-01-27 10:13:30'),
+(3, 'live_paypal_secret', '7xWXnakWOy5vlHdWAKoyhwO7Sd9+woQMlR/4oFtLYFPJtusg6AF+CcdO3Eok5VVyl1AseIm6XnjqdGpbxMTqug==', 1, '0000-00-00 00:00:00', '2016-01-27 12:35:38'),
+(4, 'live_paypal_id', 'ovK7EmoFsgGTBPeWJcsrMSsRAgdzserMlSzY7P63WZB7SSySKw6GgpNc35inwHabnYuf2ZAjpL2OtdtWXKD51NESoavAdv+NTPyOsRTFJOVfcT0gd6PL4HpC6avxzDs5', 1, '0000-00-00 00:00:00', '2016-01-27 12:35:38'),
+(5, 'sandbox_paypal_account', 'https://demo.paypal.com? MODE=TEST&SECURETOKENID=MySecureTokenID&SECURETOKEN=MySecureToke', 1, '0000-00-00 00:00:00', '2016-01-27 09:22:55'),
+(6, 'sandbox_paypal_secret', 'ycJo+T+FukSWAYA5aouIgptoTDQXpaGGj4lDx6KfSNArw/1LKvDUFVGwjNJjJob3aGadHxlISotnuU00vjZztw==', 1, '0000-00-00 00:00:00', '2016-01-27 12:36:59'),
+(7, 'sandbox_paypal_id', 'BTqSvtcwjBIncIgVa+6hk+WmDsZvEKd0WwZhON7YW0itBPNgz2OFZZbePsDqxl5gEBwI55yT9+iQnfe17r0GXvOQVrrznQncoSKvXxucBGartA/7LRFMNEnBP7ww/SBu', 1, '0000-00-00 00:00:00', '2016-01-27 12:36:59');
+
+------------------------------------------------------------------
+
+2016-01-30--- Rohit
+--
+-- Add username fields in `tbl_users`
+--
+ALTER TABLE `tbl_users` ADD `username` VARCHAR( 155 ) NOT NULL AFTER `last_name` ;
+ALTER TABLE `tbl_users` ADD `life_id` VARCHAR( 50 ) NOT NULL AFTER `id` ;
+
+------------------------------------------------------------------------
+
+2016-02-01--- Rohit
+--
+-- Add username fields in `tbl_users`
+--
+ALTER TABLE `tbl_users` ADD `working_range` DECIMAL( 10, 2 ) NOT NULL AFTER `password` ;
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+2016-02-04--- Rohit
+--
+-- Add status fields in `tbl_country_zone_areas`
+--
+ALTER TABLE `tbl_country_zone_areas` ADD `status` INT( 1 ) NOT NULL COMMENT '1: Active, 0 In-Active' AFTER `tax` ;
+
+-------------------------------------------------------------------------
+2016-02-05--- Rohit
+--
+-- Alter fields in `tbl_coupons`
+--
+
+ALTER TABLE `tbl_coupons` ADD `status` INT( 1 ) NOT NULL COMMENT '1: Active, 0 In-Active',
+ADD `delete_status` INT( 1 ) NOT NULL COMMENT '1: Deleted, 0: Not Deleted',
+ADD `created_at` DATETIME NOT NULL ,
+ADD `modified_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ;
+
+ALTER TABLE `tbl_coupons` CHANGE `status` `status` INT( 1 ) NOT NULL DEFAULT '0' COMMENT '1: Active, 0 In-Active',
+CHANGE `delete_status` `delete_status` INT( 1 ) NOT NULL DEFAULT '0' COMMENT '1: Deleted, 0: Not Deleted';
+
+--------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-06--- Rohit
+--
+-- Alter fields in `tbl_coupons`
+--
+ALTER TABLE `tbl_coupons` CHANGE `start_date` `start_date` DATETIME NULL DEFAULT NULL ,
+CHANGE `end_date` `end_date` DATETIME NULL DEFAULT NULL ;
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-10--- Rohit
+--
+-- Table structure for table `tbl_product_country_taxes`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_product_country_taxes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `tax_amount` decimal(10,2) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1: Active',
+  `delete_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Not-deleted, 1: Deleted',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-10--- Rohit
+--
+-- Table structure for table `tbl_products`
+--
+
+ALTER TABLE `tbl_products` ADD `created_at` DATETIME NOT NULL AFTER `delete_status` ,
+ADD `modified_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL AFTER `created_at` ;
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-11--- Rohit
+--
+-- Table structure for table `tbl_package_types`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_package_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(155) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `user_type` int(2) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1: Active',
+  `delete_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Not-Delete, 1: Deleted',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-16--- Rohit
+--
+-- ALTER TABLE `tbl_users` 
+--
+ALTER TABLE `tbl_users` ADD `verify_email_status` TINYINT( 0 ) NOT NULL DEFAULT '0' COMMENT '0: Un-Verify Email, 1: Verfified Email' AFTER `status` ;
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+2016-02-17--- Rohit
+--
+-- ALTER TABLE `tbl_users` 
+--
+
+ALTER TABLE `tbl_users` CHANGE `life_id` `life_id` VARCHAR( 50 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `username` `username` VARCHAR( 155 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `email_token` `email_token` VARCHAR( 155 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `working_range` `working_range` DECIMAL( 10, 2 ) NULL DEFAULT NULL ;
+
+ALTER TABLE `tbl_users` CHANGE `avatar` `avatar` VARCHAR( 155 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ;
+
+-------------------------------------------------------------------------
+ALTER TABLE `tbl_coupons` CHANGE `num_uses` `num_uses` MEDIUMINT( 8 ) UNSIGNED NOT NULL DEFAULT '0' COMMENT '0: for update uses by front';
+
+----------------------------------------------------------------------------
+
+ALTER TABLE `tbl_products` CHANGE `created_at` `created_at` DATETIME NULL DEFAULT NULL ;
+
+
+ALTER TABLE `tbl_products` CHANGE `quantity` `quantity` INT( 11 ) NULL DEFAULT NULL ;
+
+
+ALTER TABLE `tbl_users` CHANGE `status` `status` INT( 1 ) NOT NULL DEFAULT '1' COMMENT '0: disable, 1: enable';
+
+----------------------------------------------------------------------------
+
+
+-- --------------------------------------------------------
+2016-02-18--- Rohit
+--
+-- Table structure for table `tbl_package_country_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_package_country_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `package_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `pack_country_price` decimal(10,2) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1: Active, 0 : In-Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+2016-02-22--- Rohit
+--
+-- Alter Table `tbl_carriers`
+--
+
+ALTER TABLE `tbl_carriers` ADD `default_shipping_charges` DECIMAL( 10, 2 ) NOT NULL AFTER `billing_on_price_or_weight` ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tbl_carrier_country_tax_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_country_tax_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `carrier_price` decimal(10,2) NOT NULL,
+  `carrier_tax` decimal(10,2) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:In-Active, 1:active',
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_carrier_city_tax_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_city_tax_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `carrier_price` int(11) NOT NULL,
+  `carrier_tax` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1: Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--------------------------------------------------------------
+
+--
+-- Table structure for table `tbl_carrier_state_tax_prices`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_carrier_state_tax_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carrier_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `carrier_price` decimal(10,2) NOT NULL,
+  `carrier_tax` decimal(10,2) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1:Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+2016-02-25-- Rohit
+--
+-- Table structure for table `tbl_carrier_state_tax_prices`
+--
+ALTER TABLE `tbl_users` ADD `solo_type` TINYINT( 1 ) NULL DEFAULT NULL COMMENT '1 :Yes, 2:No, 3:Cancel' AFTER `email_token`;
+
+
+--
+-- ALTER TABLE `tbl_users`
+--
+
+ALTER TABLE `tbl_users` CHANGE `solo_type` `register_type` TINYINT( 1 ) NULL DEFAULT NULL COMMENT '1 :Yes, 2:No, 3:Cancel(register by solo page), 4: By dealer referal link';
+
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+
+2016-02-29-- Rohit
+--
+-- ALTER TABLE `tbl_users`
+--
+
+ALTER TABLE `tbl_users` ADD `last_login` DATETIME NOT NULL AFTER `register_type` ;
+
+ALTER TABLE `tbl_users` CHANGE `last_login` `last_login` DATETIME NULL DEFAULT NULL ;
+
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+
+2016-03-5-- Rohit
+--
+-- ALTER TABLE `tbl_users`
+--
+ALTER TABLE `tbl_users` CHANGE `working_range` `working_range` DECIMAL( 10, 2 ) NULL DEFAULT '0.00';
+
+ALTER TABLE `tbl_users` ADD `life_account` VARCHAR( 30 ) NULL DEFAULT NULL AFTER `life_id` ;
+
+----------------------------------------------------------------------
+
+
+-- ------------------------------------------------------------------
+
+2016-03-7-- Rohit
+--
+-- Table structure for table `tbl_online_contracts`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_online_contracts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `payee_name` varchar(155) NOT NULL,
+  `payee_street_number` int(11) NOT NULL,
+  `payee_zip` int(11) NOT NULL,
+  `payee_place` varchar(155) NOT NULL,
+  `payee_country` varchar(155) NOT NULL,
+  `payee_identi_number` varchar(155) NOT NULL,
+  `logo_id` varchar(155) NOT NULL,
+  `payer_name` varchar(155) NOT NULL,
+  `payer_name_expection` varchar(155) NOT NULL,
+  `payer_stree_house_number` int(11) NOT NULL,
+  `payer_zip` int(11) NOT NULL,
+  `payer_place` varchar(155) NOT NULL,
+  `payer_country` varchar(155) NOT NULL,
+  `payer_iban` varchar(155) NOT NULL,
+  `swift_bic` varchar(155) NOT NULL,
+  `execution_mondality` int(1) NOT NULL,
+  `type_of_mandate` int(1) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: In-Active, 1 :Active',
+  `genrate_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0:Pdf not Genrate, 1: Pdf Genrated',
+  `delete_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Not Deleted, 1: Deleted',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- ------------------------------------------------------------------
+
+2016-03-8-- Rohit
+--
+-- Table structure for table `tbl_online_contracts`
+--
+ALTER TABLE `tbl_online_contracts` CHANGE `genrate_status` `genrate_status` TINYINT( 1 ) NOT NULL DEFAULT '0' COMMENT '0:Pdf not Genrate, 1: Pdf Genrated';
+-- ------------------------------------------------------------------
+
+-- ------------------------------------------------------------------
+
+2016-03-10-- Rohit
+--
+ALTER TABLE `tbl_affiliate_relations` CHANGE `parent_id` `parent_id` INT( 11 ) NOT NULL COMMENT 'This id is as a dealer/parent(1 parent_id means as Admin)';
+
+
+ALTER TABLE `tbl_users` ADD `mobile` VARCHAR( 50 ) NULL DEFAULT NULL AFTER `phone` ;
+
+============================================================
+
+ALTER TABLE `tbl_online_contracts` DROP `logo_id` ;
+
+============================================================
+
+INSERT INTO `monofood`.`tbl_settings` ( `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES ('creditor_identifier', 'Creditor Identifier', '1234567891', '1', NULL, CURRENT_TIMESTAMP);
+
+-- ------------------------------------------------------------------
+
+--
+-- Table structure for table `tbl_company_profiles`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_company_profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company_name` varchar(155) NOT NULL,
+  `uid` varchar(50) NOT NULL,
+  `company_address` varchar(155) NOT NULL,
+  `country` int(11) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `post_code` int(11) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `company_logo` varchar(155) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: In-Active, 1 :Active',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `tbl_company_profiles` CHANGE `post_code` `post_code` VARCHAR( 11 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+-- ------------------------------------------------------------------
+2016-03-11-- Rohit
+--
+
+ALTER TABLE `tbl_company_profiles` CHANGE `company_name` `company_name` VARCHAR( 155 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `uid` `uid` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `company_address` `company_address` VARCHAR( 155 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `country` `country` INT( 11 ) NULL DEFAULT NULL ,
+CHANGE `state` `state` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `city` `city` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `post_code` `post_code` INT( 11 ) NULL DEFAULT NULL ,
+CHANGE `phone` `phone` VARCHAR( 20 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `company_logo` `company_logo` VARCHAR( 155 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+CHANGE `created_at` `created_at` DATETIME NULL DEFAULT NULL ;
+
+
+-- ------------------------------------------------------------------
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'name_compay', 'name/compay', 'Monofood Vertriebs GmbH', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'street', 'street', 'Klausberg7', '1', NULL, CURRENT_TIMESTAMP);
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'zip', 'Zip', '6911', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'place', 'place', 'Lochau', '1', NULL, CURRENT_TIMESTAMP);
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'country', 'country', 'Austria', '1', NULL, CURRENT_TIMESTAMP);
+
+-------------------------------------------------------------------------
+ALTER TABLE `tbl_online_contracts` CHANGE `payee_street_number` `payee_street_number` VARCHAR( 50 ) NOT NULL ;
+
+ALTER TABLE `tbl_online_contracts` CHANGE `payer_stree_house_number` `payer_stree_house_number` VARCHAR( 50 ) NOT NULL ;
+
+-------------------------------------------------------------------------
+
+2016-03-15-- Rohit
+--
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = '14' WHERE `tbl_settings`.`id` =32;
+
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+
+2016-03-18-- Rohit
+--
+ALTER TABLE `tbl_users` CHANGE `country` `country_id` INT( 11 ) NULL DEFAULT NULL ;
+
+
+ALTER TABLE `tbl_users` ADD `zone_id` INT( 11 ) NULL AFTER `country_id` ;
+
+ALTER TABLE `tbl_users` ADD `country_dailing_code` VARCHAR( 20 ) NULL DEFAULT NULL AFTER `mobile` ;
+
+
+ALTER TABLE `tbl_customers_address_bank` ADD `address_type` TINYINT( 1 ) NULL DEFAULT '0' COMMENT '0: Secondary Address, 1: Primary Address' AFTER `area_id` ;
+
+ALTER TABLE `tbl_countries` ADD `country_dailing_code` VARCHAR( 50 ) NOT NULL AFTER `name` ;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+61' WHERE `tbl_countries`.`id` =13;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+43' WHERE `tbl_countries`.`id` =14;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+268' WHERE `tbl_countries`.`id` =202;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+41' WHERE `tbl_countries`.`id` =204;
+
+
+ALTER TABLE `tbl_customers_address_bank` CHANGE `id` `id` INT(9) UNSIGNED NOT NULL AUTO_INCREMENT, CHANGE `customer_id` `customer_id` INT(9) UNSIGNED NULL DEFAULT NULL, CHANGE `company` `company` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `firstname` `firstname` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `lastname` `lastname` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `email` `email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `phone` `phone` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `address1` `address1` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `address2` `address2` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `city` `city` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `zone` `zone` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `area` `area` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `zip` `zip` VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `country` `country` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `country_code` `country_code` VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `country_id` `country_id` INT(11) NULL DEFAULT NULL, CHANGE `zone_id` `zone_id` INT(11) NULL DEFAULT NULL, CHANGE `area_id` `area_id` VARCHAR(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `address_type` `address_type` TINYINT(1) NULL DEFAULT '0' COMMENT '0: Secondary Address, 1: Primary Address', CHANGE `deleted` `deleted` TINYINT(4) NOT NULL DEFAULT '0';
+
+
+-------------------------------------------------------------------------
+
+2016-03-19-- Rohit
+--
+
+ALTER TABLE `tbl_online_contracts` CHANGE `execution_mondality` `execution_mondality` VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+ALTER TABLE `tbl_online_contracts` CHANGE `type_of_mandate` `type_of_mandate` VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+--------------------------------------------------------------------------
+--
+2016-03-21-- Rohit
+--
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+93' WHERE  `tbl_countries`.`id` =1;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+355' WHERE  `tbl_countries`.`id` =2;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+213' WHERE  `tbl_countries`.`id` =3;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-684' WHERE  `tbl_countries`.`id` =4;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+376' WHERE  `tbl_countries`.`id` =5;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+244' WHERE  `tbl_countries`.`id` =6;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-264' WHERE  `tbl_countries`.`id` =7;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-268' WHERE  `tbl_countries`.`id` =9;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-268' WHERE  `tbl_countries`.`id` =9;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+54' WHERE  `tbl_countries`.`id` =10;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+374' WHERE  `tbl_countries`.`id` =11;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+297' WHERE  `tbl_countries`.`id` =12;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+994' WHERE  `tbl_countries`.`id` =15;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-242' WHERE  `tbl_countries`.`id` =16;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+973' WHERE  `tbl_countries`.`id` =17;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+880' WHERE  `tbl_countries`.`id` =18;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-246' WHERE  `tbl_countries`.`id` =19;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-268' WHERE  `tbl_countries`.`id` =24;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+375' WHERE  `tbl_countries`.`id` =20;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+32' WHERE  `tbl_countries`.`id` =21;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+501' WHERE  `tbl_countries`.`id` =22;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+229' WHERE  `tbl_countries`.`id` =23;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+975' WHERE  `tbl_countries`.`id` =25;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+591' WHERE  `tbl_countries`.`id` =26;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+387' WHERE  `tbl_countries`.`id` =27;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+267' WHERE  `tbl_countries`.`id` =28;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+55' WHERE  `tbl_countries`.`id` =30;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+673' WHERE  `tbl_countries`.`id` =32;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+359' WHERE  `tbl_countries`.`id` =33;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+226' WHERE  `tbl_countries`.`id` =34;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+257' WHERE  `tbl_countries`.`id` =35;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+855' WHERE  `tbl_countries`.`id` =36;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+237' WHERE  `tbl_countries`.`id` =37;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1' WHERE  `tbl_countries`.`id` =38;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+238' WHERE  `tbl_countries`.`id` =39;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+1-345' WHERE  `tbl_countries`.`id` =40;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+236' WHERE  `tbl_countries`.`id` =41;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+235' WHERE  `tbl_countries`.`id` =42;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+56' WHERE  `tbl_countries`.`id` =43;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+86' WHERE  `tbl_countries`.`id` =44;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+61-8' WHERE  `tbl_countries`.`id` =45;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+61' WHERE  `tbl_countries`.`id` =46;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+57' WHERE  `tbl_countries`.`id` =47;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+269' WHERE  `tbl_countries`.`id` =48;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+242' WHERE  `tbl_countries`.`id` =49;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+682' WHERE  `tbl_countries`.`id` =50;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+506' WHERE  `tbl_countries`.`id` =51;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+385' WHERE  `tbl_countries`.`id` =53;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+53' WHERE  `tbl_countries`.`id` =54;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+357' WHERE  `tbl_countries`.`id` =55;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+420' WHERE  `tbl_countries`.`id` =56;
+
+UPDATE  `monofood`.`tbl_countries` SET  `country_dailing_code` =  '+45' WHERE  `tbl_countries`.`id` =57;
+
+-----------------------------------------------------------------
+2016-03-22-- Rohit
+--
+-- Table structure for table `tbl_claims`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_claims` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `claim_dealer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `clain_comment` text NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Unread, 1: Read/View, 2: Solved, 3: Canceled',
+  `claim_note` text,
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `delete_status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+-----------------------------------------------------------------
+2016-03-31-- Rohit
+--
+-- Update comments in affiliation relation table
+--
+
+ALTER TABLE `tbl_affiliate_relations` CHANGE `parent_id` `parent_id` INT( 11 ) NOT NULL COMMENT 'This id is as a dealer/parent(0 parent_id means as Admin)';
+
+-----------------------------------------------------------------------
+
+2016-04-1-- Rohit
+--
+ALTER TABLE `tbl_online_contracts` CHANGE `payee_zip` `payee_zip` VARCHAR( 15 ) NOT NULL ,
+CHANGE `payer_zip` `payer_zip` VARCHAR( 15 ) NOT NULL ;
+
+-----------------------------------------------------------------------
+
+2016-04-2-- Rohit
+--
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+253' WHERE `tbl_countries`.`id` =58;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+1 767' WHERE `tbl_countries`.`id` =59;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+1 809' WHERE `tbl_countries`.`id` =60;
+
+-----------------------------------------------------------------------
+
+2016-04-4-- Rohit
+--
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+670' WHERE `tbl_countries`.`id` =61;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+593' WHERE `tbl_countries`.`id` =62;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+20' WHERE `tbl_countries`.`id` =63;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+503' WHERE `tbl_countries`.`id` =64;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+240' WHERE `tbl_countries`.`id` =65;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+291' WHERE `tbl_countries`.`id` =66;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+372' WHERE `tbl_countries`.`id` =67;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+251' WHERE `tbl_countries`.`id` =68;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+500' WHERE `tbl_countries`.`id` =69;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+298' WHERE `tbl_countries`.`id` =70;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+679' WHERE `tbl_countries`.`id` =71;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+358' WHERE `tbl_countries`.`id` =72;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+33' WHERE `tbl_countries`.`id` =73;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+689' WHERE `tbl_countries`.`id` =76;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+241' WHERE `tbl_countries`.`id` =78;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+220' WHERE `tbl_countries`.`id` =79;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+995' WHERE `tbl_countries`.`id` =80;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+49' WHERE `tbl_countries`.`id` =81;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+233' WHERE `tbl_countries`.`id` =82;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+350' WHERE `tbl_countries`.`id` =83;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+30' WHERE `tbl_countries`.`id` =84;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+299' WHERE `tbl_countries`.`id` =85;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+1-473' WHERE `tbl_countries`.`id` =86;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+1-671' WHERE `tbl_countries`.`id` =88;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+502' WHERE `tbl_countries`.`id` =89;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+224' WHERE `tbl_countries`.`id` =90;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+245' WHERE `tbl_countries`.`id` =91;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+592' WHERE `tbl_countries`.`id` =92;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+509' WHERE `tbl_countries`.`id` =93;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+504' WHERE `tbl_countries`.`id` =95;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+852' WHERE `tbl_countries`.`id` =96;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+36' WHERE `tbl_countries`.`id` =97;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+354' WHERE `tbl_countries`.`id` =98;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+62' WHERE `tbl_countries`.`id` =100;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+964' WHERE `tbl_countries`.`id` =102;
+
+UPDATE `monofood`.`tbl_countries` SET `country_dailing_code` = '+98' WHERE `tbl_countries`.`id` =101;
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+
+/*======= Back to top ===============*/
+.cntctBtm {
+    margin-top: 20px;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled]{
+    background-color: #fff !important;
+}
+
+.custom_gender{
+    background-color: #fff !important;
+}

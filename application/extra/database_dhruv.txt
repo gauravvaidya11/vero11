@@ -1,0 +1,207 @@
+Dhruv Kant ---- 13 june 2016 ---------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_user_details` CHANGE `current_weight` `current_weight` FLOAT( 5 ) NOT NULL COMMENT 'in kg',
+CHANGE `target_weight` `target_weight` FLOAT( 5 ) NOT NULL COMMENT 'in kg',
+CHANGE `height` `height` FLOAT( 10 ) NOT NULL COMMENT 'in cm';
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 14 June 2016 ----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `monofood`.`tbl_settings` (`id` ,`setting_name` ,`setting_code` ,`setting_value` ,`status` ,`created_at` ,`modified_at`) VALUES (
+NULL , 'telefon', 'telefon', '+41 (0) 71 888 4000', '1', NULL , CURRENT_TIMESTAMP);
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'telefax', 'telefax', '+41 (0) 71 888 4000 10', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'telefon_accounting', 'telefon_a/c', '+41 (0) 71 888 4000 20', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'email', 'email', 'office@vegisan.com', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'internet', 'url', 'http://www.vegisan.com', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'ust_tax_id', 'ust_tax_id', 'german Tax id', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'st_tax_id', 'st_tax_id', 'german tax id', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'bank', 'bank', 'UBS', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'iban', 'iban', 'bank account country', '1', NULL, CURRENT_TIMESTAMP), (NULL, 'bic', 'bic', 'bank account country', '1', NULL, CURRENT_TIMESTAMP);
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 17 June 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_countries` ADD `contact_person_name` VARCHAR( 50 ) NULL DEFAULT NULL ,
+ADD `contact_email` VARCHAR( 50 ) NULL DEFAULT NULL ,
+ADD `contact_phone_number` VARCHAR( 20 ) NULL DEFAULT NULL ,
+ADD `country_tax_id` VARCHAR( 15 ) NULL DEFAULT NULL ;
+
+UPDATE `monofood`.`tbl_countries` SET `contact_person_name` = 'Austria Contact Person Name',
+`contact_email` = 'email@austria.mail',
+`contact_phone_number` = '123456789',
+`country_tax_id` = 'tax@austria' WHERE `tbl_countries`.`id` =14;
+
+UPDATE `monofood`.`tbl_countries` SET `contact_person_name` = 'Germany Contact Person Name',
+`contact_email` = 'email@germany.mail',
+`contact_phone_number` = '123456789',
+`country_tax_id` = 'tax@germany' WHERE `tbl_countries`.`id` =81;
+
+UPDATE `monofood`.`tbl_countries` SET `contact_person_name` = 'Switzerland Contact Person Name',
+`contact_email` = 'email@switzerland.mail',
+`contact_phone_number` = '123456789',
+`country_tax_id` = 'tax@switzerland' WHERE `tbl_countries`.`id` =204;
+
+UPDATE `monofood`.`tbl_countries` SET `contact_person_name` = 'India Contact Person Name',
+`contact_email` = 'email@india.mail',
+`contact_phone_number` = '123456789',
+`country_tax_id` = 'tax@india' WHERE `tbl_countries`.`id` =99;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 20 June 2016 ----------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'invoice_logo', 'public/uploads/logo/thumb/invioce-logo.png', 'public/uploads/logo/original/invoice-logo.png', '1', NULL, CURRENT_TIMESTAMP);
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 4 July 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_business_admin_claims` ADD `old_parent_id` INT NULL DEFAULT NULL AFTER `user_id` ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 21 July 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ ALTER TABLE `tbl_product_price` ADD `tax_id` INT NOT NULL AFTER `id` ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 25 July 2016 ----------------------------------------------------------------------------------------------------------------------
+
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = 'office@vegisan.com' WHERE `tbl_settings`.`id` =34;
+
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = 'Vegisan AG' WHERE `tbl_settings`.`id` =27;
+
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = 'Brenden 415' WHERE `tbl_settings`.`id` =28;
+
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = '9426' WHERE `tbl_settings`.`id` =29;
+
+UPDATE `monofood`.`tbl_settings` SET `setting_value` = 'Lutzenberg' WHERE `tbl_settings`.`id` =30;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 27 July 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_product_price` ADD `tax_status` INT NOT NULL DEFAULT '1' COMMENT '0 : tax included, 1: tax excluded, default : 1 (tax excluded)' AFTER `price` ;
+
+ALTER TABLE `tbl_countries` ADD `no_tax_text` VARCHAR( 200 ) NULL DEFAULT NULL COMMENT 'Text displayed when country is not having tax' AFTER `iso_code_3` ;
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 30 July 2016 ----------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `roles` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `delete_status` int(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 1 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_user_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `tbl_admin_users` DROP `roles` ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 3 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_admin_tasks` ADD `functions` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'functions json data' AFTER `task_text` ;
+
+ALTER TABLE `tbl_admin_tasks` ADD `nav_menu` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Navigation menu json data' AFTER `functions` ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 4 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_admin_users` ADD `country_id` INT NULL DEFAULT NULL AFTER `last_login` ;
+
+ALTER TABLE `tbl_admin_users` ADD `all_countries` INT( 1 ) NOT NULL DEFAULT '0' COMMENT '0 : country specific , 1 : all countries' AFTER `country_id` ;
+
+INSERT INTO `monofood`.`tbl_admin_tasks` (
+`id` ,
+`task_name` ,
+`task_text` ,
+`functions` ,
+`nav_menu` ,
+`status` ,
+`created_at`
+)
+VALUES (
+NULL , 'Logistics', 'All Logistics Task', '{
+  "functions": [
+    "getCompletedOrderPdf",
+    "viewOrderDetails"
+  ]
+}', '{
+  "icon": "truck",
+  "text": "common_task_logistics",
+  "url": "logistics",
+  "inMenu": true
+}', '1',
+CURRENT_TIMESTAMP
+);
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 5 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+TRUNCATE TABLE `tbl_admin_tasks` 
+
+INSERT INTO `tbl_admin_tasks` (`id`, `task_name`, `task_text`, `functions`, `nav_menu`, `status`, `created_at`) VALUES
+(1, 'Logistics', 'All Logistics Task', '{"functions":["getCompleteOrderPdf","viewOrderDetails"]}', '{"icon":"bar","text":"common_task_logistics","url":"logistics","inMenu":true}', 1, '2016-08-05 10:29:37');
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 10 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+UPDATE `monofood`.`tbl_admin_tasks` SET `functions` = '{"functions":["index","getCompletedOrderPdf","generateBatchPdf","generatePdf","getPreviousOrders","formateOrderStatus","formatePaymentStatusValue","updateOrderStatus","getDuplicateBatchPdf"]}' WHERE `tbl_admin_tasks`.`id` =1;
+
+INSERT INTO `monofood`.`tbl_admin_tasks` (`id`, `task_name`, `task_text`, `functions`, `nav_menu`, `status`, `created_at`) VALUES (NULL, 'Tax', 'Tax Related Task', '{"functions": ["getCompleteOrderPdf","viewOrderDetails"]}', '{"icon": "money","text": "common_task_tax","url": "tax","inMenu": true}', '1', CURRENT_TIMESTAMP);
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dhruv Kant ---- 29 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `tbl_contract` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) DEFAULT NULL,
+  `user_roll_type` varchar(10) NOT NULL,
+  `user_roll_level` int(2) NOT NULL DEFAULT '0',
+  `contract_text` text NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `delete_status` int(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 31 August 2016 ----------------------------------------------------------------------------------------------------------------------
+
+TRUNCATE TABLE `tbl_admin_tasks`
+
+CREATE TABLE IF NOT EXISTS `tbl_admin_tasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_name` varchar(255) NOT NULL,
+  `task_text` text,
+  `functions` text COMMENT 'functions json data',
+  `nav_menu` text COMMENT 'Navigation menu json data',
+  `status` tinyint(4) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+INSERT INTO `tbl_admin_tasks` (`id`, `task_name`, `task_text`, `functions`, `nav_menu`, `status`, `created_at`) VALUES
+(1, 'Logistics', 'All Logistics Task', '{"functions":["index","getCompletedOrderPdf","generateBatchPdf","generatePdf","getPreviousOrders","formateOrderStatus","formatePaymentStatusValue","updateOrderStatus","getDuplicateBatchPdf"]}', '{"icon":"truck","text":"common_task_logistics","url":"logistics","inMenu":true}', 1, '2016-08-05 10:29:37'),
+(2, 'Tax', 'Tax Related Task', '{"functions": ["index","getMonthlyTaxes"]}', '{"icon": "money","text": "common_task_tax","url": "tax","inMenu": true}', 1, '2016-08-10 10:57:50');
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'mail_on_update', 'user_contract', '0', '1', NULL, CURRENT_TIMESTAMP);
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Dhruv Kant ---- 6 September 2016 ----------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tbl_users` CHANGE `contract_accepted_at` `contract_accepted_at` DATETIME NULL DEFAULT NULL ;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------

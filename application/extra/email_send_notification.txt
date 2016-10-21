@@ -1,0 +1,26 @@
+==> Send mail for change password email notification. 
+
+==> Send mail for Add dealer email notification.
+
+==> Send mail for Forgot password email notification in front (Done).
+
+==> Send mail for After reset password email notification in front (Done).
+
+==> Send mail for verification link for (affilation and verification link) user registration email notification in front (Done).
+
+==> Send mail for After success dealer registration email notification in front (Done).
+
+==> Send mail for all customers After dealer add customer email notification in front (Done).
+
+==> Send mail for success customers registration customer email notification in front (Done).
+
+==> Send mail for assign dealer for customers email notification in front (Done).
+
+==> Send mail for customer registration thanks notification after customers self registration and send dealer also in front (Done).
+
+	Query: when customer select dealer then dealer send email notification or not
+
+
+
+
+

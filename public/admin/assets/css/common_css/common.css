@@ -1,0 +1,164 @@
+.small_input { display: inline-block; max-width: 24%; margin-right: 1%; }
+.small_input-2 { display: inline-block; max-width: 75%; }
+.customer-order { float: right; }
+.dealer-order { float: right; }
+.text-capitalize { font-weight: bold !important; }
+#datatable_ajax tbody tr .dropdown .dropdown-menu { left: auto; border-radius: 0; right: 0; padding: 5px 5px 0; }
+#datatable_ajax tbody tr:last-child .dropdown .dropdown-menu { border-radius: 0; bottom: 100%; left: auto; right: 0; top: auto; padding: 5px 5px 0; }
+/*#datatable_ajax tbody tr td:last-child a.set-status{  float: left;
+    margin: 0 5px 0 0; width: 35px;}*/
+
+
+#datatable_ajax tbody tr td:last-child .dropdown { width: auto; }
+#datatable_ajax tbody tr td:last-child .dropdown button { background: #4b8df8 none repeat scroll 0 0; border: medium none; color: #fff; padding: 5px 10px; }
+#datatable_ajax tbody tr td:last-child .dropdown li { margin-bottom: 5px }
+#datatable_ajax tbody tr td:last-child .dropdown li a { padding: 3px 5px; }
+/* loading css */
+#loading { width: 100%; height: 100%; top: 0px; left: 0px; position: fixed; display: block; opacity: 0.8; background-color: #fff; z-index: 9999; text-align: center; display: none; }
+#loading-image { position: absolute; top: 40%; left: 50%; z-index: 100; }
+#loading p { left: 48%; position: absolute; top: 40%; z-index: 100; }
+/* for show verticle menu in datatable */
+.table-verticle-menu .table-scrollable { overflow: inherit; }
+.country-main .blue { color: #fff; font-weight: bold; padding: 10px 0 !important; }
+.blue-title:after { clear: both; display: block; content: ""; }
+.country-main .row { margin: 0; }
+.close-state-ctn { display: none; }
+.close-city-ctn { display: none; }
+.close-city-ctn { display: none; }
+.country_ctn { background-color: #fafafa; }
+.state_ctn { background-color: #d1d2d4; }
+.city_ctn { background-color: #a0a1a5; }
+.margin-bottom { margin-bottom: 5px; }
+.border { border: 1px solid royalblue; padding: 5px; margin: 5px; }
+.country-main .country_container { margin-left: -5px; margin-right: -5px; }
+
+.order_dashboard-stat .order_visual {
+  display: block;
+  float: none;
+  height: 74px;
+  margin-bottom: 10px;
+  padding-left: 0;
+  padding-top: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 3px;
+    width: 100%;
+}
+.order_dashboard-stat .order_details {
+  bottom: 0;
+  height: 48px;
+  left: 0;
+  margin: auto;
+  padding-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 90%;
+  word-break: break-all;
+}
+.order_dashboard-stat.order_blue {
+  position: relative;
+  text-align: center;
+}
+.order_dashboard-stat .order_details .order_desc {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.customer {
+  margin-bottom: 15px;
+}
+
+.select2.select2-container {width: 100% !important;}
+
+
+.sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+.sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; height: 18px; }
+.sortable li>col-md- { position: absolute; margin-left: -1.3em; margin-top:.4em; }
+
+
+.option-form {
+  display:none;
+  margin-top:10px;
+}
+.optionValuesForm
+{
+    background-color:#fff;
+    padding:6px 3px 6px 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom:5px;
+    border:1px solid #ddd;
+}
+
+.optionValuesForm input {
+    margin:0px;
+}
+.optionValuesForm a {
+    margin-top:3px;
+}
+.help{
+    float: left;
+    padding: 5px;
+    text-decoration: none;
+}
+
+/* for already username and email error */
+.custom_error_username_error{
+   color: #b94a48; 
+}
+.custom_error_email_error{
+   color: #b94a48; 
+}
+.custom_error_username_success{
+   color: #47783D;
+}
+.custom_error_email_success{
+  color: #47783D;
+}
+
+#claim_status{
+  margin-top:11px;
+}
+
+.claim-detail .panel-title{
+  padding: 10px;
+}
+
+/* for admin order details   */
+.invoice-logo-space {
+  max-width: 200px;
+}
+
+.invoice-logo-space img {
+  max-width: 100%;
+}
+.adm-top-title p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.details-margin-top{
+  margin-top: 6px;
+}
+.custom_error_username{
+    position: absolute;
+}
+.custom_error_username_success{
+    color:green;
+}
+.custom_error_username_error{
+    color:#b94a48 ;
+}
+
+.menu li {
+    display: inline-block;
+    margin-right: 10px;
+}
+/**** end **/
+

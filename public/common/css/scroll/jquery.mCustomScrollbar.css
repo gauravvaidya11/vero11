@@ -1,0 +1,43 @@
+/**
+ * jquery.scrollbox.css
+ * 
+ * @version    0.2.1
+ * @author     Invis1ble
+ * @copyright  (c) 2013 Invis1ble <invisiblexman2010@gmail.com>
+ * @license    MIT http://www.opensource.org/licenses/mit-license.php
+ */
+.scrollbox-wrapper {
+    position: absolute;
+    overflow: hidden;
+	width:270px;
+}
+.scrollbox-rail, .scrollbox-bar {
+  background-color: #333;
+  border-radius: 8px;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8px;
+  z-index: 9999;
+}
+.scrollbox-rail-in,
+.scrollbox-bar-in {
+    display: block;
+}
+.scrollbox-rail {
+    height: 100%;
+    opacity: .2;
+    filter: alpha(opacity=20);
+}
+.scrollbox-bar {
+    min-height: 30px;
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+.scrl-container {
+max-height: 200px;
+}
+ul.txtcustomer{
+	position:relative;
+}

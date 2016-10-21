@@ -1,0 +1,767 @@
+//21-JAN-2015
+
+CREATE TABLE IF NOT EXISTS `tbl_languages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_name` varchar(255) NOT NULL,
+  `lang_code` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `delete_status` int(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+-----------------------------------------------------------------------------------------------------------------------------
+//03-02-2016
+
+INSERT INTO `tbl_settings` (`setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES
+('live_paypal_user_id', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('live_paypal_password', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('live_paypal_signature', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('sandbox_paypal_user_id', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('sandbox_paypal_password', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('sandbox_paypal_signature', 'paypal', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30')
+//-------------------------------------------------------------------------------------------------------------------------------
+//04-02-2016
+
+INSERT INTO `tbl_settings` (`setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES
+('default_currency_name', '', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30'),
+('default_currency_symbol', '', '', 1, '0000-00-00 00:00:00', '2016-02-03 07:06:30')
+
+//new table for cms section 
+
+CREATE TABLE `tbl_cms` (
+ `id` int(11) NOT NULL DEFAULT '0',
+ `setting_name` varchar(255) NOT NULL,
+ `setting_code` varchar(255) DEFAULT NULL,
+ `setting_value` text NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1',
+ `created_at` datetime NOT NULL,
+ `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+//---------------------------------------------------------------------------------------------------------------------------------
+
+//05-02-2016
+
+ALTER TABLE `tbl_cms` CHANGE `setting_name` `key_name` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, CHANGE `setting_code` `key_code` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT 'page name ', CHANGE `setting_value` `key_value` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
+
+ALTER TABLE `tbl_cms` CHANGE `modified_at` `modified_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+//created the new table for contact from messages
+
+CREATE TABLE `tbl_message_contact` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) DEFAULT NULL,
+ `user_name` varchar(255) NOT NULL,
+ `user_email` varchar(255) DEFAULT NULL,
+ `user_message` text NOT NULL,
+ `roll_type` int(1) NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1',
+ `created_at` datetime NOT NULL,
+ `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1
+
+//------------------------------------------------------------------------------------------------------------------------------------
+
+//06-02-2016
+
+//added a column for delete status
+ALTER TABLE `tbl_message_contact`  ADD `delete_status` INT(1) NOT NULL DEFAULT '0' AFTER `roll_type`
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+//10-02-2016
+
+//reply table of contact form queries
+CREATE TABLE `tbl_admin_reply_emails` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `message_id` int(11) DEFAULT NULL COMMENT 'NULL if email is new',
+ `subject` varchar(255) NOT NULL,
+ `email_body` text NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1',
+ `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1
+
+
+//email attachment table for contact form queries
+CREATE TABLE `tbl_admin_email_attach` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `email_id` int(11) NOT NULL,
+ `attachment_url` varchar(255) NOT NULL,
+ `created_at` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1
+
+//email receivers table for contact form queries
+CREATE TABLE `tbl_admin_email_receivers` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `email_id` int(11) NOT NULL,
+ `receiver_id` varchar(255) NOT NULL,
+ `receiver_type` int(1) NOT NULL COMMENT '1 for "to" and 2 for "cc"',
+ `created_at` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+#2016-02-16
+ALTER TABLE `tbl_message_contact`  ADD `user_number` VARCHAR(30) NOT NULL
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+#2016-02-17
+ALTER TABLE `tbl_admin_reply_emails`  ADD `delete_status` INT(1) NOT NULL DEFAULT '0' AFTER `created_at`
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+#2016-02-18
+
+ALTER TABLE `tbl_admin_reply_emails` CHANGE `subject` `subject` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, CHANGE `email_body` `email_body` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+#2016-03-17
+
+Note :- Take backup of database before running these queries.
+
+//drop tables
+
+DROP TABLE IF EXISTS tbl_forum_cat
+DROP TABLE IF EXISTS tbl_forum_comment
+DROP TABLE IF EXISTS tbl_forum_comment_edit
+DROP TABLE IF EXISTS tbl_forum_comment_like
+DROP TABLE IF EXISTS tbl_forum_scomment_edit
+DROP TABLE IF EXISTS tbl_forum_scomment_like
+DROP TABLE IF EXISTS tbl_forum_sub_comment
+DROP TABLE IF EXISTS tbl_forum_topic
+DROP TABLE IF EXISTS tbl_forum_topic_view
+DROP TABLE IF EXISTS tbl_forum_user
+
+//create tables
+
+CREATE TABLE `tbl_forum_cat` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `id_parent` int(11) DEFAULT '0',
+ `title` varchar(125) NOT NULL,
+ `color` varchar(50) NOT NULL DEFAULT '#0E79BF',
+ `link_rewrite` varchar(255) NOT NULL,
+ `description` varchar(500) NOT NULL,
+ `position` int(11) NOT NULL,
+ `closed` tinyint(1) NOT NULL DEFAULT '0',
+ `status` tinyint(4) DEFAULT '0' COMMENT '1=enabled; 0=disabled',
+ `created_at` datetime NOT NULL,
+ `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ `delete_status` int(1) DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `tbl_forum_comment` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `id_forum` int(11) DEFAULT '0',
+ `id_author` int(11) DEFAULT '0',
+ `comment` text,
+ `comment_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:for main comment 0:for normal comment',
+ `like_count` int(11) NOT NULL DEFAULT '0',
+ `status` tinyint(1) DEFAULT '0',
+ `created_at` datetime NOT NULL,
+ `delete_status` int(1) DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `tbl_forum_comment_edit` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `comment_id` int(11) DEFAULT '0',
+ `id_author` int(11) DEFAULT '0',
+ `comment` text,
+ `status` tinyint(4) NOT NULL DEFAULT '0',
+ `created_at` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_comment_like` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `comment_id` int(11) NOT NULL,
+ `created_at` datetime NOT NULL,
+ `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'for future use',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_scomment_edit` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `comment_id` int(11) DEFAULT '0',
+ `id_author` int(11) DEFAULT '0',
+ `comment` text,
+ `status` int(11) NOT NULL DEFAULT '0',
+ `created_at` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_scomment_like` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `comment_id` int(11) NOT NULL,
+ `created_at` datetime NOT NULL,
+ `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'for future use',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_sub_comment` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `id_forum` int(11) DEFAULT '0',
+ `id_author` int(11) DEFAULT '0',
+ `comment` text,
+ `like_count` int(11) NOT NULL DEFAULT '0',
+ `status` tinyint(1) DEFAULT '0',
+ `created_at` datetime NOT NULL,
+ `delete_status` int(1) DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `tbl_forum_topic` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `id_forum_cat` int(11) DEFAULT '0',
+ `id_author` int(11) DEFAULT NULL,
+ `meta_title` varchar(255) DEFAULT NULL,
+ `link_rewrite` varchar(255) DEFAULT NULL,
+ `viewed` int(11) DEFAULT '0',
+ `status` tinyint(1) DEFAULT '0',
+ `closed` tinyint(1) DEFAULT '0',
+ `highlight` tinyint(1) DEFAULT '0',
+ `position` int(11) DEFAULT '0',
+ `like_count` int(11) NOT NULL DEFAULT '0',
+ `reply_count` int(11) NOT NULL DEFAULT '0',
+ `user_count` int(11) NOT NULL DEFAULT '0',
+ `view_count` int(11) NOT NULL DEFAULT '0',
+ `last_active` datetime NOT NULL COMMENT 'last comment or subcomment',
+ `created_at` datetime NOT NULL,
+ `modified` datetime DEFAULT NULL,
+ `delete_status` int(1) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_topic_view` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `view_id` varchar(150) NOT NULL,
+ `topic_id` int(11) NOT NULL,
+ `created_at` datetime NOT NULL,
+ `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'for future use',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tbl_forum_user` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `first_name` varchar(50) DEFAULT NULL,
+ `last_name` varchar(50) DEFAULT NULL,
+ `email` varchar(50) DEFAULT NULL,
+ `last_visit` datetime DEFAULT NULL,
+ `status` tinyint(1) DEFAULT '0',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+//seeding
+
+INSERT INTO `tbl_forum_cat` (`id`, `id_parent`, `title`, `color`, `link_rewrite`, `description`, `position`, `closed`, `status`, `created_at`, `modified_at`, `delete_status`) VALUES
+(0, 0, 'uncategorised', '#9B767B', '', '', 0, 0, 1, '2016-02-23 04:12:09', '2016-02-23 08:39:29', 0),
+(1, 0, 'Exprience', '#0E79BF', 'exprience', '', 0, 0, 1, '2016-02-22 21:00:16', '2016-02-29 12:34:18', 1),
+(2, 0, 'Experience', '#0E79BF', 'experience', '', 0, 0, 1, '2016-02-29 18:04:55', '2016-02-29 12:34:55', 0),
+(3, 0, 'Feedback', '#0E79BF', 'asdasd', 'HHIS HISNA DWE', 0, 0, 1, '2016-03-08 19:29:02', '2016-03-08 13:59:02', 0);
+
+----------------------------------------------------------------------------------------------------------------------
+#2016-04-07
+
+ALTER TABLE  `tbl_temp_signup` ADD  `step` TINYINT( 1 ) NOT NULL COMMENT  '1:When send the verification link,2:when user form is open ' AFTER  `status`;
+ALTER TABLE  `tbl_temp_signup` CHANGE  `step`  `step` TINYINT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '1:When send the verification link,2:when user form is open ';
+
+---------------------------------------------------------------------------------------------------------------------------
+#2016-05-03
+
+ALTER TABLE `tbl_users` CHANGE `avatar` `avatar` VARCHAR(155) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'user-placeholder.jpg';
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-05
+CREATE TABLE `tbl_blocked_email_domain` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) NOT NULL,
+ `status` tinyint(1) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-13
+
+DELETE FROM  `monofood`.`tbl_admin_email_templates` WHERE  `tbl_admin_email_templates`.`id` =2;
+
+DELETE FROM  `monofood`.`tbl_admin_email_templates` WHERE  `tbl_admin_email_templates`.`id` =3;
+
+DELETE FROM  `monofood`.`tbl_admin_email_templates` WHERE  `tbl_admin_email_templates`.`id` =4;
+
+UPDATE  `monofood`.`tbl_admin_email_templates` SET  `name` =  'Common Email Template',`type` =  'common' WHERE  `tbl_admin_email_templates`.`id` =1;
+
+###########################After that update new template html from admin################################################################
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-18
+
+DROP TABLE  `tbl_blocked_email_domain` ;
+
+CREATE TABLE `tbl_blocked_email_domain` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) NOT NULL COMMENT 'ex: "mailinator.com", "gmail.com" ,"gmail.in"',
+ `also_block_login` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1:blocked login,0:not blocked login ',
+ `status` tinyint(1) NOT NULL COMMENT '0: not applied,1:applied',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE  `tbl_blocked_email_domain` CHANGE  `status`  `status` TINYINT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '0: not applied,1:applied';
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-25
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'default_working_range', 'working_range', '5', '1', NULL, CURRENT_TIMESTAMP);
+
+ALTER TABLE  `tbl_users` ADD  `roll_level` INT( 2 ) NOT NULL DEFAULT  '0' COMMENT  'define the level of user' AFTER  `roll_type`;
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-26
+
+###TRUNCATE YOUR TABLE BEFORE THAT 
+INSERT INTO `tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES
+(1, 'DIRECT CUSTOMER', ' If dealer sends a referral link and customer created his/her account from his link.', 1),
+(2, 'DIRECT CUSTOMER', 'If user creating an account and dealer get selected as his refer link was in pool table.', 1),
+(3, 'GEO FENCE CUSTOMER', 'If user creating an account and dealer get selected(Choose from dealer listing) by him.', 1),
+(4, 'GEO FENCE CUSTOMER', 'If user creating an account and he/she not selected coaching and dealer get selected as this customer is in dealer''s geofence.', 1),
+(5, 'FREE CUSTOMER', ' If user creating an account by referral link by a customer then this customer''s dealer get this user as customer in his downline.', 1);
+
+CREATE TABLE IF NOT EXISTS `tbl_commission_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `commission_of` int(11) NOT NULL,
+  `commission_to` int(11) NOT NULL,
+  `commission_of_roll_type` int(2) NOT NULL,
+  `commission_to_roll_type` int(2) NOT NULL,
+  `commission_amount` float NOT NULL,
+  `commission_percent` float NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `commission_type` int(3) NOT NULL,
+  `commission_status` int(2) NOT NULL,
+  `data` text COMMENT 'all other data if needed in json format',
+  `created_at` datetime NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `delete_status` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `tbl_commission_relation` (
+  `commission_relation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `relation` varchar(255) NOT NULL,
+  `regitstration_type_id` int(11) NOT NULL,
+  `roll_id_name` varchar(50) NOT NULL,
+  `user_roll_type_id` int(11) NOT NULL,
+  `user_level_id` int(11) NOT NULL COMMENT 'level id for different user type',
+  `downline` int(11) NOT NULL DEFAULT '1' COMMENT '0=unlimited',
+  `commission_percent` float NOT NULL,
+  PRIMARY KEY (`commission_relation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES
+(1, 'DIRECT CUSTOMER', ' If dealer sends a referral link and customer created his/her account from his link.', 1, 'Dealer', 2, 1, 1, 30),
+(2, 'DIRECT CUSTOMER', 'If user creating an account and dealer get selected as his refer link was in pool table.', 2, 'Dealer', 2, 1, 1, 30),
+(3, 'GEO FENCE CUSTOMER', 'If user creating an account and dealer get selected(Choose from dealer listing) by him.', 3, 'Dealer', 2, 1, 1, 30),
+(4, 'GEO FENCE CUSTOMER', 'If user creating an account and he/she not selected coaching and dealer get selected as this customer is in dealer''s geofence.', 4, 'Dealer', 2, 1, 1, 30),
+(5, 'FREE CUSTOMER', ' If user creating an account by referral link by a customer then this customer''s dealer get this user as customer in his downline.', 5, 'Dealer', 2, 1, 1, 30);
+
+ALTER TABLE  `tbl_commission_records` ADD  `commission_on_amount` FLOAT NOT NULL COMMENT  'amount in which commission is applied' AFTER `commission_percent`
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-05-30
+UPDATE `monofood`.`tbl_commission_relation` SET `downline` = '3' WHERE `tbl_commission_relation`.`commission_relation_id` = 5;
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-06-02
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES ('6', 'BUSINESS DIRECT USER', 'if business user send a referral link and customer is register with that link', '1'), ('7', 'BUSINESS DIRECT USER', 'if business user send a referral link and link is selected as it wan in referral pool when customer creating account', '1');
+
+ALTER TABLE  `tbl_users` ADD  `initial_registration_type` INT NOT NULL DEFAULT  '0' AFTER  `register_type`;
+
+ALTER TABLE  `tbl_users` CHANGE  `initial_registration_type`  `initial_registration_type` INT( 11 ) NOT NULL DEFAULT  '0' COMMENT 'this is to know how user is register in system, ID are save in tbl_user_registration_type table';
+
+INSERT INTO `monofood`.`tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES (NULL, 'DIRECT BUSINESS USER CUSTOMER', 'if business user send a referral link and customer is register with that link', '6', 'Business User', '6', '1', '1', '10');
+
+INSERT INTO `monofood`.`tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES (NULL, 'DIRECT BUSINESS USER CUSTOMER', 'if business user send a referral link and link is selected as it wan in referral pool when customer creating account', '7', 'Business User', '6', '1', '1', '7');
+
+INSERT INTO `monofood`.`tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES (NULL, 'FREE BUSINESS USER CUSTOMER', ' If user creating an account by referral link by a customer then this customer''s business user get this user as customer in his downline.', '8', 'Business User', '6', '1', '3', '5');
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES (NULL, 'BUSINESS FREE CUSTOMER', 'If user creating an account by referral link by a customer then this customer''s business user get this user as customer in his downline.', '1');
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-06-03
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `user_level_id` =  '3' WHERE  `tbl_commission_relation`.`commission_relation_id` =6;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `user_level_id` =  '3' WHERE  `tbl_commission_relation`.`commission_relation_id` =7;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `user_level_id` =  '3' WHERE  `tbl_commission_relation`.`commission_relation_id` =8;
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-06-07
+
+ALTER TABLE  `tbl_orders` ADD  `is_commission_calulated` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT  '1: commission calculated 0: not calculated' AFTER  `notes`;
+
+ALTER TABLE  `tbl_orders` CHANGE  `is_commission_calulated`  `is_commission_calculated` INT( 1 ) NOT NULL DEFAULT  '0' COMMENT '1: commission calculated 0: not calculated';
+
+-----------------------------------------------------------------------------------------------------------------------------
+#2016-06-09
+CREATE TABLE `tbl_claim_history` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `old_parent_id` int(11) NOT NULL,
+ `new_parent_id` int(11) NOT NULL,
+ `approved_by` int(11) NOT NULL,
+ `status` int(1) NOT NULL DEFAULT '1' COMMENT '0:inactive 1 active',
+ `data` tinytext CHARACTER SET latin1 NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-10
+CREATE TABLE `tbl_user_details` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `birth_day` varchar(25) NOT NULL,
+ `current_weight` int(5) NOT NULL COMMENT 'in kg',
+ `target_weight` int(5) NOT NULL COMMENT 'in kg',
+ `height` int(10) NOT NULL COMMENT 'in cm',
+ `activity_level` int(3) NOT NULL COMMENT 'activity level dropdown list',
+ `created_at` datetime NOT NULL,
+ `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE  `tbl_user_details` ADD  `user_id` INT NOT NULL AFTER  `id`;
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-13
+
+ALTER TABLE  `tbl_affiliation_pool` ADD  `coach_relation_id` INT NOT NULL DEFAULT  '0' COMMENT  '0: normal referl else id of dealer coach relation table' AFTER `email_token`
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-14
+
+ALTER TABLE  `tbl_orders` ADD  `is_wp_calculated` INT( 1 ) NOT NULL COMMENT  '0: not calulated 1: calulated' AFTER  `is_commission_calculated`
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-15
+
+ALTER TABLE  `tbl_user_details` ADD  `current_weight_unit` INT( 1 ) NOT NULL DEFAULT  '1' COMMENT  '1:kg 2:pound' AFTER  `target_weight` ,
+ADD  `target_weight_unit` INT( 1 ) NOT NULL DEFAULT  '1' COMMENT  '1:kg 2:pound' AFTER  `current_weight_unit`;
+
+ALTER TABLE  `tbl_affiliation_pool` ADD  `is_geo_fence_customer` INT NOT NULL DEFAULT  '0' COMMENT  '0: no 1:yes ' AFTER  `coach_relation_id`;
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES (NULL, 'GEO FENCE FREE USERS', 'If customer is creating a account from a geo-fence(default selected) customer''s referal link ', '1');
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `discription`, `status`) VALUES (NULL, 'BUSINESS USER''S GEO FENCE FREE USERS', 'If customer is creating a account from a geo-fence(default selected) customer''s referal link  with business dowline', '1');
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-16 Important Queries 
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '32.337' WHERE  `tbl_commission_relation`.`commission_relation_id` =1;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '32.337' WHERE  `tbl_commission_relation`.`commission_relation_id` =2;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '32.337' WHERE  `tbl_commission_relation`.`commission_relation_id` =3;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '18.88' WHERE  `tbl_commission_relation`.`commission_relation_id` =4;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '18.88' WHERE  `tbl_commission_relation`.`commission_relation_id` =5;
+
+INSERT INTO `monofood`.`tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES (NULL, 'GEO FENCE FREE CUSTOMERS', 'If customer is creating a account from a geo-fence(default selected) customer''s referal link ', '10', 'Dealer', '2', '1', '4', '18.88');
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '32.337' WHERE  `tbl_commission_relation`.`commission_relation_id` =6;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '32.337' WHERE  `tbl_commission_relation`.`commission_relation_id` =7;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_percent` =  '18.88' WHERE  `tbl_commission_relation`.`commission_relation_id` =8;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `downline` =  '4' WHERE  `tbl_commission_relation`.`commission_relation_id` =5;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `downline` =  '4' WHERE  `tbl_commission_relation`.`commission_relation_id` =6;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `downline` =  '4' WHERE  `tbl_commission_relation`.`commission_relation_id` =8;
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-17 
+
+
+
+CREATE TABLE `tbl_distributor_commission_percent` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `level` int(11) NOT NULL,
+ `percent` float NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `monofood`.`tbl_distributor_commission_percent` (`id`, `level`, `percent`) VALUES (NULL, '5', '2.25');
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-17 Second part after push
+
+
+INSERT INTO  `monofood`.`tbl_user_registration_type` (
+`id` ,
+`type` ,
+`discription` ,
+`status`
+)
+VALUES (
+NULL ,  'DISTRIBUTOR DIRECT CUSTOMER',  'if distributor user send a referral link and customer is register with that link',  '1'
+), (
+NULL ,  'DISTRIBUTOR FREE CUSTOMRE ',  'if distributor''s direct customer sends a link to user and user register by it',  '1'
+);
+
+INSERT INTO `monofood`.`tbl_commission_relation` (`commission_relation_id`, `title`, `relation`, `regitstration_type_id`, `roll_id_name`, `user_roll_type_id`, `user_level_id`, `downline`, `commission_percent`) VALUES (NULL, 'DIRECTDISTRIBUTOR USER CUSTOMER', 'if distributor user send a referral link and customer is register with that link', '12', 'Distributor', '3', '5', '1', '32.337'), (NULL, 'DISTRIBUTOR FREE CUSTOMRE ', 'if distributor''s direct customer sends a link to user and user register by it', '13', 'distributor', '3', '5', '4', '18.88');
+
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'referral_link_expire_date ', 'referral', '7', '1', '2016-06-17 10:25:26', CURRENT_TIMESTAMP);
+
+----------------------------------------------------------------------------------------------------------------------------------
+#2016-06-20 
+
+ALTER TABLE  `tbl_affiliation_pool` ADD  `text` TEXT NOT NULL AFTER  `email_token`
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-06-24
+
+UPDATE `monofood`.`tbl_admin_email_templates` SET `content` = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>{{siteName}}</title>
+</head>
+<body leftmargin="0" marginheight="0" marginwidth="0" offset="0" topmargin="0">
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" valign="top" width="600">
+	<tbody>
+		<tr>
+			<td style="border-top:#ff6600 solid 7px; padding:25px 0; text-align:center;">{{siteLogo}}</td>
+		</tr>
+		<tr>
+			<td style="background:#ff6600; text-align:center; padding:10px 0;">
+			<p style="margin:0;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; padding:0 0 0 0; font-weight:bold; color:#fff; font-size:20px;">{{emailBannerTitle}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>{{contents}}</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">{{end_message}}</td>
+		</tr>
+		<tr>
+			<td style="background:#f6f4f2; color:#483526;font-family: ''Lato'', sans-serif, Arial, Helvetica, sans-serif; font-size:14px; text-align:center; padding:15px 0;">{{footer_message}}</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
+' WHERE `tbl_admin_email_templates`.`id` = 1;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-06-27
+ALTER TABLE  `tbl_users` ADD  `refer_url` VARCHAR( 255 ) NULL AFTER  `avatar`
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-06-29
+INSERT INTO `monofood`.`tbl_settings` (`id`, `setting_name`, `setting_code`, `setting_value`, `status`, `created_at`, `modified_at`) VALUES (NULL, 'map_api_key_local_flag', 'Map Api', '1', '1', NULL, CURRENT_TIMESTAMP);
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-02
+ALTER TABLE  `tbl_users` ADD  `show_in_geofence_and_listing` TINYINT( 1 ) NOT NULL COMMENT  '0:now show in dealer listing and geofence ,1: show option by dealer' AFTER  `state` ,
+ADD  `admin_show_in_geofence_and_listing` TINYINT( 1 ) NOT NULL COMMENT  '0:now show in dealer listing and geofence ,1: show option by admin' AFTER `show_in_geofence_and_listing`;
+
+ALTER TABLE `tbl_users` CHANGE `show_in_geofence_and_listing` `show_in_geofence_and_listing` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0:now show in dealer listing and geofence ,1: show option by dealer', CHANGE `admin_show_in_geofence_and_listing` `admin_show_in_geofence_and_listing` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0:now show in dealer listing and geofence ,1: show option by admin';
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-05
+
+ALTER TABLE  `tbl_user_registration_type` ADD  `reference_of` VARCHAR( 255 ) NOT NULL AFTER  `type` ,
+ADD  `registration_way` VARCHAR( 255 ) NOT NULL AFTER  `reference_of`;
+
+
+
+UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'DEALER', `registration_way` = 'BY DIRECT REFERRAL OR REFER LINK' WHERE `tbl_user_registration_type`.`id` = 1; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'DEALER', `registration_way` = 'BY POOL REFERREL' WHERE `tbl_user_registration_type`.`id` = 2; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'DEALER', `registration_way` = 'SELECTED BY DEALER LISTING' WHERE `tbl_user_registration_type`.`id` = 3; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'DEALER', `registration_way` = 'SELECTED BY GEO FENCE' WHERE `tbl_user_registration_type`.`id` = 4; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'DEALER', `registration_way` = 'BY DEALER''S DIRECT CUSTOMER OR FREE CUSTOMER' WHERE `tbl_user_registration_type`.`id` = 5; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'BUSINESS USES', `registration_way` = 'BY DIRECT REFERRAL OR REFER LINK' WHERE `tbl_user_registration_type`.`id` = 6; UPDATE `monofood`.`tbl_user_registration_type` SET `type` = 'BUSINESS DIRECT CUSTOMER', `reference_of` = 'BUSINESS USES', `registration_way` = 'BY POOL REFERRAL' WHERE `tbl_user_registration_type`.`id` = 7; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'BUSINESS USER', `registration_way` = 'BY DIRECT CUSTOMER AND FREE CUSTOMER' WHERE `tbl_user_registration_type`.`id` = 8; UPDATE `monofood`.`tbl_user_registration_type` SET `reference_of` = 'ADMIN', `registration_way` = 'BY ADMIN ACCONT' WHERE `tbl_user_registration_type`.`id` = 9; UPDATE `monofood`.`tbl_user_registration_type` SET `type` = 'GEO FENCE FREE CUSTOMERS', `reference_of` = 'DEALER', `registration_way` = 'BY GEO-FENCE CUSTOMER AND GEOFENCE FREE CUSTOMER' WHERE `tbl_user_registration_type`.`id` = 10; UPDATE `monofood`.`tbl_user_registration_type` SET `type` = 'GEO FENCE FREE CUSTOMERS', `reference_of` = 'BUSINESS USER', `registration_way` = 'BY GEOFENCE CUSTOMERS OR GEOFENCE FREE CUSTOMERS', `status` = '0' WHERE `tbl_user_registration_type`.`id` = 11; UPDATE `monofood`.`tbl_user_registration_type` SET `type` = 'DIRECT CUSTOMER', `reference_of` = 'DISTRIBUTOR', `registration_way` = 'BY DIRECT REFERRAL OR REFER LINK' WHERE `tbl_user_registration_type`.`id` = 12; UPDATE `monofood`.`tbl_user_registration_type` SET `type` = 'FREE CUSTOMRE ', `reference_of` = 'DISTRIBUTOR', `registration_way` = 'BY DIRECT CUSTOMER OR FREE CUSTOMER' WHERE `tbl_user_registration_type`.`id` = 13;
+
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `reference_of`, `registration_way`, `discription`, `status`) VALUES (NULL, 'DIRECT CUSTOMER', 'DISTRIBUTOR', 'BY POOL REFERRAL', 'If dealer''s referral link is selected by pool table', '1');
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-06
+ALTER TABLE  `tbl_users` CHANGE  `address`  `address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE  `tbl_customers_address_bank` CHANGE  `address1`  `address1` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+CHANGE  `address2`  `address2` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-07
+INSERT INTO `monofood`.`tbl_user_registration_type` (`id`, `type`, `reference_of`, `registration_way`, `discription`, `status`) VALUES (NULL, 'NO OPTION, GEO FENCE FREE CUSTOMER', 'DEALER', 'BY NO OPTION GEO FENCE CUSTOMERS', 'if customer register from referral link of NO OPTION Geofence Customer or No option, GEO FENCE CUSTOMERS', '1');
+
+UPDATE  `monofood`.`tbl_user_registration_type` SET  `type` =  'YES OPTION,GEO FENCE FREE CUSTOMERS',
+`registration_way` =  'BY YES OPTION GEO-FENCE CUSTOMER AND YES OPTION GEOFENCE FREE CUSTOMER',
+`discription` =  'If customer is creating a account from a Yes option geo-fence(selected dealer) customer''s referal link or Yes option geo fence free customer' WHERE `tbl_user_registration_type`.`id` =10;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-12
+ALTER TABLE  `tbl_users` ADD  `extra_register_type` INT NOT NULL DEFAULT  '0' COMMENT  '0:for normal 1:for common refer link' AFTER  `initial_registration_type`;
+ALTER TABLE  `tbl_users` CHANGE  `extra_register_type`  `extra_register_type` INT( 11 ) NOT NULL DEFAULT  '0' COMMENT '0:for normal 1:for when created by account  : 2 when created by common refer link';
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-25
+
+ALTER TABLE  `tbl_customers_address_bank` ADD  `street_address` VARCHAR( 255 ) NOT NULL AFTER  `address2` ,
+ADD  `street_number` VARCHAR( 255 ) NOT NULL AFTER  `street_address`;
+
+
+ALTER TABLE  `tbl_users` ADD  `street_address` VARCHAR( 255 ) NULL AFTER  `address` ,
+ADD  `street_number` VARCHAR( 255 ) NULL AFTER  `street_address`;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-27
+
+CREATE TABLE `tbl_admin_roles` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `role_name` varchar(255) DEFAULT NULL,
+ `role_text` text NOT NULL,
+ `status` int(11) NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE  `tbl_admin_roles` ADD UNIQUE (
+`role_name`
+);
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-07-28
+
+CREATE TABLE `tbl_admin_tasks` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `task_name` varchar(255) NOT NULL,
+ `task_text` text,
+ `status` tinyint(4) NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+	CREATE TABLE `tbl_admin_role_task` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `role_id` int(11) NOT NULL,
+ `task_id` int(11) NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-08-11
+ALTER TABLE  `tbl_company_profiles` ADD  `street_address` VARCHAR( 255 ) NOT NULL AFTER  `company_address` ,
+ADD  `street_number` VARCHAR( 255 ) NOT NULL AFTER  `street_address`;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-02
+delete from  `tbl_commission_relation` where user_roll_type_id <> 2;
+UPDATE  `monofood`.`tbl_commission_relation` SET  `commission_relation_id` =  '6' WHERE  `tbl_commission_relation`.`commission_relation_id` =9;
+ALTER TABLE  `tbl_commission_relation` AUTO_INCREMENT =7;
+
+CREATE TABLE `tbl_commission_relation_percent` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `commission_relation_id` int(11) NOT NULL,
+ `product_id` int(11) NOT NULL,
+ `country_id` int(11) NOT NULL,
+ `percent` float NOT NULL,
+ `status` tinyint(4) NOT NULL DEFAULT '1',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '1', '81', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '1', '14', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '1', '204', '32', '1');
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '2', '1', '81', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '2', '1', '14', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '2', '1', '204', '32', '1');
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '3', '1', '81', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '3', '1', '14', '32', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '3', '1', '204', '32', '1');
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '4', '1', '81', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '4', '1', '14', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '4', '1', '204', '18', '1');
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '5', '1', '81', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '5', '1', '14', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '5', '1', '204', '18', '1');
+
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '6', '1', '81', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '6', '1', '14', '18', '1');
+INSERT INTO `monofood`.`tbl_commission_relation_percent` (`id`, `commission_relation_id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '6', '1', '204', '18', '1');
+
+
+ALTER TABLE  `tbl_commission_records` ADD  `product_id` INT NOT NULL AFTER  `order_id` ,
+ADD  `country_id` INT NOT NULL AFTER  `product_id`
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-03
+ALTER TABLE  `tbl_commission_records` ADD  `product_count` INT NOT NULL AFTER  `product_id`;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-06
+
+CREATE TABLE `tbl_commission_second_max_percent` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `product_id` int(11) NOT NULL,
+ `country_id` int(11) NOT NULL,
+ `percent` int(11) NOT NULL,
+ `status` int(11) NOT NULL DEFAULT '1',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE  `tbl_distributor_commission_percent` ADD  `product_id` INT NOT NULL AFTER  `level` ,
+ADD  `country_id` INT NOT NULL AFTER  `product_id` ,
+ADD  `status` TINYINT NOT NULL DEFAULT  '1' AFTER  `country_id`;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-07
+
+INSERT INTO `tbl_commission_second_max_percent` (`id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '81', '9.89', '1');
+INSERT INTO `tbl_commission_second_max_percent` (`id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '14', '9.89', '1');
+INSERT INTO `tbl_commission_second_max_percent` (`id`, `product_id`, `country_id`, `percent`, `status`) VALUES (NULL, '1', '204', '9.89', '1');
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-07
+UPDATE  `monofood`.`tbl_distributor_commission_percent` SET  `product_id` =  '1',
+`country_id` =  '81' WHERE  `tbl_distributor_commission_percent`.`id` =1;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-08
+ALTER TABLE  `tbl_commission_second_max_percent` CHANGE  `percent`  `percent` FLOAT( 11 ) NOT NULL;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+#2016-09-12
+UPDATE  `monofood`.`tbl_commission_relation` SET  `downline` =  '3' WHERE  `tbl_commission_relation`.`commission_relation_id` =5;
+
+UPDATE  `monofood`.`tbl_commission_relation` SET  `downline` =  '3' WHERE  `tbl_commission_relation`.`commission_relation_id` =6;
