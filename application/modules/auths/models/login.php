@@ -29,6 +29,8 @@ class Login extends MY_Model {
         }
     }
 
+
+
     /* =================================================
      *   This function is use for users save and insert
      */

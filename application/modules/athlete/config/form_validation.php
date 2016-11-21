@@ -22,6 +22,90 @@ $config['video_validation'] = array(
 );
 
 /**
+ * Setting for athlete registration form validation rules
+ */
+$config['athlete_registration'] = array(
+    array(
+        'field' => 'email',
+        'label' => 'Email',
+        'rules' => 'required|trim|valid_email|xss_clean|callback_username_check'
+    ),
+    array(
+        'field' => 'fname',
+        'label' => 'First Name',
+        'rules' => 'required|trim|max_length[50]|xss_clean|strip_tags'
+    ),
+   
+    array(
+        'field' => 'lname',
+        'label' => 'Last Name',
+        'rules' => 'required|trim|max_length[50]|xss_clean|strip_tags'
+    ),
+
+    array(
+        'field' => 'gender',
+        'label' => 'Gender',
+        'rules' => 'required'
+    )
+);
+
+
+// /**
+//  * Setting front profile and user validation rules
+//  */
+// $config['video_validation'] = array(
+//     array(
+//         'field' => 'video_title',
+//         'label' => 'Title',
+//         'rules' => 'required|trim|max_length[40]|xss_clean|strip_tags'
+//     ),
+    
+//     array(
+//         'field' => 'video_url',
+//         'label' => 'Video URL',
+//         'rules' => 'required|trim|xss_clean|strip_tags'
+//     ),
+
+//     array(
+//         'field' => 'upload_video',
+//         'label' => 'Upload Video',
+//         'rules' => 'required|trim|xss_clean|strip_tags'
+//     )
+
+// );
+
+/**
+ * Setting front profile and user validation rules
+ */
+$config['add_video_validation'] = array(
+    array(
+        'field' => 'video_title',
+        'label' => 'Title',
+        'rules' => 'required|trim|max_length[40]|xss_clean|strip_tags'
+    )
+    
+
+);
+
+
+/**
+ * Setting front profile and user validation rules
+ */
+$config['add_video_url_validation'] = array(
+    array(
+        'field' => 'video_title',
+        'label' => 'Title',
+        'rules' => 'required|trim|max_length[40]|xss_clean|strip_tags'
+    ),
+    array(
+        'field' => 'video_url',
+        'label' => 'Video URL',
+        'rules' => 'required'
+    )
+
+);
+
+/**
  * Setting change admin profile form validation rules
  */
 $config['athlete_rofile'] = array( 
@@ -86,12 +170,12 @@ $config['athlete_rofile'] = array(
         'field' => 'player_type',
         'label' => 'Player type',
         'rules' => 'required|xss_clean|strip_tags'
-    ),
-    array(
-        'field' => 'mobile',
-        'label' => 'Mobile',
-        'rules' => 'required|xss_clean'
     )
+    // array(
+    //     'field' => 'mobile',
+    //     'label' => 'Mobile',
+    //     'rules' => 'required|xss_clean'
+    // )
 );
 
 /**
@@ -227,21 +311,6 @@ $config['edit_upload_player_image_validation'] = array(
         'rules' => 'required|trim|xss_clean|strip_tags'
     )
 );
-
-
-
-
-
-/**
- * Setting change images validation rules
- */
-// $config['images'] = array(
-//     array(
-//         'field' => 'avtarimage',
-//         'label' => 'Select Image',
-//         'rules' => 'required|xss_clean|strip_tags'
-//     )
-// );
 
 
 

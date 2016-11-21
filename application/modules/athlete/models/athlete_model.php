@@ -27,6 +27,9 @@ class Athlete_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    /*==============================================
+    *This function is use for get no of player
+    */
     public function get_number_of_player() {
         $this->db->select('*');
         $this->db->from('tbl_users');
@@ -36,7 +39,9 @@ class Athlete_model extends CI_Model {
         return $query->num_rows();
     }
 
-
+    /*==============================================
+    *This function is use for get image info
+    */
     public function get_image_info($id) {
         $this->db->select('*');
         $this->db->from('tbl_images');
@@ -46,8 +51,10 @@ class Athlete_model extends CI_Model {
         return $row;  
     }
 
-
-     public function get_about_us_history() {
+    /*==============================================
+    *This function is use for get about history
+    */
+    public function get_about_us_history() {
         $this->db->select('*');
         $this->db->from('tbl_about_us_history');
         $this->db->where('delete_status', '0');
@@ -57,7 +64,9 @@ class Athlete_model extends CI_Model {
         return $query->result_array();
     }
 
-
+    /*==============================================
+    *This function is use for get bio info
+    */
     public function get_video_info($id) {
         $this->db->select('*');
         $this->db->from('tbl_videos');
@@ -67,7 +76,9 @@ class Athlete_model extends CI_Model {
         return $row; 
     }
 
-
+    /*==============================================
+    *This function is use for get image
+    */
     public function get_image($rowid) {
         $this->db->select('*');
         $this->db->from('tbl_images');
@@ -92,6 +103,18 @@ class Athlete_model extends CI_Model {
     }//END get_player_image_for_delete()
 
 
+    /*============================================
+    * This function is use for get video for delete from folder
+    */
+    public function get_player_video_for_delete($img_id) {
+        $this->db->select('id,player_id,filename, thumbnail_image,upload_video_type');
+        $this->db->from('tbl_videos');
+        $this->db->where('id', $img_id);
+        $this->db->where('player_id', $this->session->userdata('player_id'));
+        $query = $this->db->get();
+        $row = $query->row_array();
+        return $row;  
+    }//END get_player_video_for_delete()
     
 
     public function get_video($rowid) {
@@ -185,19 +208,26 @@ class Athlete_model extends CI_Model {
     //     return $query->num_rows();
     // }
     
+
+    /*===================================================
+    *This function is use for get player details
+    */
     public function get_player_info($id) {
-        $this->db->select('tbl_user_details.*, user.id');
-        $this->db->from('tbl_user_details');
-        $this->db->join('tbl_users user', 'user.id = tbl_user_details.user_id');
-        $this->db->where('tbl_user_details.user_id',$id);
+        $this->db->select('user.id as user_id, tbl_user_details.*');
+        $this->db->from('tbl_users user');
+        $this->db->join('tbl_user_details', 'user.id = tbl_user_details.user_id');
+        $this->db->where('user.id',$id);
         $this->db->where('user.delete_status','0');
+        $this->db->where('user.user_type',1);
         $query = $this->db->get();
         //echo $this->db->last_query();die;
         return $query->row();
-    }
+    }//END get_player_info()
 
 
-
+    /*==============================================
+    *This function is use for get biography
+    */
     public function get_biography($id) {
         $this->db->select('*');
         $this->db->from('tbl_biography');
@@ -205,7 +235,7 @@ class Athlete_model extends CI_Model {
         $query = $this->db->get();
         return $query->row();
         
-    }
+    }//END get_biography()
 
     /* for getting all player postions */
 
@@ -216,8 +246,23 @@ class Athlete_model extends CI_Model {
     //     return $query->result_array();
     // }
 
+    /*========================================
+    * This function is use for get image for remove when update profile image
+    */
+    public function get_profile_image_for_remove() {
+        $this->db->select('tbl_user_details.id, tbl_user_details.profile_image');
+        $this->db->from('tbl_user_details');
+        $this->db->where('user_id',$this->session->userdata('player_id'));
+        $query = $this->db->get();
+        return $query->row_array();
+    }//END get_profile_image_for_remove();
+
+
+    /* =======================================================
+    * This function is user for update profile
+    */ 
     public function update_profile($data) {
-        $this->db->where('id', $this->session->userdata('player_id'));
+        $this->db->where('user_id', $this->session->userdata('player_id'));
         $this->db->update('tbl_user_details', $data);
         return $this->db->affected_rows();
     }
@@ -229,6 +274,9 @@ class Athlete_model extends CI_Model {
         return $id;
     }
 
+    /*=====================================================
+    *This function is use for update video 
+    */
     public function update_video_details($data, $id) {
         $this->db->where('id', $id);
         $this->db->update('tbl_videos', $data);
@@ -236,12 +284,18 @@ class Athlete_model extends CI_Model {
     }
 
    
+    /*=======================================================
+    * This function is user for insert video 
+    */
     public function insert_video_details($data) {
         $this->db->insert('tbl_videos', $data);
         return $this->db->insert_id();
     }
 
 
+    /*===========================================================
+    *This function is user for update biography infor
+    */
     public function updateBiograpyhy($biography) {
         $this->db->where('player_id', $this->session->userdata('player_id'));
         $this->db->update('tbl_biography', $biography);   

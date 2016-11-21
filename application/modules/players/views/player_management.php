@@ -58,11 +58,11 @@
                                 </td>
                                 
                                 <td>
-                                    <input type="text" class="form-control form-filter input-sm" name="first_name" placeholder="Last Name">
+                                    <input type="text" class="form-control form-filter input-sm" name="last_name" placeholder="Last Name">
                                 </td>
 
                                 <td>
-                                    <input type="text" class="form-control form-filter input-sm" name="last_name" placeholder="Name">
+                                    <input type="text" class="form-control form-filter input-sm" name="email" placeholder="Email">
                                 </td>
                                 
                                 

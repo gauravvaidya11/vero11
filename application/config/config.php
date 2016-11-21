@@ -434,9 +434,9 @@ $config['header_admin_plugin_css'] = array();
 //====================================================================//
 //Front assets
 $config['header_css'] = array(
-    'bootstrap.min.css',
-    'font-awesome.min.css',
-    'common/validation_error.css',
+    'bootstrap.min.cssdsfs',
+    'font-awesome.min.csssdfsaf',
+    'common/validation_error.csssdfas',
 );
 
 $config['header_plugin_js'] = array(

@@ -1,4 +1,11 @@
 
+#datatable_ajax tbody tr td:last-child .dropdown button {
+    background: #4b8df8 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    padding: 5px 10px;
+}
+
 /*======= Back to top ===============*/
 .cntctBtm {
     margin-top: 20px;
@@ -9,4 +16,393 @@
 
 .custom_gender{
     background-color: #fff !important;
+}
+
+header nav ul{ display: inline-block;}
+
+.position, .player_age {font-size: 14px; color: #b0b0b0;}
+
+.comm-message {  width: 100%;}
+
+.custom_language_dropdownl {
+    display: inline-block;
+    margin:0;float: right;
+    position: relative;
+    vertical-align: middle;
+}
+.bootbox-body {
+    padding: 15px;
+}
+
+.tax-box {
+    margin-top: 37px !important;
+}
+.custom-margin {
+    margin-left: -32px;
+}
+
+.custom_language_dropdownl select { cursor: pointer; -moz-appearance: none; -webkit-appearance: none; outline: none; border: none; background: none; color: #817973; font-weight: 300; font-size: 16px; padding: 0 18px 0 0; position: relative; width: 100%; }
+.custom_language_dropdownl:after { background: url(../../images/down_aeroWht.png) no-repeat; content: ""; display: block; height: 19px; position: absolute; right: 0px; top: 18px; width: 21px; z-index: 999; pointer-events: none; }
+    /*==Close here color and logog setting css==*/
+.top-right-menu ul.language li {
+    border: medium none;
+    display: block;
+    padding: 0;
+}
+.select_bx {
+    border-radius: 0;
+    color: #605851;
+    cursor: pointer;
+    font-size: 17px;
+    margin-top: 8px;
+    margin-left:35px;
+    padding: 1px 6px 2px;
+    text-align: left;
+    width: 150px;
+}
+
+ul.language {
+    background: rgb(207, 49, 42) none repeat scroll 0 0;
+    border-radius: 0;
+    line-height: 22px;
+    margin: 0;
+    padding: 5px 10px;
+    position: absolute;z-index: 9;
+    text-align: left;
+    top: 35px;
+    width: 100%;
+}
+
+ul.language {
+    line-height: 22px;
+    text-align: left;
+    margin-left: 24px;
+}
+#select_bx img, .language img {
+    max-width: 18px;
+    margin-right:5px;
+    vertical-align: middle;
+}
+.sel_country a{
+	padding-left:7px;
+	border: none !important;
+}
+.menuIcn {
+    cursor: pointer;
+}
+
+.clbPrfLft li a:hover, .clbPrfLft li.active a{
+    border-left-color: #cf312a;
+    color: #cf312a;
+}
+.modal-footer{
+    border-top: none;
+}
+
+
+
+.my_vedio {
+    position: relative;
+}
+.my_vedio::after {
+    background: rgba(0, 0, 0, 0.4) url("../images/play.png") no-repeat scroll center center;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+.modal-footer{ text-align: left; padding-top:10px;}
+#editBio{ margin-top:10px;   }
+
+
+.my_image img, .my_vedio img {
+    height: 240px;
+    width: 100%;
+}
+
+.enter_bio {
+    font-size: 30px;
+	margin-top: 10px;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+}
+
+.add_more {
+    border-radius: 7px;
+	padding: 128px 0; 
+    
+}
+
+.add_more a {margin: 0 auto;width: 140px;}
+.my_vedio::after {
+    background: rgba(0, 0, 0, 0.4) url("../../images/play.png") no-repeat scroll center center;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+.profile_edit p {
+    color: #4f5a6d;
+    float: left;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    z-index: 99;
+}
+
+.edit_delet {
+    float: right;
+}
+
+.add_more a {
+    border: 1px solid #5286fb;
+    border-radius: 7px;
+    color: #5286fb;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    height: 50px;
+    line-height: 47px;
+    text-align: center;
+}
+
+.profile_edit {
+    height: 66px;
+    padding: 22px 15px;
+}
+
+.modal-footer{
+    margin-top: 15px;
+}
+.customPadding{padding:15px;}
+.showCheckoutBtn{width:175px;}   
+
+
+/*=====about us css only====*/
+
+.secRightCntnt {
+    color: #949494;
+    font-size: 15px;
+}
+.commann-heading h3 {
+    color: #1d2531;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 0 17px;
+}
+.cntctTopCntnt {
+    border-bottom: 1px solid #e3e3e3;
+    margin-bottom: 35px;
+    padding-bottom: 5px;
+}
+.secRightCntnt p {
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+.contactMap {
+    margin: 30px 0 60px;
+}
+
+.cntnInfoSngle.clearfix {
+    margin-bottom: 20px;
+}
+.getSocl {
+    margin: 60px 0 40px;
+}
+.snglInpt {
+    margin: 23px 0;
+}
+.snglInpt input, .snglInpt textarea {
+    background: #edebeb none repeat scroll 0 0;
+    border: 1px solid #b4b5b5;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 300;
+    outline: medium none;
+    padding: 15px 20px;
+    resize: none;
+    width: 100%;
+}
+.getSocl ul {
+    margin: 0 auto;
+    max-width: 475px;
+}
+.getSocl li {
+    display: inline-block;
+    margin: 6px;
+}
+.getSocl li a, .pnlScl li a {
+    border: 1px solid #949494;
+    border-radius: 100%;
+    color: #949494;
+    display: block;
+    height: 37px;
+    line-height: 36px;
+    text-align: center;
+    width: 37px;
+}
+.getSocl li a .fa {
+    font-size: 18px;
+}
+.btn-block, .prflSavebtn .btn {
+    background: #cd312a;
+    border: 2px solid #e2e2e2;
+    border-radius: 7px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.43) inset;
+    font-size: 21px;
+    /*margin: 22px 0 15px;*/
+    outline: medium none !important;
+    padding: 13px;
+    text-transform: uppercase;
+}
+/*=====about us css only====*/
+
+.customPadding{
+    padding:20px;
+}
+
+.super_script {
+    font-size: 15px;
+}
+.editPrfImage p {
+    font-family: "Lato Bold";
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.custom_free_user, .freeuser{
+    margin-bottom: 10px;
+    color: #CF312A;
+    font-weight:bold;
+}
+
+.paiduser{
+    color: #45763D;   
+    font-weight:bold;
+}
+.likeIcn .fa {
+    margin-right: 10px;
+    float: left;
+}
+.likeIcn .fa-heart, .liked .fa-heart-o{
+    display:inline-block;
+}
+.likeIcn {
+    font-size: 20px;
+}
+
+.selctCnt {
+    float: left;
+    margin-left: 5%;
+}
+.midInpt {
+    float: left;
+    margin-left: 0;
+    width: 28%;
+}
+
+.topSearch {
+    min-height: 75px;
+    padding: 20px 0;
+}
+
+.custom_margin{
+    margin-left: 0px;
+}
+
+/*=====add image css=====**/
+
+.video_box .main-contact-form {
+    overflow: hidden;
+}
+
+.main-contact-form .comman-group {
+    margin-bottom: 23px;
+}
+
+.video_box .main-contact-form label {
+    color: #696969;
+    display: block;
+    font-size: 16px;
+    font-weight: normal;
+}
+.video_box .main-contact-form .form-control {
+    border: 1px solid #d9d9d9;
+    box-shadow: none;
+    color: #666666;
+    font-weight: bold;
+    height: 45px;
+    padding-right: 40px;
+}
+
+.video_box .input-group {
+    border-collapse: inherit;
+    display: block;
+    position: relative;
+    width: 100%;
+}
+.video_box .input-group-btn {
+    float: left;
+    font-size: 0 !important;
+    height: 45px;
+    position: inherit;
+    white-space: inherit;
+    width: 20%;
+}
+
+.video_box .input-group .form-control {
+    background: #fff none repeat scroll 0 0;
+    display: inline-block !important;
+    float: right;
+    height: 45px;
+    margin-bottom: 0;
+    padding-right: 0;
+    position: relative;
+    width: 80%;
+    z-index: 2;
+}
+
+.video_box .input-group-btn span {
+    background: #5286fb none repeat scroll 0 0;
+    height: 45px;
+    line-height: 32px;
+    margin-right: 0;
+    width: 100%;
+}
+.video_box .leftside {
+    float: right;
+    width: 85%;
+}
+
+.custom_btn_bio {
+    right: 14px;
+}
+.custom_drop_width{
+    width: 100% !important;
+}
+.remove_serach{
+    margin-bottom: 15px;
+}
+.srchPlyrs {
+    margin-top: 30px;
+}
+
+.imgCnt, .imgCnt img {
+    height: 190px;
+    width: 100%;
+}
+.no_record {
+    margin-left: 30px;
+    width: 100%;
+}
+#play-video .modal-body{
+    padding: 23px;
 }

@@ -16,11 +16,13 @@ class User_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-
+    /*============================================
+    *This function is use for get player details 
+    */
     public function get_player_info($user_id) {
-        $this->db->select('*');
+        $this->db->select('user.*, user_det.*');
         $this->db->from('tbl_users user');
-        $this->db->join('tbl_user_details', 'user.id = tbl_user_details.user_id');
+        $this->db->join('tbl_user_details user_det', 'user.id = user_det.user_id');
         $this->db->where('user.id',$user_id);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
@@ -29,6 +31,9 @@ class User_model extends CI_Model {
         }
     }
 
+    /*==========================
+    * This player is use for get no of player 
+    */
     public function get_number_of_player() {
         $this->db->select('*');
         $this->db->from('tbl_users');
@@ -36,14 +41,20 @@ class User_model extends CI_Model {
         return $query->num_rows();
     }
 
+    /* This function is use for save default payment account info when user signup */
+    public function save_default_user_payment_account($default_user_data) {
+        $this->db->insert('tbl_payment_account', $default_user_data);
+        return $this->db->insert_id();
+    }//END save_default_user_payment_account()
 
-    /* for inserting login credentials of player */
+    /* This function is use for save users */
 
-    public function insertLoginDetails($login_data) {
+    public function save_users($login_data) {
         $this->db->insert('tbl_users', $login_data);
         return $this->db->insert_id();
     }
 
+   
     public function insert_biography($data) {
         $this->db->insert('tbl_biography', $data);
         return $this->db->insert_id();
@@ -66,8 +77,9 @@ class User_model extends CI_Model {
         }
     }
 
-    /* check for unique username */
-
+    /*===================================================
+    *This function is use for check for unique username
+    */
     public function check_unique_username($email) {
 
         $this->db->select('*');
@@ -82,7 +94,7 @@ class User_model extends CI_Model {
         } else {
             return false;
         }
-    }
+    }// END check_unique_username()
 
     /* get player login information */
 
@@ -94,8 +106,6 @@ class User_model extends CI_Model {
     }
 
     /* for getting hash value for user verfication */
-    
-
     public function get_hash_value($email) {
         $this->db->select('hash');
         $this->db->from('tbl_user_details');
@@ -106,7 +116,7 @@ class User_model extends CI_Model {
             $row = $query->row_array();
             return $row;
         }
-    }
+    }//END get_hash_value()
 
     
 
@@ -156,7 +166,10 @@ class User_model extends CI_Model {
         $data = array('is_verified' => 1);
         $this->db->where('email', $email);
         $this->db->update('tbl_users', $data);
+        return $this->db->affected_rows();
     }
+
+
 
     /* for updating otp in forgot password functionality */
 
@@ -167,10 +180,11 @@ class User_model extends CI_Model {
         $this->db->update('tbl_users', $data);
     }
 
-    public function get_otp($email) {
+    public function get_otp($email, $otp=false) {
         $this->db->select('id,otp');
         $this->db->from('tbl_users');
         $this->db->where('email', $email);
+        $this->db->where('otp', $otp);
         $this->db->where('delete_status', "0");
         $query = $this->db->get();
         if ($query->num_rows() > 0) {

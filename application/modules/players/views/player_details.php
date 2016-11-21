@@ -16,7 +16,6 @@
     $laterality = array("1"=>"Right Footed","2" =>"Left Footed","3" =>"Two Footed");
 
     $playerType = array("1"=>"Hired","2" =>"Free");
-    $genderType = array("1" => "Male", "2"=> "Female");
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -118,7 +117,7 @@
                                             <div class="col-md-9 details-margin-top">
                                                 <?php
                                                 if ($player_info->gender != '') {
-                                                    echo $genderType[$player_info->gender];
+                                                    echo $player_info->gender;
                                                 } else {
                                                     echo 'N/A';
                                                 }

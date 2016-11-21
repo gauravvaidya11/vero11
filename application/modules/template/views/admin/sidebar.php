@@ -53,6 +53,22 @@
                     </li>                  
                 </ul>
             </li>
+
+            <li class="<?php echo ($seg == 'admin-club-list' || $seg=='admin-club-details') ? 'open active' : ''; ?>" >
+                <a href="javascript:;">
+                    <i class="fa fa-user"></i>
+                    <span class="title">Club Management</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="<?php echo ($seg == 'admin-club-list' || $seg=='admin-club-details') ? 'active' : ''; ?>">
+                        <a href="<?php echo base_url(); ?>admin-club-list">
+                            <i class="fa fa-users"></i>
+                            All Clubs
+                        </a>
+                    </li>                  
+                </ul>
+            </li>
             
             
             <li class="<?php echo ($seg == 'admin-languages' || $seg == 'admin-edit-languages') ? 'open active' : ''; ?>">
@@ -97,12 +113,7 @@
                             Contact Us
                         </a>
                     </li>
-                    <!-- <li class="<?php echo ($seg == 'admin-cms-privacy-policy') ? 'active' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'admin-faq'; ?>">
-                            <i class="fa fa-briefcase"></i>
-                            FAQs
-                        </a>
-                    </li> -->
+                    
                 </ul>
             </li>
 
@@ -121,21 +132,26 @@
                             <i class="fa fa-cog"></i>
                             Basic Settings
                         </a>
-                    </li>
-                    
-                    <!-- <li class="<?php echo ($seg == 'admin-add-Paypal') ? 'active' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'admin-add-Paypal'; ?>">
-                            <i class="fa fa-paypal"></i>
-                            PayPal Settings
-                        </a>
-                    </li>
-                    <li class="<?php echo ($seg == 'admin-payment-settings') ? 'active' : ''; ?>">
-                        <a href="<?php echo BASE_URL . 'admin-payment-settings'; ?>">
+                    </li>  
+                </ul>
+            </li>
+
+            <li class="<?php echo ($seg == 'admin-payment-account-list' || $seg=='admin-payment-details') ? 'open active' : ''; ?>">
+                <a href="javascript:;">
+                    <i class="fa fa-money"></i>
+                    <span class="title">
+                        Payment Management
+                    </span>
+                    <span class="arrow ">
+                    </span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="<?php echo ($seg == 'admin-payment-account-list' || $seg=='admin-payment-details') ? 'active' : ''; ?>">
+                        <a href="<?php echo BASE_URL . 'admin-payment-account-list'; ?>">
                             <i class="fa fa-money"></i>
-                            Payment Settings
+                            Payment List
                         </a>
-                    </li> -->
-                    
+                    </li>  
                 </ul>
             </li>
             

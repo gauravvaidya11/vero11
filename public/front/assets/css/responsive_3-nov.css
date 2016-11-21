@@ -1,0 +1,149 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media screen and (max-width: 1199px) {
+	.homeInrTxt {font-size: 155px;}	
+}
+
+@media screen and (max-width: 990px) {
+	.vdoMtr {margin: 30px 0 0;}	
+	.vdoImg { float: none; }
+	.snglVdo {
+		margin-top: 40px;
+		padding-top: 45px;
+	}
+	.topHead span { margin-bottom: 10px; }
+	.homeInrTxt {font-size: 125px;}	
+	.clbPrfLft { float: none; width: auto; border: 1px solid #e8e8e8;}
+	.clbPrfLft:before { display: none}
+	.clbPrflRght { margin: 40px 0 0;}
+	.snglFldPrfl label { font-size: 19px;}
+	.clbNameHed { font-size: 22px;}
+	.snglFldPrfl p { font-size: 17px}
+}
+
+@media screen and (min-width: 681px) and (max-height: 550px) {
+	.homeInrTxt {font-size: 90px;}	
+	.homeSec + footer { position: static; margin: 0;}
+	.homeInrTxt { top: 50%}
+}
+
+
+@media screen and (max-width: 767px) {
+	.snglFldPrfl label {font-size: 18px; margin-bottom: 10px;}
+	.clbNameHed { font-size: 20px;}
+	.prflFrmCntnr .modal-lg { padding: 0;}
+}
+@media screen and (max-width: 740px) {
+	.menuIcn, .crossIcn { display: block}
+	header nav {
+		position: fixed;
+		top: 0;
+		left: -300px;
+		bottom: 0;
+		background: #fff;
+		width: 280px;
+		box-shadow: 0 0 20px rgba(0,0,0,.5);
+		z-index: 64;
+	}
+	.openMenu header nav { left: 0}
+	.openMenu .overlayBg { visibility: visible; opacity: 1}
+	header nav li { display: block; border-bottom: 1px solid #f0f0f0; }
+	header a { color: #555;}
+	header nav li a { padding: 10px 15px;}
+	header nav li.active a, header nav li a:hover { color: #cf312a} 
+	.ftrLeft, .ftrRight, .forgtPass, .signUp { float: none; }
+	.ftrRight { text-align: left; margin-top: 25px;}
+	.ftrLinks ul li { padding: 12px 8px 20px;}
+	.ftrLinks ul { margin: 0 -8px;}
+	
+	.formCntnr > h2 {
+		font-size: 23px;
+		padding: 20px 20px;
+	}
+	.formCntnr .btn-block { font-size: 20px; padding: 13px;}
+	.formCntnr { padding-bottom: 20px;}
+	.bnrInr { height: 145px;margin-bottom: 20px;}
+	footer { margin-top: 40px;}
+	.vdoMtr p, .aboutClub p, .clubHstry p {font-size: 18px;line-height: 31px;}
+	.snglVdo {
+		margin-top: 25px;
+		padding-top: 30px;
+	}
+	.vdoImg { width: auto; max-width: 371px;}
+	.homeInrTxt {font-size: 90px;}	
+	.homeSec + footer { position: static; margin: 0;}
+	.homeInrTxt { top: 50%}
+	header .container > nav > ul {
+		height: 100%;
+		padding-top: 50px;
+		margin: 0;
+		overflow: auto;
+	}
+	header .container .dropdown-menu {
+		width: auto;
+		border: 0;
+		border-radius: 0;
+		padding: 0;
+		position: static;
+		float: none;
+		box-shadow: none;
+		background: #f4f4f4;
+		margin: 0 0 -1px;
+	}
+	.dropdown-menu>li>a { padding: 6px 25px;font-size: 16px;}
+	header nav .dropdown-menu>li { border-bottom: 1px solid #e5e5e5; }
+	header nav .caret {
+		position: absolute;
+		right: 15px;
+		top: 20px;
+	}
+	.snglFldPrfl {
+		width: 100%;
+		padding: 0 2% 10px;
+	}
+	.snglFldPrfl label { margin-bottom: 5px;font-size: 17px;}
+	.snglRowPrfl,
+	.prflFrmCntnr .modal-content .snglRowPrfl { padding: 15px 10px 10px;}
+	.snglFldPrfl .input-group .form-control, 
+	.snglFldPrfl .dropdown-toggle.btn,
+	.snglFldPrfl p { font-size: 16px;}
+	.prflSavebtn .btn { margin: 0 10px 0; padding: 12px 44px; font-size: 18px;}
+	.prflFrmCntnr button.close { font-size: 25px;}
+	.editPrfImage p { font-size: 24px; margin-bottom: 65px;}
+	.editSubHead { font-size: 18px;}
+	.clubProfile { padding: 15px 0 0;}
+}
+
+@media screen and (max-width: 400px) {
+	.dteScl ul {
+		display: block;
+		margin: 15px -5px 0;
+		padding: 0;
+	}	
+	.nav-tabs { padding: 13px 13px 15px; }
+	.nav-tabs>li { float: none; width: auto; margin-bottom: -1px;}
+	.nav-tabs>li>a:before, .nav-tabs>li>a:after { display: none}
+	.nav-tabs>li>a,
+	.nav>li>a:focus, .nav>li>a:hover { background: #f5f5f5; padding: 5px 10px; border: 1px solid #e5e5e5; border-bottom-color: transparent}
+	.nav-tabs>li:last-child>a  { border-bottom-color: #e5e5e5}
+	.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{ border: 1px solid #e5e5e5; margin-bottom: 0;    background: #f5f5f5;}
+	
+	
+	.clubHstry { padding: 15px 0 45px; }
+	.vdoMtr p, .aboutClub p, .clubHstry p {
+		font-size: 16px;
+		line-height: 29px;
+		margin-bottom: 20px;
+	}
+	.topHead span {font-size: 22px;}
+	.vdoMtr h3 {  margin: 5px 0 15px; }
+	.homeInrTxt {
+    font-size: 50px;}
+	.clbPrfLft li a { padding: 13px 20px; font-size: 18px; }
+	
+}
+
+
+
+

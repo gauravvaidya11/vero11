@@ -1,29 +1,46 @@
 var commonJS = function () {
-    var ajx;
-    var multi_ajx;
     var commonJS = {
         init: function () {
-            this.backToTop();
+            this.handelMenu();
+            this.handelMultilanguage();
         },
-      
-        backToTop: function () {
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 50) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
+
+        handelMenu:function(){
+           $('.menuIcnInr').click(function() {
+            $('body').addClass('openMenu');
             });
-            // scroll body to 0px on click
-            $('#back-to-top').click(function () {
-                //$('#back-to-top').tooltip('hide');
-                $('body,html').animate({
-                    scrollTop: 0
-                }, 1000);
-                return false;
-            });
-            //$('#back-to-top').tooltip('show');
+            $('.crossIcnInr ,.overlayBg').click(function() {
+                $('body').removeClass('openMenu');
+            }); 
         },
+
+        handelMultilanguage:function(){
+           $(".language").hide();
+            $(".select_bx").show();
+
+            $(document).on("click", ".select_bx", function(){
+                $(".language").slideToggle();
+            });
+
+            $(document).on("click", ".sel_country", function(){
+                $('#loading').show();
+                var html = $(this).html();
+                $('#select_bx').html(html);
+                var dada_lang = $(this).attr('dada-lang');
+                
+                $.ajax({
+                    type:"POST",
+                    url : BASE_URL + "auths/auth/switchLanguage",
+                    data : [{name: csrf_name, value: csrf_token}, {name: 'language', value: dada_lang}],
+                    success : function(response) {
+                        window.location.href = window.location.href;
+                        $('#loading').hide();
+                    },       
+                }); 
+       
+            }); 
+        },
+            
 
     };
     $(function () {

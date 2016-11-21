@@ -58,7 +58,7 @@ $db['default']['hostname'] = 'localhost';
         $db['default']['username'] = 'rtcisinl_vero11';
         $db['default']['password'] = 'tz{2IuT{6g12';
         $db['default']['database'] = 'rtcisinl_vero11';
-
+        
 //    case 'vegisan.rt.cisinlive.com':
 //        $db['default']['username'] = 'rtcisinl_vegisan';
 //        $db['default']['password'] = 'vegisan';

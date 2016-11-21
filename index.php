@@ -1,6 +1,7 @@
 <?php
 ini_set('upload_max_filesize', '200M'); 
 ini_set('display_errors', 1);
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

@@ -107,7 +107,63 @@
 [18-Oct-2016 13:20:39 UTC] PHP Parse error:  syntax error, unexpected ')' in /data/home/rtcisinl/public_html/vero11/application/modules/settings/views/admin/index.php on line 46
 [18-Oct-2016 13:21:51 UTC] PHP Parse error:  syntax error, unexpected ')' in /data/home/rtcisinl/public_html/vero11/application/modules/settings/views/admin/index.php on line 46
 [18-Oct-2016 13:22:21 UTC] PHP Parse error:  syntax error, unexpected ')' in /data/home/rtcisinl/public_html/vero11/application/modules/settings/views/admin/index.php on line 46
-[19-Oct-2016 07:18:47 UTC] PHP Fatal error:  Call to undefined method User_model::get_player_positions() in /data/home/rtcisinl/public_html/vero11/application/modules/auths/controllers/auth.php on line 34
-[19-Oct-2016 12:29:57 UTC] PHP Fatal error:  Call to undefined function getSetting() in /data/home/rtcisinl/public_html/vero11/application/helpers/my_email_helper.php on line 92
-[19-Oct-2016 12:32:13 UTC] PHP Fatal error:  Call to undefined function getSetting() in /data/home/rtcisinl/public_html/vero11/application/helpers/my_email_helper.php on line 91
-[19-Oct-2016 12:33:06 UTC] PHP Fatal error:  Call to undefined function getSetting() in /data/home/rtcisinl/public_html/vero11/application/helpers/my_email_helper.php on line 91
+[18-Nov-2016 07:31:19 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type stdClass as array in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php:337
+Stack trace:
+#0 /data/home/rtcisinl/public_html/vero11/system/core/CodeIgniter.php(360): Club->getAllPlayers()
+#1 /data/home/rtcisinl/public_html/vero11/index.php(205): require_once('/data/home/rtci...')
+#2 {main}
+  thrown in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php on line 337
+[18-Nov-2016 07:31:26 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type stdClass as array in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php:337
+Stack trace:
+#0 /data/home/rtcisinl/public_html/vero11/system/core/CodeIgniter.php(360): Club->getAllPlayers()
+#1 /data/home/rtcisinl/public_html/vero11/index.php(205): require_once('/data/home/rtci...')
+#2 {main}
+  thrown in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php on line 337
+[18-Nov-2016 07:54:21 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_video_info() on null in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/views/front/player_details_by_club.php:200
+Stack trace:
+#0 /data/home/rtcisinl/public_html/vero11/application/third_party/MX/Loader.php(321): include()
+#1 /data/home/rtcisinl/public_html/vero11/application/third_party/MX/Loader.php(269): MX_Loader->_ci_load(Array)
+#2 /data/home/rtcisinl/public_html/vero11/application/modules/template/views/front/template.php(11): MX_Loader->view('player_details_...')
+#3 /data/home/rtcisinl/public_html/vero11/application/third_party/MX/Loader.php(321): include('/data/home/rtci...')
+#4 /data/home/rtcisinl/public_html/vero11/application/third_party/MX/Loader.php(269): MX_Loader->_ci_load(Array)
+#5 /data/home/rtcisinl/public_html/vero11/application/modules/template/controllers/template.php(44): MX_Loader->view('template', Array)
+#6 /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php(259): Template->front(Array)
+#7 in /data/home/rtcisinl/public_html/vero11/application/modules/clubs/views/front/player_details_by_club.php on line 200
+[19-Nov-2016 07:54:02 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1291
+[19-Nov-2016 07:54:39 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1291
+[19-Nov-2016 07:54:43 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1290
+[19-Nov-2016 07:55:12 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1290
+[19-Nov-2016 07:55:49 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:55:53 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:56:21 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:56:59 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:57:03 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:57:31 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:58:09 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:58:13 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:58:41 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:59:19 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:59:23 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 07:59:51 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:00:29 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:00:33 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:01:02 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:01:39 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:01:43 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:02:11 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:02:49 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:02:53 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:03:21 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:03:59 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:04:03 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:04:31 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:04:56 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:05:09 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:05:13 UTC] PHP Fatal error:  Cannot redeclare getTotalImageCount() (previously declared in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1265) in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1288
+[19-Nov-2016 08:06:19 UTC] PHP Fatal error:  Uncaught Error: Using $this when not in object context in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php:1284
+Stack trace:
+#0 /data/home/rtcisinl/public_html/vero11/application/modules/clubs/controllers/club.php(883): getTotalVideoCount()
+#1 /data/home/rtcisinl/public_html/vero11/system/core/CodeIgniter.php(360): Club->uploadVideo()
+#2 /data/home/rtcisinl/public_html/vero11/index.php(205): require_once('/data/home/rtci...')
+#3 {main}
+  thrown in /data/home/rtcisinl/public_html/vero11/application/helpers/common_helper.php on line 1284

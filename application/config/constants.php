@@ -61,6 +61,8 @@ define('FRONT_THEME_JS', BASE_URL . 'public/front/assets/js/');
 define('ADMIN_THEME_IMG', BASE_URL . 'public/admin/assets/img/');
 define('FRONT_THEME_IMG', BASE_URL . 'public/front/assets/images/');
 
+define('TIMTHUMB', BASE_URL . 'timthumb.php?src=');
+
 define('AVATAR_IMAGE', BASE_URL . 'public/front/assets/images/avatar.jpg');
 define('PLAYER_PLAY_IMAGE', BASE_URL . 'public/front/assets/images/placeholder.png');
 
@@ -89,6 +91,7 @@ define('USER_DASHBOARD_THEME_IMG', BASE_URL . 'public/user_dashboard/assets/imag
 //================== User Dashboard==================================
 
 define('NO_IMAGE', FRONT_THEME_IMG . 'default/not_found.jpg');
+define('DEFAULT_LOGO_IMAGE', FRONT_THEME_IMG . 'default/no_image.png');
 
 //================== Company Details ========================//
 define('COMPANY_LOGO_PATH',  'public/uploads/company_details/company_logo/');
@@ -105,6 +108,17 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 define('SITE_NAME', 'Vero11'); //default SITE NAME
 
 define('DEFAULT_COUNTRY', 81); //default germany
+
+
+define('CHECK_AGE', 13); //check age when player register
+
+define('API_USERNAME', 'rohit_api1.mailinator.com');
+
+define('API_PASSWORD', 'TA88CPN7GTFG8NX4');
+
+define('API_SIGNATURE', 'ANjJQ0kyujJJCiKtNXML.x-ludCPA90TDXG7MrhpUgj5iNfY4eykavIK');
+
+
 
 //====================== Validation Rules Start===========================
 

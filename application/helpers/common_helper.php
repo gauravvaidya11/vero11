@@ -5,7 +5,7 @@
  */
 function checkedLoggedInUserInfo() {
     $CI = & get_instance();
-    $CI->db->select('user.id, user_det.first_name, user_det.last_name,user_det.user_id');
+    $CI->db->select('user.id, user.user_type, user_det.club_name, user_det.club_manager_name,user_det.first_name, user_det.last_name, user_det.user_id');
     $CI->db->from('tbl_users user');
     $CI->db->join('tbl_user_details user_det', 'user.id=user_det.user_id');
     $CI->db->where('user.status', '1');
@@ -37,27 +37,32 @@ function get_number_of_player() {
 
 function isLoggedIn($flag = TRUE) {
     $ci = &get_instance();
-    if (!$ci->session->userdata('player_id')) {
-        if ($ci->input->is_ajax_request()) {
-                echo 'logout';
-                exit();
-        }else{
-           redirect(BASE_URL); 
-           exit();
-        }        
-    }else {
-        if($flag){
-           $check_status = checkedLoggedInUserInfo();
-           if(empty($check_status)){
-            logout();
-           }
-        }
-        if($flag == FALSE) {
-            if (!$ci->input->is_ajax_request()) {
-                redirect(BASE_URL."athlete-profile");
-            }
-        }
+    $check_status = checkedLoggedInUserInfo();
+    if(empty($check_status)){
+        redirect(BASE_URL.'login'); 
+        exit();
     }
+    // if (!$ci->session->userdata('player_id')) {
+    //     if ($ci->input->is_ajax_request()) {
+    //             echo 'logout';
+    //             exit();
+    //     }else{
+    //        redirect(BASE_URL.'login'); 
+    //        exit();
+    //     }        
+    // }else {
+    //     if($flag){
+    //        $check_status = checkedLoggedInUserInfo();
+    //        if(empty($check_status)){
+    //         logout();
+    //        }
+    //     }
+    //     if($flag == FALSE) {
+    //         if (!$ci->input->is_ajax_request()) {
+    //             redirect(BASE_URL."athlete-profile");
+    //         }
+    //     }
+    // }
 }
 
 function isAdminLoggedIn() {
@@ -78,8 +83,7 @@ function logout() {
     $ci = &get_instance();
         $array_items = array(
             'player_id' => '',
-            'display_name' => '',
-            'email' => '',
+            'user_type' => '',
             'profile_image' => ''
         );
         $ci->session->unset_userdata($array_items);
@@ -94,8 +98,10 @@ function logout() {
 
 function checkFrontUserLoggedIn($flag = TRUE) {
     $ci = &get_instance();
-    if ($ci->session->userdata('player_id')) {
+    if ($ci->session->userdata('player_id') && $ci->session->userdata('user_type')==1) {
         redirect(BASE_URL."athlete-profile");
+    }else if($ci->session->userdata('player_id') && $ci->session->userdata('user_type')==2){
+        redirect(BASE_URL."club-profile");
     }
 }
 
@@ -112,11 +118,6 @@ function checkAdmminLoggedIn() {
 }
 
 //END checkAdmminLoggedIn();
-
-
-/* ======================================
- * This fucntion is use for check user login
- */
 
 
 
@@ -150,8 +151,12 @@ function userLoggedInInfo() {
     $ci = &get_instance();
     $session_user_id = $ci->session->userdata('player_id');
     $ci->db->select('users.id,'
-            . 'user_det.first_name,'
+            . 'users.user_type,'
+            . 'users.paid_status,'
+            . 'user_det.club_name,'
             . 'user_det.nick_name,'
+            . 'user_det.club_manager_name,'
+            . 'user_det.first_name,'
             . 'user_det.last_name,'
             . 'user_det.email,'
             . 'user_det.age,'
@@ -168,9 +173,9 @@ function userLoggedInInfo() {
     $ci->db->where('users.id', $session_user_id);
     $query = $ci->db->get();
     return $query->row_array();
-}
+}//END userLoggedInInfo();
 
-//END userLoggedInInfo();
+
 //filter function for return true string
 function escapeString($val) {
     $db = get_instance()->db->conn_id;
@@ -424,7 +429,6 @@ function get_unique_username($user_id = false, $username = "") {
  */
 
 function setstatus($id, $status, $table) {
-
     $CI = & get_instance();
     $CI->db->set('status', $status);
     $CI->db->where('id', $id);
@@ -798,6 +802,9 @@ function display_date($date, $choise = 'default') {
                 break; 
             case 4:
                 $val = date("Y", strtotime($date));
+                break;  
+            case 5:
+                $val = date("M j, Y", strtotime($date));
                 break;    
             default:
                 $val = date("d-m-Y", strtotime($date));
@@ -1206,6 +1213,80 @@ function getContactCount() {
     //echo $ci->db->last_query();die;
     return $query->result_array();
 }
+
+function cardTypeName($number) {
+    $number = preg_replace('/[^\d]/', '', $number);
+    if (preg_match('/^3[47][0-9]{13}$/', $number)) {
+        return 'American Express';
+    }
+    elseif (preg_match('/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/', $number)) {
+        return 'Discover';
+    }
+    elseif (preg_match('/^6(?:011|5[0-9][0-9])[0-9]{12}$/', $number)) {
+        return 'Discover';
+    }
+    elseif (preg_match('/^(?:2131|1800|35\d{3})\d{11}$/', $number)) {
+        return 'JCB';
+    }
+    elseif (preg_match('/^5[1-5][0-9]{14}$/', $number)) {
+        return 'MasterCard';
+    }
+    elseif (preg_match('/^4[0-9]{12}(?:[0-9]{3})?$/', $number)) {
+        return 'Visa';
+    }
+    else {
+        return 'Unknown';
+    }
+}
+
+
+
+/* =====================================
+ * This function is use for get user infor by id
+ */
+function getUserInfoById($user_id) {
+    $CI = & get_instance();
+    $CI->db->select('user.id, user.email, user_det.first_name, user_det.last_name, user_det.user_id');
+    $CI->db->from('tbl_users user');
+    $CI->db->join('tbl_user_details user_det', 'user.id=user_det.user_id');
+    $CI->db->where('user.status', '1');
+    $CI->db->where('user.delete_status', '0');
+    $CI->db->where('user.id', $user_id);
+    $data = $CI->db->get();
+    $result = $data->row_array();
+    return $result;
+}
+
+
+/* =====================================
+ * This function is use for get image count
+ */
+function getImageCount() {
+    $CI = & get_instance();
+    $CI->db->select('id as image_count, filename');
+    $CI->db->from('tbl_images');
+    $CI->db->where('player_id', $CI->session->userdata('player_id'));
+    $CI->db->where('user.delete_status', '0');
+    $CI->db->where('user.id', $user_id);
+    $data = $CI->db->get();
+    $result = $data->num_rows();
+    return $result;
+}//END getTotalImageCount()
+
+
+/* =====================================
+ * This function is use for get video count
+ */
+function getTotalVideoCount() {
+    $CI = & get_instance();
+    $CI->db->select('id as video_count, filename');
+    $CI->db->from('tbl_videos');
+    $CI->db->where('player_id', $CI->session->userdata('player_id'));
+    $data = $CI->db->get();
+    $result = $data->num_rows();
+    return $result;
+}//END getTotalVideoCount()
+
 
 
  /*===========================================================================*/

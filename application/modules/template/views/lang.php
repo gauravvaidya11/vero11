@@ -6,8 +6,15 @@
         login_email_maxlength : '<?php echo lang("email_length_validation_message"); ?>',
         login_password_maxlength : '<?php echo lang("password_maxlenth_validation_message"); ?>',
         login_password_minlength : '<?php echo lang("password_minlength_validation_message"); ?>',
-
+        common_detele_confirmation_message_are_you_sure : '<?php echo lang("common_detele_confirmation_message_are_you_sure"); ?>',
+        message_are_you_sure_you_want_to_delete_this : '<?php echo lang("message_are_you_sure_you_want_to_delete_this"); ?>',
+        common_change_status_confirmation_message_are_you_sure : '<?php echo lang("common_change_status_confirmation_message_are_you_sure"); ?>',
+        common_remove_search_confirmation_message_are_you_sure : '<?php echo lang("common_remove_search_confirmation_message_are_you_sure"); ?>',
+        heading_please_enter_biography : '<?php echo lang("heading_please_enter_biography"); ?>',
+        heading_please_enter_biography_title : '<?php echo lang("heading_please_enter_biography_title"); ?>',
         register_firstname_required : '<?php echo lang("firstname_error_required"); ?>',
+        title_and_heading_unfavorite : '<?php echo lang("title_and_heading_unfavorite"); ?>',
+        title_and_heading_favorite : '<?php echo lang("title_and_heading_favorite"); ?>',
         register_lastname_required : '<?php echo lang("lastname_error_required"); ?>',
         register_email_required : '<?php echo lang("email_error_required"); ?>',
         register_dob_required : '<?php echo lang("dob_error_required"); ?>',
@@ -21,7 +28,7 @@
         register_terms_and_condition_required : '<?php echo lang("register_terms_and_condition_required"); ?>',
         common_male_gender_select_option : '<?php echo lang("common_male_gender_select_option"); ?>',
         common_female_gender_select_option : '<?php echo lang("common_female_gender_select_option"); ?>',
-        
+        register_user_type_required : '<?php echo lang("register_user_type_required"); ?>',
         title_required : '<?php echo lang("title_required"); ?>',
         video_required_url : '<?php echo lang("video_url_error_message"); ?>',
         video_accept_url : '<?php echo lang("video_url_accept_error_message"); ?>',
@@ -50,6 +57,8 @@
         left_footed : '<?php echo lang("left_footed"); ?>',
         center_back : '<?php echo lang("center_back"); ?>',
         two_footed : '<?php echo lang("two_footed"); ?>',
+        
+        
 
         hired : '<?php echo lang("hired"); ?>',
         free : '<?php echo lang("free"); ?>',

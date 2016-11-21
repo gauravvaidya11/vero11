@@ -1,6 +1,8 @@
 $(function () {
    
     $("#login-form").validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block', // default input error message class
         rules: {
             email: {
                 required: true,
@@ -16,7 +18,7 @@ $(function () {
            messages: {
                 email: {
                     required: lang_js.register_email_required,
-                    maxlength: lang_js.login_email_maxlength,
+                    maxlength: lang_js.login_email_maxlength, 
                     email: lang_js.common_valid_email
                 },
                 password: {
@@ -59,6 +61,8 @@ $(function () {
 
 
     $("#forgot-password").validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block', // default input error message class
         rules: {
             email: {
                 required: true,
@@ -96,6 +100,8 @@ $(function () {
 
 
     $("#reset-password").validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block', // default input error message class
         rules: {
             otp: {
                 required: true
@@ -112,14 +118,14 @@ $(function () {
         },
         messages: {// custom messages for radio buttons and checkboxes
             otp: {
-                required: lang_js.otp_required,
+                required: lang_js.otp_required
             },
             newpass:{
-              required: lang_js.login_password_required,  
+              required: lang_js.login_password_required  
             },
 
             email:{
-              required: lang_js.register_email_required,  
+              required: lang_js.register_email_required
             }
         },
         invalidHandler: function (event, validator) { //display error alert on form submit   

@@ -10,8 +10,30 @@ $(function () {
         changePasswordValidation();
     });
 
+    function handelActiveDeactive(){ 
+        $(document).on("click", ".clbPrfLft ul li", function(){
+            $('.clbPrfLft ul li').removeClass("active");
+            $(this).addClass("active");
+        });
+    }
 
-    
+    function updateProfileImage(){
+        $("#updateProfileImageForm").ajaxForm({
+            success: function(xhr){
+                var obj = $.parseJSON(xhr);
+                if(obj.type=="error"){
+                    $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+obj.msg+'</div>');
+                }else{
+                    $('.comm-message').html('<div class="alert alert-success hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-check" style="float:left"></span> Success! </strong>'+obj.msg+'</div>');
+                }
+                setTimeout(function(){
+                   $('.hideauto').fadeOut('slow');
+                }, 5000);
+                $('#loading').hide();
+            }
+        }).submit();
+    }
+
     function changePasswordValidation(){ 
             $('#change-password-form').validate({
                         errorElement: 'span', //default input error message container
@@ -56,7 +78,7 @@ $(function () {
                     });
                     var result=$("#change-password-form").valid();           
                         if(result==true){
-                            $('#loading').show();
+                           $('#loading').show();
                            $('.error').hide();
                            $("#change-password-form").ajaxForm({
                                 success: function(xhr){
@@ -132,11 +154,12 @@ $(function () {
                             player_type: {
                                 required: true
                             },
-                            mobile: {
-                                required: true
-                            },
 
-                            club_name: {
+                            // mobile: {
+                            //     required: true
+                            // },
+
+                            hire_club_name: {
                                 required: true
                             }
                         },
@@ -182,10 +205,10 @@ $(function () {
                             player_type: {
                                 required: lang_js.common_required_this_field_is_required
                             },
-                            mobile: {
-                                required: lang_js.common_required_this_field_is_required
-                            },
-                            club_name: {
+                            // mobile: {
+                            //     required: lang_js.common_required_this_field_is_required
+                            // },
+                            hire_club_name: {
                                 required: lang_js.common_required_this_field_is_required
                             }
                         },
@@ -246,19 +269,34 @@ $(function () {
                 $('#birthday').val(data.birthday);
                 $('#age').val(data.age);
                 $('#gender').val(data.gender);
+                $('#gender').selectpicker('refresh');
 
-                var explode_height = data.height.split('.');
+                if(data.height!=null){
+                    var explode_height = data.height.split('.');
 
-                $('#height_m').val(explode_height[0]);
-                $('#height_cm').val(explode_height[1]);
+                    $('#height_m').val(explode_height[0]);
+                    $('#height_m').selectpicker('refresh');
+                    $('#height_cm').val(explode_height[1]); 
+                    $('#height_cm').selectpicker('refresh'); 
+                }else{
+                    $('#height_m').val();
+                    $('#height_m').selectpicker('refresh');
+                    $('#height_cm').val();
+                    $('#height_cm').selectpicker('refresh');
+                }
 
                 $('#weight').val(data.weight);
                 $('#laterality').val(data.laterality);
+                $('#laterality').selectpicker('refresh');
                 $('#country').val(data.country);
+                $('#country').selectpicker('refresh');
                 $('#cpf').val(data.cpf);
                 $('#pos1').val(data.position_1);
+                $('#pos1').selectpicker('refresh');
                 $('#pos2').val(data.position_2);
+                $('#pos2').selectpicker('refresh');
                 $('#pos3').val(data.position_3);
+                $('#pos3').selectpicker('refresh');
                 //$('#player_type').html(data.position_3);
                 $('#mobile').val(data.mobile);
                 $('#email').val(data.email);
@@ -266,10 +304,11 @@ $(function () {
                 $('#instagram').val(data.instagram);
                 $('#twitter').val(data.twitter);
                 $('#player_type').val(data.player_type);
+                $('#player_type').selectpicker('refresh');
 
                 if(data.player_type==1){
                     $('.show_hide_club').show();
-                    $('#clubname').val(data.club_name);    
+                    $('#clubname').val(data.hire_club_name);    
                 }else{
                     $('#clubname').val("");    
                     $('.show_hide_club').hide();
@@ -291,6 +330,15 @@ $(function () {
         });
     });
 
+    // $(document).on('focus',"#birthday", function(){
+    //     $(this).datepicker();
+    // });
+
+    $('#birthday').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true
+    });
+
     $('#birthday').datepicker().on("changeDate", function (e) {
         var currentDate = new Date();
         var selectedDate = new Date(e.date.toString());
@@ -310,7 +358,7 @@ $(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#profileImage').attr('src', e.target.result);
+                $('.profileImage').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -321,16 +369,21 @@ $(function () {
         var explode_wm_image = $("#img").val().split('.').pop().toLowerCase();
         if($.inArray(explode_wm_image, ['gif','jpg', 'png', 'jpeg', 'GIF', 'JPG', 'PNG', 'JPEG']) == -1) { 
             $(this).val('');
-            $("#profileImage").attr("src", AVATAR_IMAGE);
-            $(".gal_js_error").text(lang_js.invalid_file_type_support_only_gif_jpg_jpeg_png_file_type);
+            $(".profileImage").attr("src", AVATAR_IMAGE);
+            bootbox.alert(lang_js.invalid_file_type_support_only_gif_jpg_jpeg_png_file_type);
+            //$(".gal_js_error").text(lang_js.invalid_file_type_support_only_gif_jpg_jpeg_png_file_type);
             return false;
         }else{
-            $(".gal_js_error").text('');
+            //$(".gal_js_error").text('');
+            $('#loading').show();
             readURL(this);
+            updateProfileImage();
             return true;
         } 
     });
   
+  
+
     //populateCountries("country");
 
     $("#video-form").validate({
@@ -339,7 +392,7 @@ $(function () {
         rules: {
             video_url: {
                 required: true,
-                url: true,
+                url: false,
                 remote: {
                     url: BASE_URL+"athlete/url_check",
                     type: "post",
@@ -347,9 +400,12 @@ $(function () {
                 }
             },
             video_title: {
-                required: true,
-
+                required: true
+            },
+            upload_video: {
+                required: true
             }
+            
         },
         messages: {// custom messages for radio buttons and checkboxes
             video_url: {
@@ -359,7 +415,11 @@ $(function () {
             },
             video_title: {
                 required: lang_js.title_required
+            },
+            upload_video: {
+                required: lang_js.common_required_this_field_is_required
             }
+            
         }
     });
 
@@ -371,12 +431,16 @@ $(function () {
             video_url: {
                 required: true,
                 url: true,
-                // remote: {
-                //     url: BASE_URL+"athlete/url_check",
-                //     type: "post",
-                //     data: [{'name': csrf_name, 'value': csrf_token}, { 'name':'video_url', 'value': function(){ return $("#video_url").val();} }]
-                // }
+                remote: {
+                    url: BASE_URL+"athlete/url_check",
+                    type: "post",
+                    data: [{'name': csrf_name, 'value': csrf_token}, { 'name':'video_url', 'value': function(){ return $("#update_video_url").val();} }]
+                }
             },
+            upload_video: {
+                required: false
+            },
+
             video_title: {
                 required: true,
 
@@ -384,9 +448,15 @@ $(function () {
         },
         messages: {// custom messages for radio buttons and checkboxes
             video_url: {
-                 url: lang_js.video_valid_url,
+                remote : lang_js.video_accept_url,
+                url: lang_js.video_valid_url,
                 required: lang_js.video_required_url
             },
+
+            upload_video: {
+                required: lang_js.common_required_this_field_is_required
+            },
+
             video_title: {
                 required: lang_js.title_required
             }
@@ -439,13 +509,15 @@ $(function () {
         },     
     });
 
+    handelActiveDeactive(); 
+    
     addImages();
 
-    validateURLWhileUpdate();
+    //validateURLWhileUpdate();
 
     updateImage();
 
-    validateURL();
+    //validateURL();
 
     addVideos();
 
@@ -466,10 +538,13 @@ $(function () {
     editBiography();
 
     loadPreloadedBioForm();
-    //deleteImage();
+    deleteImage();
+    deleteVideo();
+
     showHidehandel();
 
     mobileMastk();
+    uploadVideo();
 
     if(isLogin){
         setInterval(function(){ 
@@ -482,7 +557,7 @@ $(function () {
                     $('#total-players').text(lang_js.total_players+'-' + data);
                 }
             });
-        }, 80000);
+        }, 70000);
     }
    
 });
@@ -525,10 +600,10 @@ function editBiography() {
 //to delete player image
 
 function deleteVideo() {
-    $('.deleteVideoBtn').click(function () {
+    $(document).on("click", ".deleteVideoBtn", function () {
         var video_id = $(this).attr('video_id');
         bootbox.confirm({
-        message: "Are you sure you want to delete this video",
+        message: lang_js.message_are_you_sure_you_want_to_delete_this,
         
             callback: function (result) {
               if(result) {
@@ -542,11 +617,11 @@ function deleteVideo() {
                             $('#'+video_id).remove();
                             videoCount--; 
                             if(videoCount < 3){
-                                $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span> '+lang_js.add_more_button+'</a> </div></li>');
-                            }else{
                                 $("#add-more-video").parent(".add_more").parent("li").remove();
+                                $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span> '+lang_js.add_more_button+'</a> </div></li>');
                             }
-                            location.reload();
+                            addVideos();
+                            //location.reload();
                         }
                     });
                 }
@@ -557,12 +632,11 @@ function deleteVideo() {
 }
 
 
-
 function deleteImage() {
     $('.deleteBtn').click(function () { 
     var image_id = $(this).attr('image_id');
         bootbox.confirm({
-        message: "Are you sure you want to delete this image",
+        message: lang_js.message_are_you_sure_you_want_to_delete_this,
         
         callback: function (result) {
           if(result) {
@@ -577,12 +651,14 @@ function deleteImage() {
                         imageCount--;
                         //alert(imageCount);
                         if(imageCount < 3){
+                            $("#add-more-image").parent(".add_more").parent("li").remove();
                             $('#image-list').append('<li><div class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
                         }
                         // if(imageCount < 3){
-                        //     $('#image-list').append('<li><d1iv class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
+                        //     $('#image-list').append('<li><div class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
                         // }
-                       location.reload();
+                       //location.reload();
+                       addImages();
                     }
                 });
             }
@@ -594,8 +670,7 @@ function deleteImage() {
     });
 }// close deleteImage()
 
-
-
+// this function is use for add image
 function addImages() {
 
     $('#add-more-image').bind("click",function(e) {
@@ -653,11 +728,11 @@ function showResponse(id)  {
                 }
                 $("#image-list").append('<li id="'+data.id+'"><div class="my_image"><a href=""><img src="' + playerIamge + '"/></a></div>\
                 <div class="profile_edit"><p>'+data.title+'</p>\
-                <div class="edit_delet"> <a class="editImageBtn" href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteBtn" image_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+                <div class="edit_delet"> <a class="editImageBtn" href="javascript:void(0)" image_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteBtn" image_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
                 <div class="clearfix"></div></div></li>');
 
                 if(imageCount < 3){
-                    $('#image-list').append('<li><d1iv class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
+                    $('#image-list').append('<li><div class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
                 }else{
                     $("#add-more-image").parent(".add_more").parent("li").remove();
                 }
@@ -670,6 +745,7 @@ function showResponse(id)  {
 } 
 
 
+// this function is use for show image
 function showImage() {
     $('.editImageBtn').click(function () {
         $('#loading').show();
@@ -737,21 +813,59 @@ function updateImage() {
             setTimeout(function(){
                $('.hideauto').fadeOut('slow');
             }, 4000);
-            location.reload();
+            //location.reload();
             //$('#loading').hide();
         }
     });
 
 }
 
-function updatePlayerVideo() {
-    var options = { 
-            target:  '#video-title',   // target element(s) to be updated with server response 
-            success: showUpdatedVideo
-        }; 
+function showUpdatedImage(responseText)  { 
+    var data = $.parseJSON(responseText);
+    
+    if(data.type=='success'){
+        var id = data.id;
+        //$('#' + id).remove();
 
-        $('#update-video-form').ajaxForm(options); 
+        if(data.filename=="" || data.filename==null || data.filename=='0'){
+            var playerIamge = TIMTHUMB + AVATAR_IMAGE +'&w=200&h=200';
+        }else{
+            var playerIamge = TIMTHUMB + BASE_URL+ 'public/uploads/player_image/'+ data[i].filename+ '&w=200&h=200';
+        }
+
+        if($("#"+id).length == 0){
+            $("#add-more-image").parent(".add_more").parent("li").animate({
+                opacity: 0,
+            }, 2000, function() {
+                $("#add-more-image").parent(".add_more").parent("li").remove();
+                
+                    // $("#image-list").append('<li id="'+data.id+'"><div class="my_image"><a href=""><img src="' + playerIamge + '"/></a></div>\
+                    // <div class="profile_edit"><p>'+data.title+'</p>\
+                    // <div class="edit_delet"> <a class="editImageBtn" href="javascript:void(0)" image_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteBtn" image_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+                    // <div class="clearfix"></div></div></li>');
+                if(imageCount < 3){
+                    $('#image-list').append('<li><div class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
+                }else{
+                    $("#add-more-image").parent(".add_more").parent("li").remove();
+                }
+                
+            });
+        }
+
+        if($("#"+id).length > 0){
+            $("#"+id+" > .my_image").find("img").attr("src",playerIamge);
+            $("#"+id+" > .profile_edit").find("p").text(data.title);
+            
+        }
+
+        addImages();
+        deleteImage();
+        showImage();
+
+    }
+    $('#editImage').modal('hide');
 }
+
 
 
 function updateBiograpghyForm() {
@@ -799,72 +913,6 @@ function showUpdatedBiography(responseText)  {
 
 
 
-function showUpdatedVideo(responseText)  { 
-    location.reload();
-    var data = $.parseJSON(responseText);
-
-    var id = data.id;
-   
-    $('#' + id).remove();
-    $("#add-more-video").parent(".add_more").parent("li").animate({
-        opacity: 0,
-    }, 2000, function() {
-        $("#add-more-video").parent(".add_more").parent("li").remove();
-               
-        $("#video-list").append('<li id="'+data.id+'><a href="javascript:void(0)" class="open-video" video_title= "'+data.title+'" video_url="'+data.filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data.thumbnail_image + '"/></div></a></div>\
-            <div class="profile_edit"><p>'+data.title+'</p>\
-            <div class="edit_delet"><a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
-            <div class="clearfix"></div></div></li>');
-        $('#video1').attr('src', data.filename);
-        openVideo();
-
-        if(videoCount < 3){
-            $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span> '+lang_js.add_more_button+'</a> </div></li>');
-        }else{
-            $("#add-more-video").parent(".add_more").parent("li").remove();
-        }
-
-        addVideos();
-        deleteVideo();
-    });
-    $('#edit-video').modal('hide');
-
-}
-
-function showUpdatedImage(responseText)  { 
-    var data = $.parseJSON(responseText);
-    //console.log(data);
-    if(data.type=='success'){
-        var id = data.id;
-        $('#' + id).remove();
-        
-        $("#add-more-image").parent(".add_more").parent("li").animate({
-            opacity: 0,
-        }, 2000, function() {
-            $("#add-more-image").parent(".add_more").parent("li").remove();
-            if(data.filename=="" || data.filename==null || data.filename=='0'){
-                var playerIamge = AVATAR_IMAGE;
-            }else{
-                var playerIamge = BASE_URL+ 'public/uploads/player_image/'+ data.filename;
-            }
-            $("#image-list").append('<li id="'+data.id+'"><div class="my_image"><a href=""><img src="' + playerIamge + '"/></a></div>\
-            <div class="profile_edit"><p>'+data.title+'</p>\
-            <div class="edit_delet"> <a class="editImageBtn" href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteBtn" image_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
-            <div class="clearfix"></div></div></li>');
-
-            if(imageCount < 3){
-                $('#image-list').append('<li><d1iv class="add_more custom-add-more"> <a data-toggle="modal" role="button" href="javascript:void(0)" id="add-more-image"><span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
-            }else{
-                $("#add-more-image").parent(".add_more").parent("li").remove();
-            }
-            addImages();
-            deleteImage();
-        });
-
-    }
-    $('#editImage').modal('hide');
-}
-
 
 function validateURL() {
     $('#uploadVideo').click(function () {
@@ -908,44 +956,27 @@ function validateURL() {
 }
 
 
-function validateURLWhileUpdate() {
-    $('#updateVideo').click(function () {
-        //$('#loading').show();
-        var url = $('#video-url').val();
 
-        if(url=="" || url==null || url==undefined){
-            $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+lang_js.common_required_this_field_is_required+'</div>');
-        }else{ 
-            if(url.indexOf("https://vine.co/") == -1 && url.indexOf("https://www.youtube.com/") == -1 && url.indexOf("https://vimeo.com/") == -1) {
-              $('#video-type').val('invalid');
-            }
-            else {
-                if (url != undefined || url != '') {        
+// uncomment this after apply video
+// function addVideos() {
+//     $('#add-more-video').bind("click",function(e) {
+//         if(videoCount < 3){
+//             $('#video-form')[0].reset();
+//             $("#modal-video").modal("show");
+//             // var options = { 
+//             //     target:  '#video_title',   // target element(s) to be updated with server response 
+//             //     success: showVideos
+//             // };
+//             // $('#video-form').ajaxForm(options); 
+//         }
+//     });
+   
+// }
 
-                    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
-                    var match = url.match(regExp);
-                    if (match && match[2].length == 11) {
-                            $('#videoObject').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
-                          $('#video-type').val('youtube');
-                        }
-                }
 
-                if (/https:\/\/vimeo.com\/\d{8}(?=\b|\/)/.test(url)) { 
-                    $('#video-type').val('vimeo');
-                }
-
-                if(url.indexOf("https://vine.co/") > -1){
-                    $('#video-type').val('vine');
-                }
-
-            }
-        }
-    
-    });
-}
 
 function addVideos() {
-    $('#add-more-video').bind("click",function(e) {
+    $(document).on('click', '#add-more-video', function () { 
         if(videoCount < 3){
             $('#video-form')[0].reset();
             $("#modal-video").modal("show");
@@ -957,40 +988,250 @@ function addVideos() {
         }
     });
    
+}//END addVideos()
+
+function uploadVideo(){
+    $(document).on('click', '#uploadVideo', function () {
+        if(videoCount <= 3){
+            $('#loading').show();
+            beforeSubmitVideo();
+            setTimeout(function(){
+                var options = { 
+                    target:  '#video_title',   // target element(s) to be updated with server response 
+                    //beforeSubmit : beforeSubmitVideo,
+                    success: showVideos
+                };
+                $('#video-form').ajaxForm(options); 
+            },200);
+        }
+    });
+}//END uploadVideo()
+
+
+function beforeSubmitVideo(){
+    var url = $('#video_url').val();
+
+    if(url =="" || url ==null || url == undefined){ 
+        $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+lang_js.common_required_this_field_is_required+'</div>');
+    
+    }else{
+        if(url.indexOf("https://vine.co/") == -1 && url.indexOf("https://www.youtube.com/") == -1 && url.indexOf("https://vimeo.com/") == -1 ) {
+            $('#video_type').val('invalid');
+            $('#video-type').val('invalid');
+        }else {
+
+            if (url != undefined || url != '') {        
+
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match && match[2].length == 11) {
+                        $('#videoObject').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
+                        $('#video_type').val('youtube');
+                        $('#video-type').val('youtube');
+                }
+
+                var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+
+                var match = url.match(regExp);
+                if(match){
+                //if (/https:\/\/vimeo.com\/\d{8}(?=\b|\/)/.test(url)) { 
+                    $('#video_type').val('vimeo');
+                    $('#video-type').val('vimeo');
+                }
+
+                if(url.indexOf("https://vine.co/") > -1){
+                    $('#video_type').val('vine');
+                    $('#video-type').val('vine');
+                }
+            }
+         
+        }
+    }    
 }
 
-function showVideoToUpdate() {
-    $('.editVideoBtn').click(function () {
-        var video_id = $(this).attr('video_id');
+
+function updatePlayerVideo() {
+    $(document).on('click', '#updateVideo', function () { 
+        $('#loading').show();
+        beforeSubmitVideoForUpdate();
+
+        var options = { 
+                target:  '#video_title',   // target element(s) to be updated with server response 
+                success: showUpdatedVideo
+            };
+            $('#update-video-form').ajaxForm(options); 
+
+    });
+}
+
+
+
+function showUpdatedVideo(responseText)  { 
+    var data = $.parseJSON(responseText);
+    
+    if(data.type=='error'){
+        $('.upd-comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+data.msg+'</div>');
+        $('#loading').hide();
+    }else{
+        var id = data.id;
+
+        if($("#"+id).length == 0){
+            $("#add-more-video").parent(".add_more").parent("li").animate({
+                opacity: 0,
+            }, 2000, function() {
+                $("#add-more-video").parent(".add_more").parent("li").remove();
+               
+                $('#video1').attr('src', data.filename);
+                
+                if(videoCount < 3){
+                    $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span> '+lang_js.add_more_button+'</a> </div></li>');
+                }else{
+                    $("#add-more-video").parent(".add_more").parent("li").remove();
+                }
+
+                
+            });
+
+        }
         
+        if($("#"+id).length > 0){
+            setTimeout(function(){
+                $("#"+id+" .my_vedio").find("img").attr("src",data.thumbnail_image);
+                $("#"+id+" .profile_edit").find("p").text(data.title);
+            },200);
+        }
+        $('#loading').hide();
+        // this function is use for dynamin action when user add dynamic action
+        openVideo();
+        addVideos();
+        $('#edit-video').modal('hide');
+    }
+    
+
+}
+
+
+
+function beforeSubmitVideoForUpdate(){
+    var url = $('#update_video_url').val();
+
+    if(url =="" || url ==null || url == undefined){ 
+        $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+lang_js.common_required_this_field_is_required+'</div>');
+    
+    }else{
+        if(url.indexOf("https://vine.co/") == -1 && url.indexOf("https://www.youtube.com/") == -1 && url.indexOf("https://vimeo.com/") == -1 ) {
+            $('#video_type').val('invalid');
+            $('#video-type').val('invalid');
+        }else {
+
+            if (url != undefined || url != '') {        
+
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match && match[2].length == 11) {
+                        $('#videoObject').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
+                        $('#video_type').val('youtube');
+                        $('#video-type').val('youtube');
+                }
+
+                var regExp = /https:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
+
+                var match = url.match(regExp);
+                if(match){
+                //if (/https:\/\/vimeo.com\/\d{8}(?=\b|\/)/.test(url)) { 
+                    $('#video_type').val('vimeo');
+                    $('#video-type').val('vimeo');
+                }
+
+                if(url.indexOf("https://vine.co/") > -1){
+                    $('#video_type').val('vine');
+                    $('#video-type').val('vine');
+                }
+            }
+         
+        }
+    }    
+}
+
+
+
+// uncomment when apply video
+// function showVideoToUpdate() {
+//     $('.editVideoBtn').click(function () {
+//         $('#loading').show();
+//         var video_id = $(this).attr('video_id');
+        
+//         $.ajax({
+//             url: BASE_URL + 'athlete/getVideoData',
+//             type: 'POST',
+//             data: [{name: csrf_name, value: csrf_token}, {name: 'video_id', value: video_id}],
+//             dataType: 'json',
+//             success: function (data) {
+//                 if(data.upload_video_type==1){
+//                     $('#upload_videoType1').attr('checked', 'checked');    
+//                     //$('#upload_videoType2').attr('checked', '');
+//                     $(".show_upload_video").hide();
+//                     $(".show_video_url").show();
+//                     $('#video-type').val(data.video_type);
+//                     $('#update_video_url').val(data.filename);
+//                 }else{
+//                     $(".show_upload_video").show();
+//                     $(".show_video_url").hide();
+//                     $("#upload_hidden_thumb_image").val(data.thumbnail_image);
+//                     //$('#upload_videoType1').attr('checked','');    
+//                     $('#upload_videoType2').attr('checked','checked');
+//                     $("#hidden_player_video").val(data.filename);
+//                     $("#upload_video_type").val(data.video_type);
+//                 }
+//                     $('#loading').hide();
+//                     $('#videoid').val(data.id);
+//                     $('#video-title').val(data.title);
+//                     $('#edit-video').modal('show');
+//             }
+//         });        
+//     });
+// }
+
+
+
+
+function showVideoToUpdate() {
+    $(document).on('click', '.editVideoBtn', function () {
+        $('#loading').show();
+        var video_id = $(this).attr('video_id');
+
+        var options = { 
+                target:  '#video_title',   // target element(s) to be updated with server response 
+                success: showUpdatedVideo
+            };
+            $('#update-video-form').ajaxForm(options); 
+
         $.ajax({
             url: BASE_URL + 'athlete/getVideoData',
             type: 'POST',
             data: [{name: csrf_name, value: csrf_token}, {name: 'video_id', value: video_id}],
             dataType: 'json',
             success: function (data) {
-                
                 $('#video-type').val(data.video_type);
                 $('#videoid').val(data.id);
                 $('#video-title').val(data.title);
-                $('#video-url').val(data.filename);
+                $('#update_video_url').val(data.orignal_video_url);
                 $('#edit-video').modal('show');
+                 $('#loading').hide();
             }
         });        
     });
 }
 
-// function showProfileToUpdate() {
-//     $('#editProfile').click(function () {
-                
-//         alert();      
-//     });
-// }
+
+
 
 function showVideos(responseText)  { 
     videoCount++;
     var data = $.parseJSON(responseText);
+    //console.log(data);
     if(data.type=='error'){
+        $("#loading").hide();
         $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+data.msg+'</div>');
     }else{
         $("#add-more-video").parent(".add_more").parent("li").animate({
@@ -998,12 +1239,12 @@ function showVideos(responseText)  {
         }, 2000, function() {
             $("#add-more-video").parent(".add_more").parent("li").remove();
                    
-            $("#video-list").append('<li id="'+data.id+'><a href="javascript:void(0)" class="open-video" video_title= "'+data.title+'" video_url="'+data.filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data.thumbnail_image + '"/></div></a></div>\
+            $("#video-list").append('<li id="'+data.id+'"><a href="javascript:void(0)" class="open-video" video_title= "'+data.title+'" video_url="'+data.filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data.thumbnail_image + '"/></div></a></div>\
                 <div class="profile_edit"><p>'+data.title+'</p>\
                 <div class="edit_delet"><a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
                 <div class="clearfix"></div></div></li>');
             $('#video1').attr('src', data.filename);
-            openVideo();
+            //openVideo();
 
             if(videoCount < 3){
                 $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
@@ -1011,14 +1252,62 @@ function showVideos(responseText)  {
                 $("#add-more-video").parent(".add_more").parent("li").remove();
             }
 
-            addVideos();
-            deleteVideo();
-
         });
+        $("#loading").hide();
         $('#modal-video').modal('hide');
+        openVideo();
+        addVideos();
+        deleteVideo();
+        showVideoToUpdate(); 
     }
     
 }
+
+
+// uncomment when video apply
+// function showVideos(responseText)  { 
+//     videoCount++;
+
+//     var data = $.parseJSON(responseText);
+    
+//     if(data.type=='error'){
+//         $('#loading').hide();
+//         $('.comm-message').html('<div class="alert alert-danger hideauto"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button><strong><span class="ui-icon ui-icon-alert" style="float:left"></span> Error! </strong>'+data.msg+'</div>');
+//     }else{
+//         $('#loading').hide();
+//         $("#add-more-video").parent(".add_more").parent("li").animate({
+//             opacity: 0,
+//         }, 2000, function() {
+//             $("#add-more-video").parent(".add_more").parent("li").remove();
+             
+//             if(data.upload_video_type==2){
+//                 $("#video-list").append('<li id="'+data.id+'><a href="javascript:void(0)" class="open-video" video_title= "'+data.title+'" video_url="' +BASE_URL +'public/uploads/player_video/'+ data.filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="'+BASE_URL +'public/uploads/video_thumb/'+ data.thumbnail_image + '"/></div></a></div>\
+//                 <div class="profile_edit"><p>'+data.title+'</p>\
+//                 <div class="edit_delet"><a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+//                 <div class="clearfix"></div></div></li>');
+//             }else{
+//                 $("#video-list").append('<li id="'+data.id+'><a href="javascript:void(0)" class="open-video" video_title= "'+data.title+'" video_url="'+data.filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data.thumbnail_image + '"/></div></a></div>\
+//                 <div class="profile_edit"><p>'+data.title+'</p>\
+//                 <div class="edit_delet"><a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data.id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data.id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+//                 <div class="clearfix"></div></div></li>');
+//             }       
+//             $('#video1').attr('src', data.filename);
+//             openVideo();
+//             location.reload();
+//             if(videoCount < 3){
+//                 $('#video-list').append('<li><div class="add_more custom-add-more"> <a id="add-more-video" href="javascript:void(0)" role="button" data-toggle="modal"><span><i class="fa fa-plus" aria-hidden="true"></i></span>'+lang_js.add_more_button+'</a> </div></li>');
+//             }else{
+//                 $("#add-more-video").parent(".add_more").parent("li").remove();
+//             }
+
+//             addVideos();
+//             deleteVideo();
+
+//         });
+//         $('#modal-video').modal('hide');
+//     }
+    
+// }
 
 function loadPreloadedProfileForm() {
     var positions = {1:lang_js.goalkeeper,
@@ -1047,7 +1336,8 @@ function loadPreloadedProfileForm() {
         success: function (data) {
             //console.log(data);
             //alert();
-            $('#full-name').text(data.first_name + ' ' + data.last_name);
+            $('.profileName').text(data.first_name + ' ' + data.last_name);
+
             if(data.profile_image && data.profile_image!= "0"){
                 $('#profile-image').attr('src', BASE_URL + PROFILE_IMAGE + data.profile_image);
             }else{
@@ -1180,7 +1470,7 @@ function loadPreloadedProfileForm() {
             }
 
             if(data.player_type==1){
-                $('#club_name').text(data.club_name);
+                $('#club_name').text(data.hire_club_name);
                 $('.show_hide_club').show();
             }else{
                 $('.show_hide_club').hide();
@@ -1207,13 +1497,13 @@ function loadPreloadedBioForm() {
                 $('#biotitle').text(data.title);
             }
             else {
-                $('#biotitle').text("Enter Biography.");
+                $('#biotitle').text(lang_js.heading_please_enter_biography_title);
             }
             if(data.content && data.content!='0' && data.content!='null') {
                 $('#bio_content').html(data.content);
             }
             else {
-                $('#bio_content').text("PLease enter your biography.");
+                $('#bio_content').text(lang_js.heading_please_enter_biography);
             }
             
             
@@ -1231,9 +1521,9 @@ function loadPreUploadedImages(){
         success: function (data) {
             for (var i in data) {
                 if(data[i].filename=="" || data[i].filename==null || data[i].filename=='0'){
-                    var playerIamge = AVATAR_IMAGE;
+                    var playerIamge = TIMTHUMB + AVATAR_IMAGE + '&w=200&h=200';
                 }else{
-                    var playerIamge = BASE_URL+ 'public/uploads/player_image/'+ data[i].filename;
+                    var playerIamge = TIMTHUMB + BASE_URL+ 'public/uploads/player_image/'+ data[i].filename+ '&w=200&h=200';
                 }
 
                 $("#image-list").append('<li id="'+data[i].id+'"><div class="my_image"><a href="javascript:void(0)"><img src="' + playerIamge + '"/></a></div>\
@@ -1261,10 +1551,18 @@ function loadPreUploadedVideos(){
         dataType: 'json',
         success: function (data) {
             for (var i in data) {
-                $("#video-list").append('<li id="'+data[i].id+'"><a href="javascript:void(0)" class="open-video" video_title= "'+data[i].title+'" video_url="'+data[i].filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data[i].thumbnail_image + '"/></div></a></div>\
-                <div class="profile_edit"><p>'+data[i].title+'</p>\
-                <div class="edit_delet"> <a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data[i].id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data[i].id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
-                <div class="clearfix"></div></div></li>');
+                if(data[i].upload_video_type==2){
+                    $("#video-list").append('<li id="'+data[i].id+'"><a href="javascript:void(0)" class="open-video" video_title= "'+data[i].title+'" video_url="' +BASE_URL +'public/uploads/player_video/'+ data[i].filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' +BASE_URL +'public/uploads/video_thumb/'+ data[i].thumbnail_image + '"/></div></a></div>\
+                    <div class="profile_edit"><p>'+data[i].title+'</p>\
+                    <div class="edit_delet"> <a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data[i].id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data[i].id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+                    <div class="clearfix"></div></div></li>');
+                }else{
+                    $("#video-list").append('<li id="'+data[i].id+'"><a href="javascript:void(0)" class="open-video" video_title= "'+data[i].title+'" video_url="'+data[i].filename+'" role="button" data-toggle="modal"><div class="my_vedio"><img src="' + data[i].thumbnail_image + '"/></div></a></div>\
+                    <div class="profile_edit"><p>'+data[i].title+'</p>\
+                    <div class="edit_delet"> <a class="editVideoBtn" data-toggle="modal" role="button" href="javascript:void(0)" video_id="'+data[i].id+'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="javascript:void(0)" class="deleteVideoBtn" video_id="'+data[i].id+'"><i class="fa fa-trash-o" aria-hidden="true"></i></a> </div>\
+                    <div class="clearfix"></div></div></li>');
+                }
+                
 
                 openVideo();
                 videoCount++;
@@ -1275,13 +1573,13 @@ function loadPreUploadedVideos(){
                 $('#modal-video').modal('hide');
                 addVideos();
                 showVideoToUpdate();
-                deleteVideo();
+                //deleteVideo();
         }
     });
 }
 
 function openVideo(){
-    $(".open-video").bind("click",function(){
+    $(document).on("click",".open-video", function(){
         $('#video1').attr('src', $(this).attr("video_url"));
         $('#vid_title').text($(this).attr("video_title"));
         $("#play-video").modal("show");

@@ -12,8 +12,25 @@ $route['admin-logout'] = "auths/admin/logout";
 
 //==========Stary Front routes here==========
 
-$route['signup'] = "auths/auth/register";
+$route['player-signup'] = "auths/auth/playerSignupForm";
+
+$route['playerSignup'] = "auths/auth/playerSignup";
+
+$route['club-signup'] = "auths/auth/clubSignupForm";
+
+$route['clubSignup'] = "auths/auth/clubSignup";
+
+
+
+
 $route['login'] = "auths/auth/login";
+
+$route['register-by'] = "auths/auth/registerBy";
+
+$route['user-plan-payment'] = "auths/auth/userPlanPayment";
+
+
+
 $route['verify?'] = "auths/auth/verify";
 $route['reset-password'] = "auths/auth/resetPasswordFrom";
 $route['send-reset-password'] = "auths/auth/resetPassword";
